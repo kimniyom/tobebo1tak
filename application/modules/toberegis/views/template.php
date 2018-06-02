@@ -129,20 +129,7 @@
                                 <a href="<?= site_url('toberegis/users/checkprivilege') ?>" id="_link">
                                     <span class="fa fa-check text-success"></span> ตรวจสอบรายชื่อ</a>
                             </li>
-                            <?php if($this->session->userdata('status') == "S") { ?>
-                            <li>
-                                <a href="<?= site_url('toberegis/toberegis/getofficename/2') ?>" id="_links">
-                                    <span class="fa fa-bank"></span> รายชื่อโรงเรียน</a>
-                            </li>
-                            <li>
-                                <a href="<?= site_url('toberegis/toberegis/getofficename/1') ?>" id="_links">
-                                    <span class="fa fa-building-o"></span> รายชื่อสถานประกอบการ</a>
-                            </li>
-                            <li>
-                                <a href="<?= site_url('toberegis/toberegis/getofficename/3') ?>" id="_links">
-                                    <span class="fa fa-hospital-o"></span> รายชื่อ รพ.สต.</a>
-                            </li>
-                            <?php } ?>
+                           
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                                 <li>
@@ -152,11 +139,14 @@
                             </ul>
                         <?php if($this->session->userdata('status') == "S") { ?>
                         <ul class="nav navbar-nav navbar-right">
+                            <!--
                                 <li>
                                     <a href="javascript:openpopupformregister()" id="_links"><i class="fa fa-users"></i> ลงทะเบียนสมาชิก</a> 
                                 </li>
+                            -->
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="_links">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
+                                    aria-expanded="false" id="_links">
                                     <i class="fa fa-cog"></i> ตั้งค่า <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo site_url('toberegis/occupation/index') ?>">อาชีพ,สถานบริการ,หน่วยงาน,โรงเรียน</a></li>
