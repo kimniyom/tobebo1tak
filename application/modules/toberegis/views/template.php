@@ -94,7 +94,7 @@
 
                                         <i class="fa fa-user">
                                             
-                                        </i> <?php echo ($this->session->userdata('username')) ? $this->session->userdata('username') : $this->session->userdata('user_register') ?>
+                                        </i> <?php echo ($this->session->userdata('username')) ? $this->session->userdata('username') : $this->session->userdata('user_register_name') ?>
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">

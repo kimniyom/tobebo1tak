@@ -24,6 +24,10 @@ class toberegis extends CI_Controller {
         $this->load->view("toberegis/template", $data);
     }
 
+    public function Auth(){
+
+    }
+
     public function Index() {
         $page = "index";
         $data['type'] = $this->model->Type();
@@ -148,5 +152,27 @@ class toberegis extends CI_Controller {
         $data = "";
         $this->output($data, $page, "Success");
     }
+
+    public function views($id){
+        $page = "views";
+        $this->db->where("id",$id);
+
+        $data['datas'] = $this->db->get("tobe_register")->row();
+        $data['occupation'] = $this->db->get("tobe_occupation");
+        $data['education'] = $this->db->get("tobe_education");
+        $data['smoking'] = $this->db->get("tobe_smoking");
+        $data['alcohol'] = $this->db->get("tobe_alcohol");
+        $data['changwat'] = $this->db->get("cchangwat");
+        $data['level2'] = $this->occupation($data['datas']->level2);
+        $data['level3'] = $this->occupation($data['datas']->level3);
+        $this->output($data, $page, "ข้อมูลสมาชิก");
+    }
+
+    function occupation($occ) {
+        $this->db->where('id',$occ);
+        $q = $this->db->get("tobe_occupation")->row();
+        return $q->name;
+    }
+
     
 }

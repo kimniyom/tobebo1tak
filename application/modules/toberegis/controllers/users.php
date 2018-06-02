@@ -46,37 +46,47 @@ class users extends CI_Controller {
     }
 
     public function Checkprivilege(){
-        $page = "users/checkprivilege";
-        $data = "";
-        $this->output($data, $page, "ตรวจสอบข้อมูล");
-    }
-
-    public function Checkprivileges(){
-        $cid = trim($this->input->post('cid'));
-        $birth = trim($this->input->post('birth'));
-        $sql = "select * from tobe_register where cid = '$cid'";
-        $result = $this->db->query($sql);
-        $row = $result->num_rows();
-        if($row > 0){
-            $sql .= " and birth='$birth'";
-            $results = $this->db->query($sql);
-            $rows = $results->num_rows();
-            if($rows > 0){
-                $data = $results->row();
-                $this->session->set_userdata('user_register',$data->id);
-                echo "1";
-            } else {
-                echo "0";
-            }
+        $id = $this->session->userdata('user_register');
+        if(empty($id)){
+            $page = "users/checkprivilege";
+            $data = "";
+            $this->output($data, $page, "ตรวจสอบข้อมูล");
         } else {
-            echo "0";
+            redirect('/toberegis/toberegis/views/'.$id, 'location');
         }
     }
 
+    public function Checkprivileges(){
+        
+            $cid = trim($this->input->post('cid'));
+            $birth = trim($this->input->post('birth'));
+            $sql = "select * from tobe_register where cid = '$cid'";
+            $result = $this->db->query($sql);
+            $row = $result->num_rows();
+            if($row > 0){
+                $sql .= " and birth='$birth'";
+                $results = $this->db->query($sql);
+                $rows = $results->num_rows();
+                if($rows > 0){
+                    $data = $results->row();
+                    $this->session->set_userdata('user_register',$data->id);
+                    $this->session->set_userdata('user_register_name',$data->name);
+                    echo "1";
+                } else {
+                    echo "0";
+                }
+            } else {
+                echo "0";
+            }
+        
+    }
+
     public function view(){
-        $page = "users/view";
-        $data = "";
-        $this->output($data, $page, "ข้อมูลสมาชิก");
+        $id = $this->session->userdata('user_register');
+        redirect('/toberegis/toberegis/views/'.$id, 'location');
+        //$page = "users/view";
+        //$data = "";
+        //$this->output($data, $page, "ข้อมูลสมาชิก");
     }
 
 }
