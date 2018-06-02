@@ -1,0 +1,140 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 7, 2016, 10:16:38 PM
+    Author     : Kimniyom
+*/
+/*
+html { 
+  background: url(images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+*/
+#bg_gray{
+    background: url(images/bg_grey.gif);
+}
+
+#submenu{
+    text-align: center;
+}
+
+.text-menu{
+    text-align: center;
+    text-overflow: ellipsis; white-space:nowrap; width:300px; overflow:hidden;
+}
+@media screen and (min-width: 480px) {
+    .text-menu{
+        text-overflow: ellipsis; white-space:nowrap; width:150px; overflow:hidden;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .text-menu{
+        text-overflow: ellipsis; white-space:nowrap; max-width:200px; overflow:hidden;
+    }
+}
+
+
+@media screen and (min-width: 1024px) {
+    .text-menu{
+        text-overflow: ellipsis; white-space:nowrap; width:100px; overflow:hidden;
+    }
+}
+
+@media screen and (min-width: 1009px) {
+    .text-menu{
+        text-overflow: ellipsis; white-space:nowrap; width:100px; overflow:hidden;
+    }
+}
+
+.btn-flag{
+    border-radius: 0px;
+}
+
+.font_news a:hover{
+    color: #999999;
+    text-decoration: none;
+}
+
+
+#hr{
+    border: solid 2px #cccccc;
+    margin-top: 0px;
+}
+
+#head-panel{
+    font-size: 20px;
+    color: #FFF;
+    margin: 5px;
+}
+
+.breadcrumb{
+    margin-top: 20px;
+}
+
+
+.breadcrumb li{
+    font-size: 18px;
+}
+
+.breadcrumb li a{
+    font-size: 18px;
+}
+
+.breadcrumb .active{
+    font-size: 18px;
+}
+
+#nav-bar{
+    box-shadow: 0px 0px 5px 0px #000;
+}
+
+#footer{
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.25);
+    padding: 20px 0px;
+    color: #ffff00;
+    border-radius: 0px; 
+}
+
+#footer a{
+    color:#FFF;
+}
+
+.bottom-line{
+    background: url(images/divider-gray.png) center top no-repeat;
+    height: 30px;
+}
+
+#box-lastnews{
+    background: #FFF;
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.25);
+}
+
+#bg-echo{
+    background: url(images/bg_content.png) center top repeat-x;
+}
+
+#tab-sing-in{
+    padding: 5px; margin: 0px; background: #15a589; border: none; border-radius: 0px;
+}
+
+#tab-sing-in a{
+    color: #ffff00;
+}
+
+#tab-sing-in a:hover{
+    text-decoration: none;
+    color: #FFF;
+}
+
+#box-express{
+    border-radius: 0px;
+    box-shadow: 0px 0px 5px 0px #000;
+    margin-bottom: 0px;
+}

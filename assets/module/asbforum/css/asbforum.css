@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 21, 2017, 9:51:11 AM
+    Author     : apple
+*/
+
+.bodys input[type=text]{
+    border: #cccccc solid 1px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #FFF;
+}
+
+.bodys input[type=password]{
+    border: #cccccc solid 1px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #FFF;
+}
+
+.bodys input[type=email]{
+    border: #cccccc solid 1px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #FFF;
+
+}
+
+.bodys .text-area{
+    border: #cccccc solid 1px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #FFF;
+}
+
+.bodys .select-box{
+    border: #cccccc solid 1px;
+    padding: 5px;
+    border-radius: 3px;
+    background: #FFF;
+}
+
+#dropdown-repost{
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
