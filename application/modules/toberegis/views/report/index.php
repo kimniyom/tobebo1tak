@@ -30,8 +30,7 @@ $active = $head;
 <hr id="hr"/>
 
 <h3>
-<img src="<?php echo base_url() ?>assets/module/toberegis/images/<?php echo $type->icons ?>"  style="margin-top:0px; height:64px;"/>
-<i class="fa fa-comment"></i> สมาชิก TO BE NUMBER ONE (<?php echo $type->typename ?>)
+<i class="fa fa-comment"></i> สมาชิก TO BE NUMBER ONE (<?php echo $type->name ?>)
 </h3>
 
 <hr id="hr"/>
@@ -45,7 +44,7 @@ $active = $head;
 <hr/>
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-users"></i> จำนวนผู้ลงทะเบียน</div>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>อำเภอ</th>
@@ -60,9 +59,9 @@ $active = $head;
             $sum = ($sum + $rs->total);
             ?>
         <tr>
-            <td><?php echo $rs->distid." ".$rs->distname ?></td>
+            <td><?php echo $rs->ampurcodefull." ".$rs->ampurname ?></td>
             <td style="text-align: right;"><?php echo number_format($rs->total) ?></td>
-             <td style="text-align: center;"><a href="<?php echo site_url('toberegis/tobereport/office/'.$type->id.'/'.$rs->distid) ?>">คลิกดูข้อมูล</a></td>
+             <td style="text-align: center;"><a href="<?php echo site_url('toberegis/tobereport/office/'.$type->id.'/'.$rs->ampurcodefull) ?>">คลิกดูข้อมูล</a></td>
         </tr>
     <?php endforeach; ?>
     </tbody>

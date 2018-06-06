@@ -30,17 +30,17 @@ class toberegis extends CI_Controller {
 
     public function Index() {
         $page = "index";
-        $data['type'] = $this->model->Type();
+        $data['occupation'] = $this->model->Type();
         $data['amphur'] = $this->model->Amphur();
         $ReportAmphur = $this->report->GetreportAmphur();
         $ReportType = $this->report->GetreportType();
         $data['countall'] = $this->report->CountAll();
         foreach($ReportAmphur->result() as $rs):
-            $ChartAmphurArr[] = "['".$rs->distname."',".$rs->total."]";
+            $ChartAmphurArr[] = "['".$rs->ampurname."',".$rs->total."]";
         endforeach;
 
         foreach($ReportType->result() as $rss):
-            $ChartTypeArr[] = "{name:'".$rss->typename."',y:".$rss->total."}";
+            $ChartTypeArr[] = "{name:'".$rss->name."',y:".$rss->total."}";
         endforeach;
         $data['chartamphur'] = implode(",",$ChartAmphurArr);
         $data['charttype'] = implode(",",$ChartTypeArr);

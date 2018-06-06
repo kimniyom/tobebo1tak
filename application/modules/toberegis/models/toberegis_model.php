@@ -14,22 +14,24 @@ class toberegis_model extends CI_Model {
     }
 
     function Type() {
-        return $this->db->get("tobe_type");
+        $sql = "select * from tobe_occupation where upper = '' ";
+        return $this->db->query($sql);
     }
 
     function TypeRow($id) {
         $this->db->where("id",$id);
-        $query = $this->db->get("tobe_type");
+        $query = $this->db->get("tobe_occupation");
         return $query->row();
     }
 
-    function Amphur() {
-        return $this->db->get("tobe_district");
+    function Amphur($changwat = 63) {
+        $sql = "select * from campur where changwatcode = '$changwat' ";
+        return $this->db->query($sql);
     }
 
     function AmphurRow($id) {
-        $this->db->where("distid",$id);
-        $query = $this->db->get("tobe_district");
+        $this->db->where("ampurcodefull",$id);
+        $query = $this->db->get("campur");
         return $query->row();
     }
 

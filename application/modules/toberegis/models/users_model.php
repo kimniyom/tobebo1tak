@@ -13,6 +13,10 @@ class users_model extends CI_Model {
         $this->CI->query("SET NAMES 'UTF8'");
     }
 
+    public function typeuser(){
+    	return $this->db->get("tobe_user_type");
+    }
+
 
 }
 

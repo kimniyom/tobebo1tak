@@ -24,31 +24,29 @@
 <div class="row">
     <div class="col-md-8 col-lg-8">
         <div id="charttype"></div>
+        <hr/>
+        <div id="chartamphur"></div>
     </div>
     <div class="col-md-4 col-lg-4">
         <?php foreach ($ReportType->result() as $rs) { ?>
 
             <div class="row">
-                <div class="col-md-3 col-lg-3 col-sm-5 col-xs-12" style="text-align:center;">
-                    <center>
-                        <img src="<?php echo base_url() ?>assets/module/toberegis/images/<?php echo $rs->icons ?>" class="img img-responsive" style="margin-top:10px;"/>
-                    </center>
-                </div>
-                <div class="col-md-9 col-lg-9 col-sm-7 col-xs-12" style=" margin-bottom: 10px;">
+
+                <div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 well" style=" margin-bottom: 10px;">
                     <a href="<?php echo site_url('toberegis/tobereport/index/' . $rs->id) ?>" style=" text-decoration: none;">
-                        <div class="btn btn-default btn-block" id="btn-category">
-                            <h4><?php echo $rs->typename ?></h4>
-                            <hr/>
-                            <span class="badge">จำนวน <?php echo $rs->total ?> ราย</span>
+                        <div class="btn btn-default btn-block">
+                            <h4><?php echo $rs->name ?></h4>  
                         </div></a>
+                </div>
+                <div class="col-md-3 col-lg-3 col-sm-5 col-xs-12" style="text-align:center; padding-top: 10px;">
+                    จำนวน
+                   <h4><?php echo $rs->total ?></h4>
                 </div>
             </div>
         <?php } ?>
     </div>
 </div>
 
-<hr/>
-<div id="chartamphur"></div>
 <!--
 <div class="row">
 <?php //foreach ($amphur->result() as $am) { ?>

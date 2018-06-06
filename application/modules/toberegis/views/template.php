@@ -129,8 +129,8 @@
                                 <a href="<?= site_url('toberegis/users/checkprivilege') ?>" id="_link">
                                     <span class="fa fa-check text-success"></span> ตรวจสอบรายชื่อ</a>
                             </li>
-                           
                         </ul>
+
                         <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <a href="<?= site_url('toberegis/toberegis/register') ?>" id="_link">
@@ -150,6 +150,7 @@
                                     <i class="fa fa-cog"></i> ตั้งค่า <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo site_url('toberegis/occupation/index') ?>">อาชีพ,สถานบริการ,หน่วยงาน,โรงเรียน</a></li>
+                                        <li><a href="<?php echo site_url('toberegis/users/createuser') ?>">ผู้ใช้งาน</a></li>
                                     </ul>
                                 </li>
                         </ul>

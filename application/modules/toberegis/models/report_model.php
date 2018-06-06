@@ -13,54 +13,40 @@ class report_model extends CI_Model {
         $this->CI->query("SET NAMES 'UTF8'");
     }
 
-    function GetreportAmphur($type = null){
-        if($type){
-            $where = " r.type='$type'";
+    function GetreportAmphur($occupation=null,$changwat = 63){
+        if($occupation){
+            $where = " r.occupation='$occupation'";
         } else {
             $where = "1=1";
         }
-    	$sql = "SELECT d.distid,d.distname,IFNULL(Q.total,0) AS total
-				FROM tobe_district d 
+    	$sql = "SELECT d.ampurcodefull,d.ampurname,IFNULL(Q.total,0) AS total
+				FROM campur d 
 				LEFT JOIN 
 				(
 					SELECT r.ampur,COUNT(*) AS total
 					FROM tobe_register r 
                     WHERE $where
 					GROUP BY r.ampur
-				) Q ON d.distid = Q.ampur ";
+				) Q ON d.ampurcodefull = Q.ampur 
+                WHERE d.changwatcode = '$changwat'";
 		return $this->db->query($sql);
     }
 
     function GetreportType(){
-    	$sql = "SELECT d.id,d.typename,d.icons,IFNULL(Q.total,0) AS total
-				FROM tobe_type d 
-				LEFT JOIN 
-				(
-					SELECT r.type,COUNT(*) AS total
-					FROM tobe_register r 
-					GROUP BY r.type
-				) Q ON d.id = Q.type ";
+    	$sql = "SELECT d.id,d.name,IFNULL(Q.total,0) AS total
+                FROM tobe_occupation d 
+                LEFT JOIN 
+                (
+                    SELECT r.occupation,COUNT(*) AS total
+                    FROM tobe_register r INNER JOIN tobe_occupation o ON r.occupation = o.id
+                    WHERE o.upper = ''
+                    GROUP BY r.occupation
+                ) Q ON d.id = Q.occupation
+                WHERE d.upper = '' ";
 		return $this->db->query($sql);
     }
 
-    function GetreportOffice($type = null,$amphur = null){
-        $TypeModel = new toberegis_model();
-        $TypeDetail = $TypeModel->TypeRow($type);
-        $tables = $TypeDetail->tables;
-        $fields = $TypeDetail->fields;
-        $relation = $tables.".".$TypeDetail->relation."=Q.office";
-        $sql = "SELECT $fields,IFNULL(Q.total,0) AS total
-                FROM $tables
-                LEFT JOIN 
-                (
-                    SELECT r.office,COUNT(*) AS total
-                    FROM tobe_register r 
-                    WHERE r.type = '$type' AND r.ampur = '$amphur'
-                    GROUP BY r.office
-                ) Q ON $relation";
-        return $this->db->query($sql);
-    }
-
+    
     function GetreportList($type = null,$amphur = null,$office = null){
         $sql = "SELECT *
                 FROM tobe_register r 
@@ -73,13 +59,13 @@ class report_model extends CI_Model {
     	return $result->num_rows();
     }
 
-    function CountType($type = null,$amphur = null){
+    function CountType($occupation = null,$amphur = null){
         if($amphur){
             $where = " ampur = '$amphur'";
         } else {
             $where = "1=1";
         }
-        $sql = "select IFNULL(count(*),0) as total from tobe_register where type='$type' AND $where";
+        $sql = "select IFNULL(count(*),0) as total from tobe_register where occupation='$occupation' AND $where";
         $rs = $this->db->query($sql)->row();
         return $rs->total;
     }

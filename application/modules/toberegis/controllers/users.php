@@ -10,7 +10,7 @@ class users extends CI_Controller {
         $this->load->model('takmoph_model', 'tak');
         $this->load->model('toberegis/toberegis_model', 'model');
         $this->load->model('toberegis/report_model', 'report');
-        $this->load->model('toberegis/users_model', 'model');
+        $this->load->model('toberegis/users_model', 'usermodel');
         $this->load->helper('url');
         $this->load->library('session');
         $this->load->helper('captcha');
@@ -87,6 +87,76 @@ class users extends CI_Controller {
         //$page = "users/view";
         //$data = "";
         //$this->output($data, $page, "ข้อมูลสมาชิก");
+    }
+
+    public function createuser(){
+        $page = "users/create";
+        $data['ampur'] = $this->model->Amphur();
+        $data['type'] = $this->usermodel->typeuser();
+        $head = "สมาชิก";
+        $this->output($data,$page,$head);
+    }
+
+    public function saveuser(){
+        $columns = array(
+            "name" => $this->input->post('name'),
+            "lname" => $this->input->post('lname'),
+            "username" => $this->input->post('username'),
+            "password" => $this->input->post('password'),
+            "type" => $this->input->post('type')
+        );
+        $this->db->insert("tobe_user",$columns);
+
+        $sql = "select max(id) as id from tobe_user";
+        $query = $this->db->query($sql)->row();
+        $data = array("id" => $query->id);
+        echo json_encode($data);
+    }
+
+    public function detailuser($id){
+        $this->db->where("id",$id);
+        $data['user'] = $this->db->get("tobe_user")->row();
+
+        $this->db->where("id",$data['user']->type);
+        $data['type'] = $this->db->get("tobe_user_type")->row();
+        $page = "users/detailuser";
+        $head = $data['user']->name;
+        $data['filter'] = $this->filter($data['user']->type);
+        $this->output($data,$page,$head);
+    }
+
+    public function filter($type){
+        $str = "";
+        if($type == 2){
+            $amphur = $this->model->Amphur();
+            $str .= "<div class='col-md-3 col-lg-3'><label>อำเภอ</label>"; 
+            $str .= "<select id='filter' class='form-control'>";
+            foreach($amphur->result() as $rs):
+                $str .= "<option value='".$rs->ampurcodefull."'>".$rs->ampurname."</option>";
+            endforeach;
+            $str .= "</select>";
+            $str .= "</div>";
+        } else if($type == 3){
+             $amphur = $this->model->Amphur();
+            $str .= "<div class='col-md-3 col-lg-3'>"; 
+            $str .= "<select id='filter'>";
+            foreach($amphur->result() as $rs):
+                $str .= "<option value='".$rs->ampurcodefull."'>".$rs->ampurname."</option>";
+            endforeach;
+            $str .= "</select>";
+            $str .= "</div>";
+        } else if($type == 4){
+            $amphur = $this->model->Amphur();
+            $str .= "<div class='col-md-3 col-lg-3'>"; 
+            $str .= "<select id='filter'>";
+            foreach($amphur->result() as $rs):
+                $str .= "<option value='".$rs->ampurcodefull."'>".$rs->ampurname."</option>";
+            endforeach;
+            $str .= "</select>";
+            $str .= "</div>";
+        }
+
+        return $str;
     }
 
 }
