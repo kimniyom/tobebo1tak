@@ -29,24 +29,78 @@
     </div>
     <div class="col-md-4 col-lg-4">
         <?php foreach ($ReportType->result() as $rs) { ?>
-
             <div class="row">
-
-                <div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 well" style=" margin-bottom: 10px;">
+                <div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 " style=" margin-bottom: 10px;">
                     <a href="<?php echo site_url('toberegis/tobereport/index/' . $rs->id) ?>" style=" text-decoration: none;">
                         <div class="btn btn-default btn-block">
-                            <h4><?php echo $rs->name ?></h4>  
+                            <h4><?php echo $rs->typename ?></h4>  
                         </div></a>
                 </div>
-                <div class="col-md-3 col-lg-3 col-sm-5 col-xs-12" style="text-align:center; padding-top: 10px;">
+                <div class="col-md-3 col-lg-3 col-sm-5 col-xs-12" style="text-align:center; padding-top: 0px;">
                     จำนวน
                    <h4><?php echo $rs->total ?></h4>
                 </div>
             </div>
         <?php } ?>
+        <hr/>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">เหตุผลที่เข้าร่วมชมรม</div>
+                    <div class="panel-body" style=" padding: 0px;">
+                        <div class="list-group" style="border-radius:0px; margin: 0px;">
+                            <div class="list-group-item" style="border-radius:0px;">
+                                ต้องการเข้ารับการบำบัด"ใครติดยา ยกมือขึ้น" 
+                                <span class="badge"><?php echo $reason->reason1 ?></span>
+                            </div>
+                            <div class="list-group-item" style="border-radius:0px;">
+                                ต้องการร่วมรณรงค์ป้องกันและแก้ไขปัญหายาเสพติด 
+                                <span class="badge"><?php echo $reason->reason2 ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
+
+<div class="row">
+    <div class="col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">สูบบุหรี่</div>
+            <div class="panel-body">
+                <div class="row">
+                <?php foreach($smoking->result() as $sk): ?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style=" text-align: center;">
+                        <span class="badge"><?php echo number_format($sk->total) ?></span>
+                        <div style=" width: 100%; border-bottom: solid 1px #eeeeee; height: 10px;"></div>
+                        <?php echo $sk->smoking ?> 
+                    </div>
+                <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">ดื่มแอลกอฮอล์</div>
+            <div class="panel-body">
+                <div class="row">
+                <?php foreach($alcohol->result() as $al): ?>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style=" text-align: center;">
+                        <span class="badge"><?php echo number_format($al->total) ?></span>
+                        <div style=" width: 100%; border-bottom: solid 1px #eeeeee; height: 10px;"></div>
+                        <?php echo $al->alcohol ?> 
+                    </div>
+                <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--
 <div class="row">
 <?php //foreach ($amphur->result() as $am) { ?>

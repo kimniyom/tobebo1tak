@@ -51,11 +51,10 @@ if (!defined('BASEPATH'))
 $active_group = 'default';
 $active_record = TRUE;
 
-/*
 $db['default']['hostname'] = '127.0.0.1';
 $db['default']['username'] = 'root';
-$db['default']['password'] = 'root';
-$db['default']['database'] = 'asbbuild2017';
+$db['default']['password'] = '';
+$db['default']['database'] = 'tobeno_one';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
@@ -67,8 +66,8 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
- */
-
+ 
+/*
 $db['default']['hostname'] = '192.168.0.10';
 $db['default']['username'] = 'kimniyom';
 $db['default']['password'] = '0800260943';
@@ -84,6 +83,6 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-
+*/
 /* End of file database.php */
 /* Location: ./application/config/database.php */

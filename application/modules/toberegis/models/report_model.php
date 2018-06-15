@@ -33,6 +33,7 @@ class report_model extends CI_Model {
     }
 
     function GetreportType(){
+        /*
     	$sql = "SELECT d.id,d.name,IFNULL(Q.total,0) AS total
                 FROM tobe_occupation d 
                 LEFT JOIN 
@@ -43,6 +44,16 @@ class report_model extends CI_Model {
                     GROUP BY r.occupation
                 ) Q ON d.id = Q.occupation
                 WHERE d.upper = '' ";
+                */
+                $sql = "SELECT d.id,d.typename,IFNULL(Q.total,0) AS total
+                        FROM tobe_type d 
+                        LEFT JOIN 
+                        (
+                            SELECT o.type,COUNT(*) AS total
+                            FROM tobe_register r INNER JOIN tobe_occupation o ON r.occupation = o.id
+                            WHERE o.type != ''
+                            GROUP BY o.type
+                        ) Q ON d.id = Q.type";
 		return $this->db->query($sql);
     }
 
@@ -68,6 +79,38 @@ class report_model extends CI_Model {
         $sql = "select IFNULL(count(*),0) as total from tobe_register where occupation='$occupation' AND $where";
         $rs = $this->db->query($sql)->row();
         return $rs->total;
+    }
+
+    function CountAlcohol($changwat = '63'){
+        $sql = "SELECT a.id,a.alcohol,IFNULL(Q.total,0) AS total
+                FROM tobe_alcohol a 
+                LEFT JOIN (
+                        SELECT r.alcohol,COUNT(*) AS total
+                        FROM tobe_register r 
+                        WHERE (r.alcohol != '' OR r.alcohol IS NOT NULL) AND r.changwat = '$changwat'
+                        GROUP BY r.alcohol
+                ) Q ON a.id = Q.alcohol ";
+        return $this->db->query($sql);
+    }
+
+    function CountSmoking($changwat = '63'){
+        $sql = "SELECT a.id,a.smoking,IFNULL(Q.total,0) AS total
+                FROM tobe_smoking a 
+                LEFT JOIN (
+                    SELECT r.smoking,COUNT(*) AS total
+                    FROM tobe_register r 
+                    WHERE (r.smoking != '' OR r.smoking IS NOT NULL) AND r.changwat = '$changwat'
+                    GROUP BY r.smoking
+                ) Q ON a.id = Q.smoking";
+        return $this->db->query($sql);
+    }
+
+    function CountReason($changwat = '63'){
+        $sql = "SELECT SUM(IF(r.reason='1',1,0)) as reason1,
+                        SUM(IF(r.reason='2',1,0)) as reason2
+                FROM tobe_register r 
+                WHERE (r.smoking != '' OR r.smoking IS NOT NULL) AND r.changwat = '$changwat'";
+        return $this->db->query($sql)->row();
     }
 
 }

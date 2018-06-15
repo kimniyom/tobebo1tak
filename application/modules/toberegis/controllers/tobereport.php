@@ -65,4 +65,5 @@ class tobereport extends CI_Controller {
         $this->output($data, $page, $data['type']->typename);
     }
 
+
 }
