@@ -3,18 +3,20 @@
         margin-bottom: 10px;
     }
 </style>
-
+<script src="<?php echo base_url() ?>assets/module/toberegis/js/app.js"></script>
 <?php
-$this->load->library('takmoph_libraries');
-$model = new takmoph_libraries();
-$list = array(
-    //array("label" => 'Dashboard',"url" => 'toberegis')
-);
-$active = $head;
+	$this->load->library('takmoph_libraries');
+	$model = new takmoph_libraries();
+	$list = array(
+    	//array("label" => 'Dashboard',"url" => 'toberegis')
+	);
+	$active = $head;
 ?>
 
 <?php echo $model->breadcrumb_backend($list, $active); ?>
 <hr id="hr"/>
+<input type="hidden" name="" id="urlsave" value="<?php echo site_url('toberegis/users/saveuser') ?>"/>
+<input type="hidden" name="" id="urlredir" value="<?php echo site_url('toberegis/users/detailuser') ?>"/>
 <h3><i class="fa fa-user"></i> ผู้ใช้งาน</h3>
 <hr/>
 <div class="row">
@@ -75,30 +77,5 @@ $active = $head;
 	</div>
 </div>
 
-<script type="text/javascript">
-	function saveuser(){
-		var url = "<?php echo site_url('toberegis/users/saveuser') ?>";
-		var name = $("#name").val();
-		var lname = $("#lname").val();
-		var username = $("#username").val();
-		var password = $("#password").val();
-		var type = $("#type").val();
-		if(name == "" || lname == "" || username == "" || password == "" || type == ""){
-			alert("กรอกข้อมูลไม่ครบ...");
-			return false;
-		}
-		var data = {
-			name: name,
-			lname: lname,
-			username: username,
-			password: MD5(password),
-			type: type
-		};
-		$.post(url,data,function(datas){
-			var id = datas.id;
-			window.location="<?php echo site_url('toberegis/users/detailuser') ?>" + "/" + id;
-		},'json');
-	}
-</script>
 
 

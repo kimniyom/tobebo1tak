@@ -13,9 +13,9 @@ class report_model extends CI_Model {
         $this->CI->query("SET NAMES 'UTF8'");
     }
 
-    function GetreportAmphur($occupation=null,$changwat = 63){
-        if($occupation){
-            $where = " r.occupation='$occupation'";
+    function GetreportAmphur($type=null,$changwat = 63){
+        if($type && $type != '3'){
+            $where = " o.type='$type'";
         } else {
             $where = "1=1";
         }
@@ -23,8 +23,8 @@ class report_model extends CI_Model {
 				FROM campur d 
 				LEFT JOIN 
 				(
-					SELECT r.ampur,COUNT(*) AS total
-					FROM tobe_register r 
+					SELECT r.ampur,SUM(IF(o.type != '3',1,0)) AS total
+					FROM tobe_register r INNER JOIN tobe_occupation o ON r.occupation = o.id
                     WHERE $where
 					GROUP BY r.ampur
 				) Q ON d.ampurcodefull = Q.ampur 
@@ -32,7 +32,7 @@ class report_model extends CI_Model {
 		return $this->db->query($sql);
     }
 
-    function GetreportType(){
+    function GetreportType($changwat = 63){
         /*
     	$sql = "SELECT d.id,d.name,IFNULL(Q.total,0) AS total
                 FROM tobe_occupation d 
@@ -49,13 +49,15 @@ class report_model extends CI_Model {
                         FROM tobe_type d 
                         LEFT JOIN 
                         (
-                            SELECT o.type,COUNT(*) AS total
+                            SELECT o.type,SUM(IF(o.type != '3',1,0)) AS total
                             FROM tobe_register r INNER JOIN tobe_occupation o ON r.occupation = o.id
-                            WHERE o.type != ''
+                            INNER JOIN campur c ON r.ampur = c.ampurcodefull AND r.changwat = c.changwatcode
+                            WHERE o.type != '' AND r.changwat = '$changwat'
                             GROUP BY o.type
-                        ) Q ON d.id = Q.type";
+                        ) Q ON d.id = Q.type ORDER BY d.order ASC";
 		return $this->db->query($sql);
     }
+
 
     
     function GetreportList($type = null,$amphur = null,$office = null){
@@ -65,18 +67,27 @@ class report_model extends CI_Model {
         return $this->db->query($sql);
     }
 
-    function CountAll(){
-    	$result = $this->db->get("tobe_register");
-    	return $result->num_rows();
+    function CountAll($changwat = '63'){
+    	$sql = "select SUM(IF(o.type != '3',1,0)) AS total
+                from tobe_register r 
+                INNER JOIN tobe_occupation o ON r.occupation = o.id 
+                INNER JOIN campur c ON r.ampur = c.ampurcodefull AND r.changwat = c.changwatcode
+                where r.changwat = '$changwat' AND (o.type != '' OR o.type IS NOT NULL)";
+                $result = $this->db->query($sql)->row();
+    	return $result->total;
     }
 
-    function CountType($occupation = null,$amphur = null){
-        if($amphur){
-            $where = " ampur = '$amphur'";
+    function CountType($type = null,$amphur = null,$changwat = '63'){
+        if($amphur && $type != '3'){
+            $where = " r.ampur = '$amphur' and o.type='$type' and o.type != ''";
         } else {
             $where = "1=1";
         }
-        $sql = "select IFNULL(count(*),0) as total from tobe_register where occupation='$occupation' AND $where";
+        $sql = "select SUM(IF(o.type != '3',1,0)) AS total 
+        from tobe_register r 
+        INNER JOIN tobe_occupation o ON r.occupation = o.id 
+        INNER JOIN campur c ON r.ampur = c.ampurcodefull AND r.changwat = c.changwatcode
+        where r.changwat = '$changwat' and $where";
         $rs = $this->db->query($sql)->row();
         return $rs->total;
     }

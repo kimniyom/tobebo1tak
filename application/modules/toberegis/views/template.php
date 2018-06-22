@@ -17,6 +17,9 @@
                 background:#000000; 
                 color:#FFFFFF;
             }
+            .bodys{
+                background:#eeeeee; 
+            }
         </style>
         <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all" />
         <link rel="stylesheet" href="<?= base_url() ?>assets/module/toberegis/css/toberegis.css" type="text/css" media="all" />
@@ -163,7 +166,7 @@
                 </div>
             </nav>
 
-            <div class="container" style="width:100%; background:url(<?= base_url() ?>images/nav-bg-bottom.png) bottom; background-repeat:repeat-x; margin:0px;">
+            <div class="container" style="width:100%; margin:0px;">
 
                 <div class="container" id="container" style=" padding-top:0px; margin-bottom: 10px; background: none; box-shadow: none; border: 0px; word-wrap: break-word;">
                     <?php
@@ -181,23 +184,16 @@
         </div>
 
         <!-- footer -->
-        <nav class="navbar navbar-inverse" style=" margin-bottom: 0px; border-radius: 0px;">
-            <hr style="margin-bottom:10px;"/>
-            <div class="container" style="margin-bottom:10px; color:#FFFFFF;">
-                <center>
-                    <b>Power By</b>
-                    <img src="<?= base_url() ?>images/A_LOGO_W_full.png" style="height:42px;"/>
-                    <img src="<?= base_url() ?>images/codeigniter.gif" style="height:42px;"/>Codeigniter
-                    <img src="<?= base_url() ?>images/php.png" style="height:42px;"/> PHP
-                    <img src="<?= base_url() ?>images/javascript-128.png" style="height:42px;"/> JavaScript
-                    <img src="<?= base_url() ?>images/my_sql-128.png" style="height:42px;"/> MySql
-                    <img src="<?= base_url() ?>images/22-128.png" style="height:42px;"/> HTML5
-                    <img src="<?= base_url() ?>images/jquery.png" style="height:42px;"/> Jquery
-                    <img src="<?= base_url() ?>images/boostrap-128.png" style="height:42px;"/> Bootstrap3
-
-                </center>
+            <div class="container" style=" margin-top: 0px; padding-top:0px; margin-bottom: 10px;">
+                <div style=" float: left;">
+                <img src="<?php echo base_url() ?>assets/module/toberegis/images/logotak.png" style="height: 50px;"/>
+                </div>
+               <div style=" float: left; margin-left: 10px; padding-top: 5px;">
+                    <b>TO BE NUMBER ONE TAK</b><br/>
+                    &copy งานเทคโนโลยีสารสนเทศ สำนักงานสาธารณสุขจังหวัดตาก
+               </div>
             </div>
-        </nav>
+    
 
         <div class="modal fade" tabindex="-1" role="dialog" id="form-register-popup">
   <div class="modal-dialog modal-sm" role="document">
@@ -250,29 +246,30 @@
             }
 
             function GetOffice(){
-        var url = "<?php echo site_url('toberegis/toberegis/combooffice') ?>";
-        var amphur = $("#amphur").val();
-        var type = $("#type").val();
-        var data = {amphur: amphur,type: type};
-        if(amphur != "" && type !=""){
-            $.post(url,data,function(datas){
-                $("#_office").html(datas);
-            });
+            var url = "<?php echo site_url('toberegis/toberegis/combooffice') ?>";
+            var amphur = $("#amphur").val();
+            var type = $("#type").val();
+            var data = {amphur: amphur,type: type};
+            if(amphur != "" && type !=""){
+                $.post(url,data,function(datas){
+                    $("#_office").html(datas);
+                });
+            }
         }
-    }
 
-    function register(){
-        var amphur = $("#amphur").val();
-        var type = $("#type").val();
-        var office = $("#office").val();
-        var url = "<?php echo site_url('toberegis/toberegis/register') ?>" + "/" + amphur + "/" + type + "/" + office;
-        if(amphur != "" && type !="" && office != ""){
-            window.location=url;
-        } else {
-            alert("เลือกข้อมูลไม่ครบ");
-            return false;
+        function register(){
+            var amphur = $("#amphur").val();
+            var type = $("#type").val();
+            var office = $("#office").val();
+            var url = "<?php echo site_url('toberegis/toberegis/register') ?>" + "/" + amphur + "/" + type + "/" + office;
+            if(amphur != "" && type !="" && office != ""){
+                window.location=url;
+            } else {
+                alert("เลือกข้อมูลไม่ครบ");
+                return false;
+            }
         }
-    }
+
         </script>
     </body>
 </html>

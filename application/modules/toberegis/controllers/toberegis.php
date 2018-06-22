@@ -14,6 +14,16 @@ class toberegis extends CI_Controller {
         $this->load->library('session');
         $this->load->helper('captcha');
         $this->load->library('Ciqrcode', 'ciqrcode');
+        $this->load->library('takmoph_libraries');
+        $this->load->helper('cookie');
+    }
+
+    public function Auth(){
+        if($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || !empty($this->session->userdata('user_register'))){
+            return TRUE;
+        } else {
+            redirect('users/login','refresh');
+        }
     }
 
     public function output($deta = '', $page = '', $head = '') {
@@ -22,10 +32,6 @@ class toberegis extends CI_Controller {
         $data['head'] = $head;
         //$template = $this->template_model->get_template();
         $this->load->view("toberegis/template", $data);
-    }
-
-    public function Auth(){
-
     }
 
     public function Index() {
@@ -41,9 +47,14 @@ class toberegis extends CI_Controller {
         foreach($ReportAmphur->result() as $rs):
             $ChartAmphurArr[] = "['".$rs->ampurname."',".$rs->total."]";
         endforeach;
-
+        $sum = 0;
         foreach($ReportType->result() as $rss):
-            $ChartTypeArr[] = "{name:'".$rss->typename."',y:".$rss->total."}";
+            if($rss->id != '3'){
+                $sum = $sum + $rss->total;
+                $ChartTypeArr[] = "{name:'".$rss->typename."',y:".$rss->total."}";
+            } else if($rss->id == '3'){
+                $ChartTypeArr[] .= "{name:'".$rss->typename."',y:".$sum."}";
+            }
         endforeach;
         $data['chartamphur'] = implode(",",$ChartAmphurArr);
         $data['charttype'] = implode(",",$ChartTypeArr);
@@ -156,25 +167,33 @@ class toberegis extends CI_Controller {
         $this->output($data, $page, "Success");
     }
 
-    public function views($id){
-        $page = "views";
-        $this->db->where("id",$id);
+    public function views($eid){
+        $id = $this->takmoph_libraries->url_decode($eid);
+        if($this->Auth() == TRUE){
+            $page = "views";
+            $this->db->where("id",$id);
+            $data['datas'] = $this->db->get("tobe_register")->row();
 
-        $data['datas'] = $this->db->get("tobe_register")->row();
-        $data['occupation'] = $this->db->get("tobe_occupation");
-        $data['education'] = $this->db->get("tobe_education");
-        $data['smoking'] = $this->db->get("tobe_smoking");
-        $data['alcohol'] = $this->db->get("tobe_alcohol");
-        $data['changwat'] = $this->db->get("cchangwat");
-        $data['level2'] = $this->occupation($data['datas']->level2);
-        $data['level3'] = $this->occupation($data['datas']->level3);
-        $this->output($data, $page, "ข้อมูลสมาชิก");
+            $data['occupation'] = $this->db->get("tobe_occupation");
+            $data['education'] = $this->db->get("tobe_education");
+            $data['smoking'] = $this->db->get("tobe_smoking");
+            $data['alcohol'] = $this->db->get("tobe_alcohol");
+            $data['changwat'] = $this->db->get("cchangwat");
+            $data['level2'] = $this->occupation($data['datas']->level2);
+            $data['level3'] = $this->occupation($data['datas']->level3);
+            $this->output($data, $page, "ข้อมูลสมาชิก");
+           
+        }
     }
 
     function occupation($occ) {
         $this->db->where('id',$occ);
         $q = $this->db->get("tobe_occupation")->row();
-        return $q->name;
+        if($q){
+            return $q->name;
+        } else {
+            return FALSE;
+        }
     }
 
     

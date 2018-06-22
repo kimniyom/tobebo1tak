@@ -20,7 +20,7 @@ class toberegis_model extends CI_Model {
 
     function TypeRow($id) {
         $this->db->where("id",$id);
-        $query = $this->db->get("tobe_occupation");
+        $query = $this->db->get("tobe_type");
         return $query->row();
     }
 

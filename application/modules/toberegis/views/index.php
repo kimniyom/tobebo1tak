@@ -28,7 +28,12 @@
         <div id="chartamphur"></div>
     </div>
     <div class="col-md-4 col-lg-4">
-        <?php foreach ($ReportType->result() as $rs) { ?>
+        <?php 
+        $sum = 0;
+        foreach ($ReportType->result() as $rs) { ?>
+            <?php if($rs->id != '3'){ 
+                $sum = $sum + $rs->total;
+                ?>
             <div class="row">
                 <div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 " style=" margin-bottom: 10px;">
                     <a href="<?php echo site_url('toberegis/tobereport/index/' . $rs->id) ?>" style=" text-decoration: none;">
@@ -41,6 +46,20 @@
                    <h4><?php echo $rs->total ?></h4>
                 </div>
             </div>
+            <?php } else if($rs->id == '3'){ ?>
+                <div class="row">
+                <div class="col-md-9 col-lg-9 col-sm-7 col-xs-12 " style=" margin-bottom: 10px;">
+                    <a href="<?php echo site_url('toberegis/tobereport/index/' . $rs->id) ?>" style=" text-decoration: none;">
+                        <div class="btn btn-default btn-block">
+                            <h4><?php echo $rs->typename ?></h4>  
+                        </div></a>
+                </div>
+                <div class="col-md-3 col-lg-3 col-sm-5 col-xs-12" style="text-align:center; padding-top: 0px;">
+                    จำนวน
+                   <h4><?php echo $sum ?></h4>
+                </div>
+            </div>
+            <?php } ?>
         <?php } ?>
         <hr/>
         <div class="row">

@@ -130,7 +130,7 @@ $active = $head;
 	</div>
 	<div class="row">
 		<div class="col-md-2 col-lg-2"><label>อาชีพ *</label></div>
-		<div class="col-md-3 col-lg-3">
+		<div class="col-md-4 col-lg-4">
 			<select id="occupation" class="form-control" onchange="getfilter(this.value,1)">
 				<option value="">== เลือกอาชีพ ==</option>
 				<?php foreach($occupation->result() as $occ): ?>
@@ -138,18 +138,23 @@ $active = $head;
 				<?php endforeach; ?>
 			</select>
 		</div>
-			<div class="col-md-3 col-lg-3">
+	</div>
+	<div class="row">
+		<div class="col-md-2 col-lg-2">
+		</div>
+			<div class="col-md-6 col-lg-6">
 			<div id="boxlv2">
 				<?php if($level2) { ?>
-					<input type="text" disabled="disabled" value="<?php echo $level2 ?>">
+					<input type="text" disabled="disabled" class="form-control" value="<?php echo $level2 ?>">
 				<?php } ?>
 			</div>
 			
 		</div>
-			<div class="col-md-3 col-lg-3">
+		
+			<div class="col-md-4 col-lg-4">
 			<div id="boxlv3">
 				<?php if($level3) { ?>
-					<input type="text" disabled="disabled" value="<?php echo $level3 ?>">
+					<input type="text" disabled="disabled" class="form-control"> value="<?php echo $level3 ?>">
 				<?php } ?>
 			</div>
 			<?php if($datas->classroom) { ?>

@@ -34,7 +34,7 @@ class tobereport extends CI_Controller {
         endforeach;
         $data['table'] = $ReportAmphur;
         $data['chartamphur'] = implode(",",$ChartAmphurArr);
-        $this->output($data, $page, $data['type']->name);
+        $this->output($data, $page, $data['type']->typename);
     }
 
     public function Office($type=null,$amphur = null) {

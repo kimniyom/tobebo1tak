@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class users extends CI_Controller {
+class privilege extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,10 +13,7 @@ class users extends CI_Controller {
         $this->load->model('toberegis/users_model', 'usermodel');
         $this->load->helper('url');
         $this->load->library('session');
-        $this->load->helper('captcha');
-        $this->load->library('Ciqrcode', 'ciqrcode');
         $this->load->library('takmoph_libraries');
-        $this->load->helper('cookie');
     }
 
     public function Auth(){

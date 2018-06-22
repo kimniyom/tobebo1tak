@@ -30,7 +30,7 @@ $active = $head;
 <hr id="hr"/>
 
 <h3>
-<i class="fa fa-comment"></i> สมาชิก TO BE NUMBER ONE (<?php echo $type->name ?>)
+<i class="fa fa-comment"></i> สมาชิก TO BE NUMBER ONE (<?php echo $type->typename ?>)
 </h3>
 
 <hr id="hr"/>
