@@ -1,0 +1,100 @@
+<style type="text/css">
+    .row{
+        margin-bottom: 10px;
+    }
+</style>
+
+<?php
+$this->load->library('takmoph_libraries');
+$model = new takmoph_libraries();
+$list = array(
+    array("label" => 'ผู้ใช้งาน', "url" => 'toberegis/users/index')
+);
+$active = $head;
+?>
+<?php echo $model->breadcrumb_backend($list, $active); ?>
+<div style=" clear: both;">
+
+    <hr/>
+</div>
+<div class="row">
+    <div class="col-md-3 col-lg-3">
+        <div class="list-group">
+            <div class="list-group-item active"><i class="fa fa-user"></i> ผู้ใช้งาน</div>
+            <div class="list-group-item">ชื่อ - สกุล: <?php echo $user->name . " " . $user->lname ?></div>
+            <div class="list-group-item">สถานะ: <?php echo $user->typename ?></div>
+            <div class="list-group-item">ลงทะเบียน: <?php echo $user->d_update ?></div>
+        </div>
+    </div>
+    <div class="col-md-9 col-lg-9">
+        <h4>เลือกสิทธิ์การใช้งาน</h4>
+        <hr/>
+        <div class="row">
+            <?php echo $filter ?>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <button type="button" class="btn btn-success" onclick="saveprivilege()"><i class="fa fa-save"></i> บันทึกข้อมูล</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function getschool() {
+        $("#filters").html("loading...");
+        var ampur = $("#ampur").val();
+        var url = "<?php echo site_url('toberegis/users/getschoolinampur') ?>";
+        var data = {ampur: ampur};
+        $.post(url, data, function (datas) {
+            $("#filters").html(datas);
+        });
+    }
+
+    function gettambon() {
+        $("#filters").html("loading...");
+        var ampur = $("#ampur").val();
+        var url = "<?php echo site_url('toberegis/users/gettamboninampur') ?>";
+        var data = {ampur: ampur};
+        $.post(url, data, function (datas) {
+            $("#filters").html(datas);
+        });
+    }
+
+    function getprisoner() {
+        $("#filters").html("loading...");
+        var ampur = $("#ampur").val();
+        var url = "<?php echo site_url('toberegis/users/getprisonerinampur') ?>";
+        var data = {ampur: ampur};
+        $.post(url, data, function (datas) {
+            $("#filters").html(datas);
+        });
+    }
+
+    function getcompany() {
+        $("#filters").html("loading...");
+        var ampur = $("#ampur").val();
+        var url = "<?php echo site_url('toberegis/users/getcompanyinampur') ?>";
+        var data = {ampur: ampur};
+        $.post(url, data, function (datas) {
+            $("#filters").html(datas);
+        });
+    }
+
+    function saveprivilege() {
+        var ampur = $("#ampur").val();
+        var filter = $("#filter").val();
+        var user_id = "<?php echo $user->id ?>";
+        var url = "<?php echo site_url('toberegis/users/saveprivilege') ?>";
+        if (ampur == '') {
+            alert("เลือกข้อมูลไม่ครบ...");
+            return false;
+        }
+        var data = {user_id: user_id, ampur: ampur, filter: filter};
+        $.post(url, data, function (datas) {
+            var euser = datas.id;
+            window.location = "<?php echo site_url('toberegis/users/detailuser') ?>" + "/" + euser;
+        }, 'json');
+    }
+</script>

@@ -17,11 +17,11 @@
                 background:#000000; 
                 color:#FFFFFF;
             }
-            .bodys{
-                background:#eeeeee; 
-            }
+            
         </style>
-        <link rel="stylesheet" href="<?= base_url() ?>css/style.css" type="text/css" media="all" />
+        <!--
+        <link rel="stylesheet" href="<?php //echo base_url() ?>css/style.css" type="text/css" media="all" />
+        -->
         <link rel="stylesheet" href="<?= base_url() ?>assets/module/toberegis/css/toberegis.css" type="text/css" media="all" />
         <script src="<?= base_url(); ?>js/jquery-1.10.1.min.js"></script>
 
@@ -156,7 +156,7 @@
                                     <i class="fa fa-cog"></i> ตั้งค่า <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo site_url('toberegis/occupation/index') ?>">อาชีพ,สถานบริการ,หน่วยงาน,โรงเรียน</a></li>
-                                        <li><a href="<?php echo site_url('toberegis/users/createuser') ?>">ผู้ใช้งาน</a></li>
+                                        <li><a href="<?php echo site_url('toberegis/users/index') ?>">ผู้ใช้งาน</a></li>
                                     </ul>
                                 </li>
                         </ul>

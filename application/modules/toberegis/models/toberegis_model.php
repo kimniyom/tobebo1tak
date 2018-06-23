@@ -40,6 +40,43 @@ class toberegis_model extends CI_Model {
         return $this->db->query($sql);
     }
 
+    function GetSchoolInampur($changwat = 63,$ampur = null) {
+        $sql = "SELECT *
+                FROM tobe_occupation o
+                WHERE o.type = '2' 
+                    AND o.upper != '0' 
+                    AND o.ampur = '$ampur'
+                    AND o.changwat = '63'";
+        return $this->db->query($sql);
+    }
+
+    function GetTambonInampur($changwat = 63,$ampur = null) {
+        $sql = "SELECT t.tamboncodefull,t.tambonname
+                FROM ctambon t INNER JOIN campur a ON t.ampurcode = a.ampurcodefull
+                WHERE t.ampurcode = '$ampur' AND a.changwatcode = '$changwat'";
+        return $this->db->query($sql);
+    }
+
+    function GetPrisonerInampur($changwat = 63,$ampur = null) {
+        $sql = "SELECT *
+                FROM tobe_occupation o
+                WHERE o.type = '4' 
+                    AND o.upper != '0' 
+                    AND o.ampur = '$ampur'
+                    AND o.changwat = '$changwat'";
+        return $this->db->query($sql);
+    }
+
+    function GetCompanyInampur($changwat = 63,$ampur = null) {
+        $sql = "SELECT *
+                FROM tobe_occupation o
+                WHERE o.type = '1' 
+                    AND o.upper != '0' 
+                    AND o.ampur = '$ampur'
+                    AND o.changwat = '$changwat'";
+        return $this->db->query($sql);
+    }
+
 }
 
 /*

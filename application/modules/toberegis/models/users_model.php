@@ -17,6 +17,14 @@ class users_model extends CI_Model {
     	return $this->db->get("tobe_user_type");
     }
 
+    public function DetilUser($id){
+        $sql = "select u.*,t.type as typename 
+                from tobe_user u inner join tobe_user_type t on u.type = t.id
+                where u.id = '$id'";
+        $result = $this->db->query($sql)->row();
+        return $result;
+    }
+
 
 }
 
