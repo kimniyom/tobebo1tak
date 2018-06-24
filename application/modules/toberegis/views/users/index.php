@@ -37,7 +37,14 @@ $active = $head;
                 <td><?php echo $rs->name . ' ' . $rs->lname ?></td>
                 <td><?php echo $rs->typename ?></td>
                 <td>
-                    <a href="<?php echo site_url('toberegis/users/privilege/' . $this->takmoph_libraries->url_encode($rs->id)) ?>">จัดการสิทธิ์</a>
+                    <?php
+                     $userprivilege = $this->usermodel->Checkprivilege($rs->id);
+                    if ($userprivilege == "0") {
+                    ?>
+                    <a href="<?php echo site_url('toberegis/users/privilege/' . $this->takmoph_libraries->url_encode($rs->id)) ?>" class='text-success'><i class='fa fa-plus'></i> กำหนดสิทธิ์</a>
+                    <?php } else { ?>
+                        <a href="<?php echo site_url('toberegis/users/privilegeupdate/' . $this->takmoph_libraries->url_encode($rs->id)) ?>" class='text-danger'><i class='fa fa-cog'></i> จัดการสิทธิ์</a>
+                    <?php } ?>
                 </td>
                 <td style=" text-align: center;">
                     <?php if ($rs->block == "N") { ?>

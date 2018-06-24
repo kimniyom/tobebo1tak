@@ -33,3 +33,15 @@ function saveuser() {
     });
 
 }
+
+function login(){
+    $("#error").html("");
+    var url = $("#urllogin").val();
+    var urlredir = $("#urlredir").val();
+    var username = $("#username").val();
+    var password = MD5($("#password").val());
+    if(username == "" || password == ""){
+        $("#error").html("<i class='fa fa-info' style='color:red;'></i> !..กรอกข้อมูลที่มี * ไม่ครบ");
+        return false;
+    }
+}
