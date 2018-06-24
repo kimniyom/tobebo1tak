@@ -25,6 +25,16 @@ class users_model extends CI_Model {
         return $result;
     }
 
+    public function Checkprivilege($user_id){
+        $sql = "select * from tobe_user_privilege where user_id = '$user_id'";
+        $result = $this->db->query($sql);
+        if($result->num_rows() > 0){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
 }
 

@@ -14,7 +14,6 @@ $active = $head;
 ?>
 <?php echo $model->breadcrumb_backend($list, $active); ?>
 <div style=" clear: both;">
-
     <hr/>
 </div>
 <div class="row">
@@ -33,6 +32,16 @@ $active = $head;
             <?php echo $filter ?>
         </div>
         <hr/>
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <h4><input type="checkbox" id="news"/> ข่าวประชาสัมพันธ์</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <h4><input type="checkbox" id="activity"/> รูปภาพกิจกรรม</h4>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <button type="button" class="btn btn-success" onclick="saveprivilege()"><i class="fa fa-save"></i> บันทึกข้อมูล</button>
@@ -86,12 +95,14 @@ $active = $head;
         var ampur = $("#ampur").val();
         var filter = $("#filter").val();
         var user_id = "<?php echo $user->id ?>";
+        var news = $("#news").attr("checked") ? 1 : 0;
+        var activity = $("#activity").attr("checked") ? 1 : 0;
         var url = "<?php echo site_url('toberegis/users/saveprivilege') ?>";
         if (ampur == '') {
             alert("เลือกข้อมูลไม่ครบ...");
             return false;
         }
-        var data = {user_id: user_id, ampur: ampur, filter: filter};
+        var data = {user_id: user_id, ampur: ampur, filter: filter,news: news,activity: activity};
         $.post(url, data, function (datas) {
             var euser = datas.id;
             window.location = "<?php echo site_url('toberegis/users/detailuser') ?>" + "/" + euser;

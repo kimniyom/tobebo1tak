@@ -138,11 +138,16 @@ class users extends CI_Controller {
         $id = $this->takmoph_libraries->url_decode($eid);
         $checkStatus = $this->Auth();
         if ($checkStatus == TRUE) {
-            $data['user'] = $this->usermodel->DetilUser($id);
-            $page = "users/privilege";
-            $head = $data['user']->name;
-            $data['filter'] = $this->filter($data['user']->type);
-            $this->output($data, $page, $head);
+            $userprivilege = $this->usermodel->Checkprivilege($id);
+            if ($userprivilege == "0") {
+                $page = "users/privilege";
+                $data['user'] = $this->usermodel->DetilUser($id);
+                $head = $data['user']->name;
+                $data['filter'] = $this->filter($data['user']->type);
+                $this->output($data, $page, $head);
+            } else {
+                redirect("toberegis/users/detailuser/" . $eid, "refresh");
+            }
         }
     }
 
@@ -295,7 +300,7 @@ class users extends CI_Controller {
         $str .= "</select>";
         echo $str;
     }
-    
+
     public function getcompanyinampur() {
         $ampur = $this->input->post('ampur');
         $company = $this->model->GetCompanyInampur('63', $ampur);
