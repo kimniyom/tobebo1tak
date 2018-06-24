@@ -35,6 +35,67 @@ class users_model extends CI_Model {
         }
     }
 
+    function login($username) {
+        $this->db->select("*");
+        $this->db->from("tobe_user");
+        $this->db->where("username", $username);
+        $this->db->limit("1");
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    function check_password($password_input = null, $password = null) {
+        //$p_input = md5($password_input);
+        $p_input = $password_input;
+        if ($p_input == $password) {
+            $verify = "1";
+        } else {
+            $verify = "0";
+        }
+
+        return $verify;
+    }
+
+    function auth($Id = null) {
+        $this->db->select("*");
+        $this->db->from("tobe_user");
+        $this->db->where("id", $Id);
+        $this->db->limit("1");
+        $query = $this->db->get();
+        $row = $query->row();
+
+        $data = array(
+            'tobe_name' => $row->name,
+            'tobe_lname' => $row->lname,
+            'tobe_type' => $row->type,
+            'tobe_username' => $row->username,
+            'tobe_user_id' => $row->id
+        );
+        $this->session->set_userdata($data);
+
+        $log = array(
+            "username" => $row->username,
+            "user_id" => $row->id,
+            "password" => $row->password,
+            "ip" => $this->input->ip_address(),
+            "status" => "True",
+            "d_date" => date("Y-m-d H:i:s")
+        );
+        $this->db->insert("tobe_log_login", $log);
+    }
+
+    function savelog_login_flase($username = null, $password = null) {
+        $log = array(
+            "username" => $username,
+            "user_id" => "",
+            "password" => $password,
+            "ip" => $this->input->ip_address(),
+            "status" => "False",
+            "d_date" => date("Y-m-d H:i:s")
+        );
+        $this->db->insert("tobe_log_login", $log);
+    }
+
 
 }
 

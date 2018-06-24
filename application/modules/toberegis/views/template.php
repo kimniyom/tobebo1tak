@@ -17,10 +17,10 @@
                 background:#000000; 
                 color:#FFFFFF;
             }
-            
+
         </style>
         <!--
-        <link rel="stylesheet" href="<?php //echo base_url() ?>css/style.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="<?php //echo base_url()      ?>css/style.css" type="text/css" media="all" />
         -->
         <link rel="stylesheet" href="<?= base_url() ?>assets/module/toberegis/css/toberegis.css" type="text/css" media="all" />
         <script src="<?= base_url(); ?>js/jquery-1.10.1.min.js"></script>
@@ -91,28 +91,34 @@
     <body class="bodys">
         <!-- container -->
         <div class="container" style="width:100%; background:url(<?= base_url() ?>images/nav-bg.png) top; background-repeat:repeat-x; padding:0px;">
-        <div style="background:#090909;">
+            <div style="background:#090909;">
                 <div class="container">
-                        <a class="navbar-brand" style="color:#FFFFFF;">TO BE NUMBER ONE TAK</a>
-                        <?php if($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "") { ?>
-                                    <div class="dropdown pull-right" style="margin-top:5px;">
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown"  aria-expanded="false">
+                    <a class="navbar-brand" style="color:#FFFFFF;">TO BE NUMBER ONE TAK</a>
+                    <?php if ($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || $this->session->userdata('tobe_username') != "") { ?>
+                        <div class="dropdown pull-right" style="margin-top:5px;">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown"  aria-expanded="false">
+                                <i class="fa fa-user"></i> 
+                                <?php echo ($this->session->userdata('username')) ? $this->session->userdata('username') : $this->session->userdata('user_register_name') ?>
+                                <?php echo ($this->session->userdata('tobe_username')) ? $this->session->userdata('tobe_username') : "" ?>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                                <?php
+                                if ($this->session->userdata('tobe_username') != "") {
+                                    $eid = $this->takmoph_libraries->url_encode($this->session->userdata('tobe_user_id'));
+                                    ?>
+                                    <li><a href="<?php echo site_url('toberegis/users/detailuser/' . $eid) ?>"><i class="fa fa-cog"></i> บัญชีผู้ใช้งาน</a> </li>
+                                    <li role="separator" class="divider"></li>
+                                <?php } ?>
+                                <li><a href="<?php echo site_url('users/logout') ?>"><i class="fa fa-sign-out"></i> ออกจากระบบ</a> </li>
 
-                                        <i class="fa fa-user">
-                                            
-                                        </i> <?php echo ($this->session->userdata('username')) ? $this->session->userdata('username') : $this->session->userdata('user_register_name') ?>
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu3">
-                                            <li><a href="<?php echo site_url('users/logout') ?>"><i class="fa fa-sign-out"></i> ออกจากระบบ</a> </li>
-                                        
-                                        </ul>
-                                    </div>
-                        <?php } else { ?>
-                                    <a href="<?php echo site_url('toberegis/users/login') ?>" class="btn btn-defaule pull-right" style="color:#FFFFFF; margin-top:5px;"><i class="fa fa-sign-in"></i> เข้าสู่ระบบ</a> 
-                        <?php } ?>
+                            </ul>
+                        </div>
+                    <?php } else { ?>
+                        <a href="<?php echo site_url('toberegis/users/login') ?>" class="btn btn-defaule pull-right" style="color:#FFFFFF; margin-top:5px;"><i class="fa fa-sign-in"></i> เข้าสู่ระบบ</a> 
+                    <?php } ?>
                 </div>
-          </div>
+            </div>
 
             <nav class="navbar navbar-inverse" style=" border-radius: 0px;border:none;">
                 <div class="container">
@@ -138,29 +144,29 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <a href="<?= site_url('toberegis/toberegis/register') ?>" id="_link">
-                                        <span class="fa fa-users text-success"></span> สมัคสมาชิก</a>
-                                </li>
-                            </ul>
-                        <?php if($this->session->userdata('status') == "S") { ?>
-                        <ul class="nav navbar-nav navbar-right">
-                            <!--
-                                <li>
-                                    <a href="javascript:openpopupformregister()" id="_links"><i class="fa fa-users"></i> ลงทะเบียนสมาชิก</a> 
-                                </li>
-                            -->
+                            <li>
+                                <a href="<?= site_url('toberegis/toberegis/register') ?>" id="_link">
+                                    <span class="fa fa-users text-success"></span> สมัคสมาชิก</a>
+                            </li>
+                        </ul>
+                        <?php if ($this->session->userdata('status') == "S") { ?>
+                            <ul class="nav navbar-nav navbar-right">
+                                <!--
+                                    <li>
+                                        <a href="javascript:openpopupformregister()" id="_links"><i class="fa fa-users"></i> ลงทะเบียนสมาชิก</a> 
+                                    </li>
+                                -->
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
-                                    aria-expanded="false" id="_links">
-                                    <i class="fa fa-cog"></i> ตั้งค่า <span class="caret"></span></a>
+                                       aria-expanded="false" id="_links">
+                                        <i class="fa fa-cog"></i> ตั้งค่า <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo site_url('toberegis/occupation/index') ?>">อาชีพ,สถานบริการ,หน่วยงาน,โรงเรียน</a></li>
                                         <li><a href="<?php echo site_url('toberegis/users/index') ?>">ผู้ใช้งาน</a></li>
                                     </ul>
                                 </li>
-                        </ul>
-                        <?php }  ?>
+                            </ul>
+                        <?php } ?>
                         <!---------------------------------->
                     </div><!--/.nav-collapse -->
                 </div>
@@ -184,91 +190,91 @@
         </div>
 
         <!-- footer -->
-            <div class="container" style=" margin-top: 0px; padding-top:0px; margin-bottom: 10px;">
-                <div style=" float: left;">
+        <div class="container" style=" margin-top: 0px; padding-top:0px; margin-bottom: 10px;">
+            <div style=" float: left;">
                 <img src="<?php echo base_url() ?>assets/module/toberegis/images/logotak.png" style="height: 50px;"/>
-                </div>
-               <div style=" float: left; margin-left: 10px; padding-top: 5px;">
-                    <b>TO BE NUMBER ONE TAK</b><br/>
-                    &copy งานเทคโนโลยีสารสนเทศ สำนักงานสาธารณสุขจังหวัดตาก
-               </div>
             </div>
-    
+            <div style=" float: left; margin-left: 10px; padding-top: 5px;">
+                <b>TO BE NUMBER ONE TAK</b><br/>
+                &copy งานเทคโนโลยีสารสนเทศ สำนักงานสาธารณสุขจังหวัดตาก
+            </div>
+        </div>
+
 
         <div class="modal fade" tabindex="-1" role="dialog" id="form-register-popup">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">เลือกสถานที่ / หน่วยบริการ</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row" style="margin:0px;">
-            <div class="col-md-12 col-lg-12">
-                <label>อำเภอ</label>
-                <select class="form-control" id="amphur" onchange="GetOffice()">
-                    <option value="">เลือก</option>
-                    <?php foreach ($amphur->result() as $am){ ?>
-                    <option value="<?php echo $am->distid ?>"><?php echo $am->distname ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-            <div class="col-md-12 col-lg-12">
-                        <label>ประเภท</label>
-                <select class="form-control" id="type" onchange="GetOffice()">
-                    <option value="">เลือก</option>
-                    <?php foreach ($type->result() as $rs){ ?>
-                    <option value="<?php echo $rs->id ?>"><?php echo $rs->typename ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-            <div class="col-md-12 col-lg-12">
-                <div id="_office">
-                <label>?</label>
-                <select class="form-control" id="office">
-                    <option value="">เลือก</option>
-                </select>
-                </div>
-            </div>
-            
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-block" onclick="register()">ตกลง</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">เลือกสถานที่ / หน่วยบริการ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="margin:0px;">
+                            <div class="col-md-12 col-lg-12">
+                                <label>อำเภอ</label>
+                                <select class="form-control" id="amphur" onchange="GetOffice()">
+                                    <option value="">เลือก</option>
+                                    <?php foreach ($amphur->result() as $am) { ?>
+                                        <option value="<?php echo $am->distid ?>"><?php echo $am->distname ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <label>ประเภท</label>
+                                <select class="form-control" id="type" onchange="GetOffice()">
+                                    <option value="">เลือก</option>
+                                    <?php foreach ($type->result() as $rs) { ?>
+                                        <option value="<?php echo $rs->id ?>"><?php echo $rs->typename ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                                <div id="_office">
+                                    <label>?</label>
+                                    <select class="form-control" id="office">
+                                        <option value="">เลือก</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-block" onclick="register()">ตกลง</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
         <script type="text/javascript">
-            function openpopupformregister(){
+            function openpopupformregister() {
                 $("#form-register-popup").modal();
             }
 
-            function GetOffice(){
-            var url = "<?php echo site_url('toberegis/toberegis/combooffice') ?>";
-            var amphur = $("#amphur").val();
-            var type = $("#type").val();
-            var data = {amphur: amphur,type: type};
-            if(amphur != "" && type !=""){
-                $.post(url,data,function(datas){
-                    $("#_office").html(datas);
-                });
+            function GetOffice() {
+                var url = "<?php echo site_url('toberegis/toberegis/combooffice') ?>";
+                var amphur = $("#amphur").val();
+                var type = $("#type").val();
+                var data = {amphur: amphur, type: type};
+                if (amphur != "" && type != "") {
+                    $.post(url, data, function (datas) {
+                        $("#_office").html(datas);
+                    });
+                }
             }
-        }
 
-        function register(){
-            var amphur = $("#amphur").val();
-            var type = $("#type").val();
-            var office = $("#office").val();
-            var url = "<?php echo site_url('toberegis/toberegis/register') ?>" + "/" + amphur + "/" + type + "/" + office;
-            if(amphur != "" && type !="" && office != ""){
-                window.location=url;
-            } else {
-                alert("เลือกข้อมูลไม่ครบ");
-                return false;
+            function register() {
+                var amphur = $("#amphur").val();
+                var type = $("#type").val();
+                var office = $("#office").val();
+                var url = "<?php echo site_url('toberegis/toberegis/register') ?>" + "/" + amphur + "/" + type + "/" + office;
+                if (amphur != "" && type != "" && office != "") {
+                    window.location = url;
+                } else {
+                    alert("เลือกข้อมูลไม่ครบ");
+                    return false;
+                }
             }
-        }
 
         </script>
     </body>

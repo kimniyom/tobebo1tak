@@ -11,6 +11,7 @@ class users extends CI_Controller {
         $this->load->model('toberegis/toberegis_model', 'model');
         $this->load->model('toberegis/report_model', 'report');
         $this->load->model('toberegis/users_model', 'usermodel');
+        $this->load->model('toberegis/report_model', 'report');
         $this->load->helper('url');
         $this->load->library('session');
         $this->load->helper('captcha');
@@ -20,7 +21,7 @@ class users extends CI_Controller {
     }
 
     public function Auth() {
-        if ($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || !empty($this->session->userdata('user_register'))) {
+        if ($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || !empty($this->session->userdata('user_register')) || $this->session->userdata('tobe_user_id') != "") {
             return TRUE;
         } else {
             redirect('users/login', 'refresh');
@@ -44,9 +45,58 @@ class users extends CI_Controller {
         }
     }
 
-    public function Login(){
+    public function Login() {
         $page = "users/login";
         $this->output("", $page, "Login");
+    }
+
+    public function checklogin() {
+        $ip = $this->input->ip_address();
+
+        $sqllock = "SELECT * FROM tobe_lock_ip WHERE ip = '$ip' ";
+        $resultlock = $this->db->query($sqllock);
+        if ($resultlock->num_rows > 0) {
+            echo "lock";
+            return false;
+        }
+
+        $datenow = date("Y-m-d");
+        $sql = "SELECT COUNT(*) AS TOTAL FROM tobe_log_login WHERE ip = '$ip' AND LEFT(d_date,10) = '$datenow' AND status = 'Flase'";
+        $rs = $this->db->query($sql)->row();
+
+        //นับจำนวนการเข้าต่อวัน
+        if ($rs->TOTAL > 50) {
+            $lock = array(
+                "ip" => $this->input->ip_address(),
+                "d_update" => date("Y-m-d H:i:s")
+            );
+            $this->db->insert("tobe_lock_ip", $lock);
+        } else {
+            //รับค่า
+            $username = $this->input->post('username', TRUE);
+            $password = $this->input->post('password', TRUE);
+
+            $user = $this->usermodel->login($username); //หา user คนนี้ก่อน
+
+            if (!empty($user->username)) {
+                // compare passwords
+                $checkPassword = $this->usermodel->check_password($password, $user->password);
+
+                if ($checkPassword == 1) {
+                    // mark user as logged in
+                    $this->usermodel->auth($user->id);
+                    $eid = $this->takmoph_libraries->url_encode($user->id);
+                    $json = array("id" => $eid);
+                    echo json_encode($json);
+                } else {
+                    $this->usermodel->savelog_login_flase($username, $password);
+                    echo "0";
+                }
+            } else {
+                $this->usermodel->savelog_login_flase($username, $password);
+                echo "0";
+            }
+        }
     }
 
     public function Checkprivilege() {
@@ -64,7 +114,8 @@ class users extends CI_Controller {
     public function Checkprivileges() {
         $cid = trim($this->input->post('cid'));
         $birth = trim($this->input->post('birth'));
-        $sql = "select * from tobe_register where cid = '$cid'";
+
+        $sql = "select * from tobe_register where md5(cid) = '$cid'";
         $result = $this->db->query($sql);
         $row = $result->num_rows();
         if ($row > 0) {
@@ -132,11 +183,15 @@ class users extends CI_Controller {
 
             $this->db->where("id", $data['user']->type);
             $data['type'] = $this->db->get("tobe_user_type")->row();
-            $page = "users/detailuser";
+            if ($this->session->userdata('status') == "S") {
+                $page = "users/detailuserview";
+            } else {
+                $page = "users/detailuser";
+            }
             $head = $data['user']->name;
-            $this->db->where("user_id",$data['user']->id);
+            $this->db->where("user_id", $data['user']->id);
             $privilege = $this->db->get("tobe_user_privilege")->row();
-            $data['filter'] = $this->filter($data['user']->type,$privilege->ampur,$privilege->privilege);
+            $data['filter'] = $this->filter($data['user']->type, $privilege->ampur, $privilege->privilege);
             $data['news'] = $privilege->news;
             $data['activity'] = $privilege->activity;
             $this->output($data, $page, $head);
@@ -189,9 +244,9 @@ class users extends CI_Controller {
             $page = "users/privilege";
             $data['user'] = $this->usermodel->DetilUser($id);
             $head = $data['user']->name;
-            $this->db->where("user_id",$data['user']->id);
+            $this->db->where("user_id", $data['user']->id);
             $privilege = $this->db->get("tobe_user_privilege")->row();
-            $data['filter'] = $this->filter($data['user']->type,$privilege->ampur,$privilege->privilege);
+            $data['filter'] = $this->filter($data['user']->type, $privilege->ampur, $privilege->privilege);
             $data['flag'] = "update";
             $data['news'] = $privilege->news;
             $data['activity'] = $privilege->activity;
@@ -212,7 +267,7 @@ class users extends CI_Controller {
             "news" => $news,
             "activity" => $activity
         );
-        $this->db->where("user_id",$user_id);
+        $this->db->where("user_id", $user_id);
         $this->db->update("tobe_user_privilege", $columns);
         $eid = $this->takmoph_libraries->url_encode($user_id);
         $json = array("id" => $eid);
@@ -230,7 +285,7 @@ class users extends CI_Controller {
         }
     }
 
-    public function filter($type,$ampur = null,$privilege = null) {
+    public function filter($type, $ampur = null, $privilege = null) {
         $str = "";
         if ($type == 2) {
             $amphur = $this->model->Amphur();
@@ -238,12 +293,12 @@ class users extends CI_Controller {
             $str .= "<select id='ampur' class='form-control'>";
             $str .= "<option value=''>== เลือกอำเภอ ==</option>";
             foreach ($amphur->result() as $rs):
-                if($ampur == $rs->ampurcodefull){ 
+                if ($ampur == $rs->ampurcodefull) {
                     $activeampur = "selected='selected'";
                 } else {
                     $activeampur = "";
                 }
-                $str .= "<option value='" . $rs->ampurcodefull . "'".$activeampur.">" . $rs->ampurname . "</option>";
+                $str .= "<option value='" . $rs->ampurcodefull . "'" . $activeampur . ">" . $rs->ampurname . "</option>";
             endforeach;
             $str .= "</select>";
             $str .= "</div>";
@@ -254,12 +309,12 @@ class users extends CI_Controller {
             $str .= "<select id='ampur' class='form-control' onchange='getschool()'>";
             $str .= "<option value=''>== เลือกอำเภอ ==</option>";
             foreach ($amphur->result() as $rs):
-                if($ampur == $rs->ampurcodefull){ 
+                if ($ampur == $rs->ampurcodefull) {
                     $activeampur = "selected='selected'";
                 } else {
                     $activeampur = "";
                 }
-                $str .= "<option value='" . $rs->ampurcodefull . "'".$activeampur.">" . $rs->ampurname . "</option>";
+                $str .= "<option value='" . $rs->ampurcodefull . "'" . $activeampur . ">" . $rs->ampurname . "</option>";
             endforeach;
             $str .= "</select>";
             $str .= "</div>";
@@ -267,7 +322,7 @@ class users extends CI_Controller {
             $str .= "<div id='filters'></div>";
             $str .= "</div>";
             $str .= "<script type='text/javascript'>";
-            $str .= "$(document).ready(function(){getschool(".$privilege.");});";
+            $str .= "$(document).ready(function(){getschool(" . $privilege . ");});";
             $str .= "</script>";
         } else if ($type == 4) {
             $amphur = $this->model->Amphur();
@@ -276,12 +331,12 @@ class users extends CI_Controller {
             $str .= "<select id='ampur' class='form-control' onchange='gettambon()'>";
             $str .= "<option value=''>== เลือกอำเภอ ==</option>";
             foreach ($amphur->result() as $rs):
-                if($ampur == $rs->ampurcodefull){ 
+                if ($ampur == $rs->ampurcodefull) {
                     $activeampur = "selected='selected'";
                 } else {
                     $activeampur = "";
                 }
-                $str .= "<option value='" . $rs->ampurcodefull . "'".$activeampur.">" . $rs->ampurname . "</option>";
+                $str .= "<option value='" . $rs->ampurcodefull . "'" . $activeampur . ">" . $rs->ampurname . "</option>";
             endforeach;
             $str .= "</select>";
             $str .= "</div>";
@@ -289,7 +344,7 @@ class users extends CI_Controller {
             $str .= "<div id='filters'></div>";
             $str .= "</div>";
             $str .= "<script type='text/javascript'>";
-            $str .= "$(document).ready(function(){gettambon(".$privilege.");});";
+            $str .= "$(document).ready(function(){gettambon(" . $privilege . ");});";
             $str .= "</script>";
         } else if ($type == 5) {
             $amphur = $this->model->Amphur();
@@ -298,12 +353,12 @@ class users extends CI_Controller {
             $str .= "<select id='ampur' class='form-control' onchange='getprisoner()'>";
             $str .= "<option value=''>== เลือกอำเภอ ==</option>";
             foreach ($amphur->result() as $rs):
-                if($ampur == $rs->ampurcodefull){ 
+                if ($ampur == $rs->ampurcodefull) {
                     $activeampur = "selected='selected'";
                 } else {
                     $activeampur = "";
                 }
-                $str .= "<option value='" . $rs->ampurcodefull . "'".$activeampur.">" . $rs->ampurname . "</option>";
+                $str .= "<option value='" . $rs->ampurcodefull . "'" . $activeampur . ">" . $rs->ampurname . "</option>";
             endforeach;
             $str .= "</select>";
             $str .= "</div>";
@@ -311,7 +366,7 @@ class users extends CI_Controller {
             $str .= "<div id='filters'></div>";
             $str .= "</div>";
             $str .= "<script type='text/javascript'>";
-            $str .= "$(document).ready(function(){getprisoner(".$privilege.");});";
+            $str .= "$(document).ready(function(){getprisoner(" . $privilege . ");});";
             $str .= "</script>";
         } else if ($type == 6) {
             $amphur = $this->model->Amphur();
@@ -320,12 +375,12 @@ class users extends CI_Controller {
             $str .= "<select id='ampur' class='form-control' onchange='getcompany()'>";
             $str .= "<option value=''>== เลือกอำเภอ ==</option>";
             foreach ($amphur->result() as $rs):
-                if($ampur == $rs->ampurcodefull){ 
+                if ($ampur == $rs->ampurcodefull) {
                     $activeampur = "selected='selected'";
                 } else {
                     $activeampur = "";
                 }
-                $str .= "<option value='" . $rs->ampurcodefull . "'".$activeampur.">" . $rs->ampurname . "</option>";
+                $str .= "<option value='" . $rs->ampurcodefull . "'" . $activeampur . ">" . $rs->ampurname . "</option>";
             endforeach;
             $str .= "</select>";
             $str .= "</div>";
@@ -333,7 +388,7 @@ class users extends CI_Controller {
             $str .= "<div id='filters'></div>";
             $str .= "</div>";
             $str .= "<script type='text/javascript'>";
-            $str .= "$(document).ready(function(){getcompany(".$privilege.");});";
+            $str .= "$(document).ready(function(){getcompany(" . $privilege . ");});";
             $str .= "</script>";
         }
 
@@ -348,12 +403,12 @@ class users extends CI_Controller {
         $str .= "<label>โรงเรียน/สถานศึกษา</label>";
         $str .= "<select id='filter' class='form-control'>";
         foreach ($school->result() as $rs):
-            if($privilege == $rs->id){
+            if ($privilege == $rs->id) {
                 $privilegeactive = "selected='selected'";
             } else {
                 $privilegeactive = "";
             }
-            $str .= "<option value='" . $rs->id . "'".$privilegeactive.">" . $rs->name . "</option>";
+            $str .= "<option value='" . $rs->id . "'" . $privilegeactive . ">" . $rs->name . "</option>";
         endforeach;
         $str .= "</select>";
         echo $str;
@@ -367,12 +422,12 @@ class users extends CI_Controller {
         $str .= "<label>ชุมชน</label>";
         $str .= "<select id='filter' class='form-control'>";
         foreach ($school->result() as $rs):
-            if($privilege == $rs->tamboncodefull){
+            if ($privilege == $rs->tamboncodefull) {
                 $privilegeactive = "selected='selected'";
             } else {
                 $privilegeactive = "";
             }
-            $str .= "<option value='" . $rs->tamboncodefull . "'".$privilegeactive.">" . $rs->tambonname . "</option>";
+            $str .= "<option value='" . $rs->tamboncodefull . "'" . $privilegeactive . ">" . $rs->tambonname . "</option>";
         endforeach;
         $str .= "</select>";
         echo $str;
@@ -386,12 +441,12 @@ class users extends CI_Controller {
         $str .= "<label>พฤตินิสัย</label>";
         $str .= "<select id='filter' class='form-control'>";
         foreach ($prisoner->result() as $rs):
-            if($privilege == $rs->id){
+            if ($privilege == $rs->id) {
                 $privilegeactive = "selected='selected'";
             } else {
                 $privilegeactive = "";
             }
-            $str .= "<option value='" . $rs->id . "'".$privilegeactive.">" . $rs->name . "</option>";
+            $str .= "<option value='" . $rs->id . "'" . $privilegeactive . ">" . $rs->name . "</option>";
         endforeach;
         $str .= "</select>";
         echo $str;
@@ -405,15 +460,33 @@ class users extends CI_Controller {
         $str .= "<label>สถานประกอบการ/โรงงาน</label>";
         $str .= "<select id='filter' class='form-control'>";
         foreach ($company->result() as $rs):
-            if($privilege == $rs->id){
+            if ($privilege == $rs->id) {
                 $privilegeactive = "selected='selected'";
             } else {
                 $privilegeactive = "";
             }
-            $str .= "<option value='" . $rs->id . "'".$privilegeactive.">" . $rs->name . "</option>";
+            $str .= "<option value='" . $rs->id . "'" . $privilegeactive . ">" . $rs->name . "</option>";
         endforeach;
         $str .= "</select>";
         echo $str;
+    }
+
+    public function countperson() {
+        $report = new report_model();
+        $ampur = $this->input->post('ampur');
+        $privilege = $this->input->post('privilege');
+        $type = $this->input->post('type');
+        if ($type != "2" || $type != "4") {
+            $this->db->where("id", $privilege);
+            $rs = $this->db->get("tobe_occupation")->row();
+            $level = $rs->level;
+            $levels = "level$level = '$privilege'";
+            $total = $report->Countpersoninprivilege(63, $ampur, $levels, $type);
+        } else if($type == "4"){
+            
+        }
+        //echo $total;
+        echo "จำนวน " . $total . " คน";
     }
 
 }

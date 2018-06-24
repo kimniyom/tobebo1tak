@@ -10,6 +10,7 @@
 
 <div style=" clear: both;">
     <input type="hidden" name="" id="urllogin" value="<?php echo site_url('toberegis/users/checklogin') ?>"/>
+    <input type="hidden" name="" id="urlredir" value="<?php echo site_url('toberegis/users/detailuser') ?>"/>
     <h3><i class="fa fa-lock"></i> เข้าสู่ระบบ</h3>
     <hr/>
 </div>

@@ -34,14 +34,28 @@ function saveuser() {
 
 }
 
-function login(){
+function login() {
     $("#error").html("");
     var url = $("#urllogin").val();
-    var urlredir = $("#urlredir").val();
+    var urldir = $("#urlredir").val();
     var username = $("#username").val();
     var password = MD5($("#password").val());
-    if(username == "" || password == ""){
+    var data = {
+        username: username,
+        password: password
+    };
+
+    if (username == '' || password == '') {
         $("#error").html("<i class='fa fa-info' style='color:red;'></i> !..กรอกข้อมูลที่มี * ไม่ครบ");
         return false;
     }
+
+    $.post(url, data, function (datas) {
+        if (datas.id != '0') {
+            window.location = urldir + "/" + datas.id;
+        } else {
+            $("#error").html("<i class='fa fa-info' style='color:red;'></i> ไม่พบข้อมูล..!");
+            return false;
+        }
+    }, 'json');
 }
