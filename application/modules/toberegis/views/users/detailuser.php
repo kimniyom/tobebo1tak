@@ -26,6 +26,9 @@ $active = $head;
             <div class="list-group-item">ลงทะเบียน: <?php echo $user->d_update ?></div>
 
         </div>
+        <div id="menu">
+           
+        </div>
     </div>
     <div class="col-md-9 col-lg-9">
         <h4><i class="fa fa-unlock"></i>สิทธิ์ผู้ใช้งาน</h4>
@@ -56,6 +59,7 @@ $active = $head;
 <script type="text/javascript">
     $(document).ready(function () {
         $("#ampur").attr('disabled', true);
+        loadmenu();
     });
     function getschool(privilege) {
         $("#filters").html("loading...");
@@ -116,5 +120,12 @@ $active = $head;
         });
     }
     
-    
+    function loadmenu(){
+        var user_id = "<?php echo $user->id ?>";;
+        var url = "<?php echo site_url('toberegis/users/loadmenu') ?>";
+        var data = {user_id: user_id};
+        $.post(url, data, function (datas) {
+            $("#menu").html(datas);
+        });
+    }
 </script>
