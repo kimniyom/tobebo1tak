@@ -33,7 +33,7 @@ $this->load->model('photo_model', 'photo');
                     <div id="div-bg-boxnew"></div>
                     <div class="img-wrapper">
                         <?php if (!empty($images)) { ?>
-                            <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $images; ?>" class="img-responsive img-polaroid" style="height:200px;"/>
+                            <img src="<?php echo base_url() ?>upload_images/photo/thumb/<?php echo $images; ?>" class="img-responsive img-polaroid" style="height:200px;"/>
                         <?php } else { ?>
                             <center>
                                 <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $images; ?>" class="img-responsive img-polaroid" style="height:200px;"/>

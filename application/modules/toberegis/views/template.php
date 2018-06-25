@@ -85,7 +85,10 @@
         <script type="text/javascript" src="<?php echo base_url() ?>assets/bootstrap-notify/bootstrap-notify.min.js"></script>
 
         <script type="text/javascript" src="<?php echo base_url() ?>js/library/MD5.js"></script>
-
+        
+        <!-- fancybox -->
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fancyBox2.1.5/source/jquery.fancybox.css" media="screen">
+        <script src="<?php echo base_url() ?>assets/fancyBox2.1.5/source/jquery.fancybox.js"></script>
     </head>
 
     <body class="bodys">

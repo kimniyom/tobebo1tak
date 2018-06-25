@@ -233,7 +233,9 @@ class takmoph_model extends CI_Model {
     }
 
     function get_dengue($id = '') {
-        $sql = "SELECT * FROM dengue WHERE admin_menu_id = '$id' ORDER BY id DESC";
+        $sql = "SELECT d.*,u.name,u.lname
+                FROM dengue d INNER JOIN mas_user u ON d.user_id = u.user_id
+                WHERE d.admin_menu_id = '$id' ORDER BY d.id DESC";
         return $this->db->query($sql);
     }
 
@@ -365,8 +367,6 @@ class takmoph_model extends CI_Model {
         $rs = $this->db->get('mas_month');
         return $rs;
     }
-
-    
 
 ////////// end //////
 }

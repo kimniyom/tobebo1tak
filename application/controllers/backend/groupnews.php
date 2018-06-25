@@ -41,7 +41,7 @@ class groupnews extends CI_Controller {
         $data['lastnewshow'] = $rs->showlastnews;
         $data['groupnews'] = $this->groupnews->get_groupnews_all();
         $page = "backend/groupnews/index";
-        $head = "กลุ่มข่าวประชาสัมพันธ์";
+        $head = "ข่าว / บทความ / เนื้อหาเว็บไซต์";
 
         $this->output($data, $page, $head);
     }
@@ -96,7 +96,6 @@ class groupnews extends CI_Controller {
     }
 
     public function delete() {
-
         $groupID = $this->input->post('id');
         $groupnews = $this->news->get_news_ingroup($groupID);
         foreach ($groupnews->result() as $rs):
@@ -105,11 +104,22 @@ class groupnews extends CI_Controller {
             $result = $this->db->query($sql);
             if ($result->num_rows() > 0) {
                 foreach ($result->result() as $rss):
-                    unlink('upload_images/news/' . $rss->images);
+                    if (file_exists('upload_images/news/thumb/' . $rss->images)) {
+                        unlink('upload_images/news/thumb/' . $rss->images);
+                    }
+                    if (file_exists('upload_images/news/' . $rss->images)) {
+                        unlink('upload_images/news/' . $rss->images);
+                    }
                 endforeach;
             }
+
             $this->db->where('new_id', $new_id);
             $this->db->delete('images_news');
+            
+            //ลบ qrcode
+            if (file_exists('qrcode/' . $rs->qrcode)) {
+                unlink('qrcode/' . $rs->qrcode);
+            }
         endforeach;
 
         $this->db->where('groupnews', $groupID);
@@ -238,11 +248,11 @@ class groupnews extends CI_Controller {
 
         return $c;
     }
-    
-    public function setlastnews(){
+
+    public function setlastnews() {
         $val = $this->input->post('val');
         $columns = array("showlastnews" => $val);
-        $this->db->update("style",$columns,'id = 1');
+        $this->db->update("style", $columns, 'id = 1');
     }
 
 }

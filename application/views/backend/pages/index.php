@@ -86,21 +86,18 @@ $active = $head;
 echo $model->breadcrumb_backend($list, $active);
 ?>
 
-<h3><i class="fa fa-bookmark"></i> <?php echo $head ?></h3>
+<h3 style=" margin-bottom: 0px;"><img src="<?= base_url() ?>icon_menu/<?php echo $icon ?>" width="32"/> <?php echo $head ?></h3>
 <hr/>
 <a href="<?php echo site_url(array('backend/pages/create',$pageid,$admin_menu_id))?>">
     <button class="btn btn-default"><i class="fa fa-plus"></i> เพิ่มหัวข้อ</button></a>
 <br/><br/>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <?php echo $head ?>
-    </div>
-    <div class="panel-body">
-        <table width="100%" class="table" id="danger">
+
+        <table width="100%" class="table table-striped" id="danger">
             <thead>
                 <tr style="height:40px;">
                     <th align="left" width="2%">#</th>
                     <th align="left">หัวข้อ</th>
+                    <th>ผู้บันทึก</th>
                     <th style=" width: 20%;"></th>
                 </tr>
             </thead>
@@ -114,13 +111,12 @@ echo $model->breadcrumb_backend($list, $active);
                         <td align="left">
                             <a href="<?php echo site_url('backend/pages/view/') . "/" . $rs->id . "/" . $rs->admin_menu_id ?>"><?= $rs->title ?></a>
                         </td>
+                        <td><?php echo $rs->name." ".$rs->lname?></td>
                         <td style=" text-align: center;"><?php if($rs->d_update) echo $model->thaidate($rs->d_update); else echo "-"; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-</div>
 
 <!--
     POPUP ADD ITEMS

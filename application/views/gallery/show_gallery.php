@@ -56,13 +56,13 @@
         $i = 0;
         foreach ($gallery->result() as $rs): $i++;
             ?>
-            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3" style="text-align:center;">
                 <a href="<?php echo base_url() ?>upload_images/photo/<?php echo $rs->images; ?>"
-                   class="fancybox hvr-float-shadow" rel="ligthbox">
-                    <div class="container-card" style="height:200px;">
+                   class="fancybox" rel="ligthbox">
+                    <div class="container-card" style="height:250px;">
                         <div class="img-wrapper">
                             <?php if (!empty($rs->images)) { ?>
-                                <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $rs->images; ?>" class="img-responsive img-polaroid" style="height:200px;"/>
+                                <img src="<?php echo base_url() ?>upload_images/photo/thumb/<?php echo $rs->images; ?>" class="img-responsive img-polaroid" style="height:250px;"/>
                             <?php } else { ?>
                                 <center>
                                     <img src="<?php echo base_url() ?>upload_images/photo/no-sign_1334604348.png" class="img-responsive img_news"/>

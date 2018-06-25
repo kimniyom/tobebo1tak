@@ -25,17 +25,29 @@ class sub_homepage_model extends CI_Model {
     }
 
     function get_subhomepage($Id = null, $limit = null) {
+        /*
         $this->db->cache_on();
         $this->db->select("*");
         $this->db->from("sub_homepage");
         $this->db->where("homepage_id", $Id);
         $this->db->where("upper", null);
         $this->db->order_by("create_date", "DESC");
+        */
         if ($limit != null || $limit != '') {
-            $this->db->limit($limit);
+           $sql = "select * from sub_homepage where homepage_id = '$Id' and final = '1'order by create_date desc limit $limit";
+        } else {
+            $sql = "select * from sub_homepage where homepage_id = '$Id' and final = '1' order by create_date desc";
         }
 
-        $query = $this->db->get();
+        $query = $this->db->query($sql);
+
+        return $query;
+    }
+
+    function get_subhomepage_group($Id = null) {
+           $sql = "select * from sub_homepage where homepage_id = '$Id' and final = '0' order by create_date desc";
+        
+        $query = $this->db->query($sql);
 
         return $query;
     }

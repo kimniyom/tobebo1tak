@@ -12,7 +12,9 @@ class news extends CI_Controller {
         $this->load->model('news_model', 'news');
         $this->load->model('groupnews_model', 'groupnews');
         $this->load->helper('url');
+        $this->load->library('takmoph_libraries');
         $this->load->library('session');
+        $this->load->library('ciqrcode');
         $this->load->helper('string');
     }
 
@@ -40,19 +42,53 @@ class news extends CI_Controller {
         $this->output($data, $page, $head);
     }
 
+    public function create($groupID = null) {
+        $GroupNews = $this->groupnews->get_groupnews_where($groupID);
+        $data['groupnews'] = $GroupNews;
+        $page = "backend/news/create";
+        $head = "เพิ่ม";
+
+        $this->output($data, $page, $head);
+    }
+
     public function save_news() {
+        //header("Content-Type: image/png");
+        //$Qrcode = new Ciqrcode();
+        $id = $this->input->post('new_id');
+        $group = $this->input->post('groupnews');
+        $qrcodeName = md5($group . $id . date("His")) . ".png";
         $data = array(
-            'groupnews' => $this->input->post('groupnews'),
-            'id' => $this->input->post('new_id'),
+            'groupnews' => $group,
+            'id' => $id,
             'titel' => $this->input->post('title'),
             'detail' => $this->input->post('detail'),
             'user_id' => $this->session->userdata('user_id'),
+            'qrcode' => $qrcodeName,
             'date' => date('Y-m-d H:i:s')
         );
+
+        $news_id = $this->takmoph_libraries->encode($id);
+        //QrCode
+
+        $params['data'] = base_url() . 'news/view/' . $news_id . '/' . $group;
+        $params['level'] = 'H';
+        $params['size'] = 10;
+        $params['savename'] = 'qrcode/' . $qrcodeName;
+        $this->ciqrcode->generate($params);
+
         $this->db->insert('tb_news', $data);
-        
-        
+
         //echo $this->tak->redir('backend/news/from_upload_images_news/' . $_POST['new_id']);
+    }
+
+    public function GenQrcode() {
+        header("Content-Type: image/png");
+        
+        $params['data'] = 'This is a text to encode become QR Code';
+        //$params['level'] = 'H';
+        //$params['size'] = 10;
+        $this->ciqrcode->generate($params);
+        
     }
 
     public function from_edit_news() {
@@ -65,12 +101,35 @@ class news extends CI_Controller {
     }
 
     public function edit_news() {
-        $data_update = array(
-            'titel' => $_POST['_title'],
-            'detail' => $_POST['_detail']
-        );
-        $this->db->where('id', $_POST['_new_id']);
+        //header("Content-Type: image/png");
+        $new_id = $this->input->post('_new_id');
+        $results = $this->db->get_where("tb_news", array("id" => $new_id));
+        $rs = $results->row();
+        if ($rs->qrcode == "") {
+            $qrcodeName = md5($rs->groupnews . $new_id . date("His")) . ".png";
+            $news_id = $this->takmoph_libraries->encode($new_id);
+            //QrCode
+            $params['data'] = base_url() . 'news/view/' . $news_id . '/' . $rs->groupnews;
+            $params['level'] = 'H';
+            $params['size'] = 10;
+            //$params['savename'] = FCPATH . 'tes.png';
+            $params['savename'] = 'qrcode/' . $qrcodeName;
+            $this->ciqrcode->generate($params);
+            $data_update = array(
+                'titel' => $_POST['_title'],
+                'detail' => $_POST['_detail'],
+                'qrcode' => $qrcodeName
+            );
+        } else {
+            $data_update = array(
+                'titel' => $_POST['_title'],
+                'detail' => $_POST['_detail']
+            );
+        }
+        $this->db->where('id', $new_id);
         $this->db->update('tb_news', $data_update);
+
+
         //echo $this->tak->redir('takmoph_admin/get_news/');
     }
 
@@ -82,7 +141,15 @@ class news extends CI_Controller {
         $result = $this->db->query($sql);
         if ($result->num_rows() > 0) {
             foreach ($result->result() as $rs):
-                unlink('upload_images/news/' . $rs->images);
+                if (file_exists('upload_images/news/thumb/' . $rs->images)) {
+                    unlink('upload_images/news/thumb/' . $rs->images);
+                }
+                if (file_exists('upload_images/news/' . $rs->images)) {
+                    unlink('upload_images/news/' . $rs->images);
+                }
+                if (file_exists('qrcode/' . $rs->qrcode)) {
+                    unlink('qrcode/' . $rs->qrcode);
+                }
             endforeach;
         }
 
@@ -132,7 +199,12 @@ class news extends CI_Controller {
         $images = $_POST['images'];
 
         if (!empty($images)) {
-            unlink("upload_images/news/" . $images);
+            if (file_exists("upload_images/news/thumb/" . $images)) {
+                unlink("upload_images/news/thumb/" . $images);
+            }
+            if (file_exists("upload_images/news/" . $images)) {
+                unlink("upload_images/news/" . $images);
+            }
         }
 
         $this->db->where("id", $id);
@@ -153,7 +225,7 @@ class news extends CI_Controller {
             //$GalleryShot = $_FILES['Filedata']['name'];
             if (in_array($fileParts['extension'], $fileTypes)) {
                 //$file_string = addslashes(fread(fopen($thefile[tmp_name], "r"), $thefile[size]));
-                
+
                 $width = 1280; //*** Fix Width & Heigh (Autu caculate) ***//
                 //$new_images = "Thumbnails_".$_FILES["Filedata"]["name"];
                 $size = getimagesize($_FILES['Filedata']['tmp_name']);
@@ -161,23 +233,72 @@ class news extends CI_Controller {
                 $images_orig = imagecreatefromjpeg($tempFile);
                 $photoX = imagesx($images_orig);
                 $photoY = imagesy($images_orig);
-                $images_fin = imagecreatetruecolor($width, $height);
-                imagecopyresampled($images_fin, $images_orig, 0, 0, 0, 0, $width + 1, $height + 1, $photoX, $photoY);
-                imagejpeg($images_fin, "upload_images/news/" . $Name);
-                imagedestroy($images_orig);
-                imagedestroy($images_fin);
-                
+
+                if ($photoY >= $width) {
+                    $images_fin = imagecreatetruecolor($width, $height);
+                    imagecopyresampled($images_fin, $images_orig, 0, 0, 0, 0, $width + 1, $height + 1, $photoX, $photoY);
+                    imagejpeg($images_fin, "upload_images/news/" . $Name);
+                    imagedestroy($images_orig);
+                    imagedestroy($images_fin);
+                } else {
+                    move_uploaded_file($tempFile, $targetFile);
+                }
+
                 $data = array(
                     'new_id' => $new_id,
                     'images' => $Name
                 );
                 $this->db->insert('images_news', $data);
-                //move_uploaded_file($tempFile, $targetFile);
+                $this->Thumnail($targetFolder . "/" . $Name, $targetFolder . "/thumb", $Name);
                 echo '1';
             } else {
                 echo 'Invalid file type.';
             }
         }
+    }
+
+    public function Thumnail($original, $originalPath, $name) {
+        $this->load->library('image_lib');
+
+        $config['image_library'] = 'gd2';
+        $config['source_image'] = $original;
+        $config['create_thumb'] = false;
+        $config['maintain_ratio'] = true;
+        $config['width'] = 250;
+        $config['height'] = 250;
+        $config['new_image'] = $originalPath . "/" . $name;
+
+        $this->image_lib->clear();
+        $this->image_lib->initialize($config);
+        $this->image_lib->resize();
+    }
+
+    public function view($id) {
+        $data['news'] = $this->db->get_where("tb_news", array("id" => $id))->row();
+        $data['groupnews'] = $this->db->get_where("groupnews", array("id" => $data['news']->groupnews))->row();
+        $sql = "SELECT * FROM images_news WHERE new_id = '$id' ORDER BY id ASC LIMIT 1";
+        $result = $this->db->query($sql);
+        $rs = $result->row();
+        if ($rs) {
+            $data['firstIMG'] = $rs->images;
+        } else {
+            $data['firstIMG'] = "";
+        }
+
+        $page = "backend/news/view";
+        $head = $data['news']->titel;
+
+        $this->output($data, $page, $head);
+    }
+
+    public function update($id) {
+        $data['news'] = $this->db->get_where("tb_news", array("id" => $id))->row();
+        $data['groupnews'] = $this->db->get_where("groupnews", array("id" => $data['news']->groupnews))->row();
+
+        $page = "backend/news/update";
+        $head = $data['news']->titel;
+
+        $this->output($data, $page, $head);
     }
 
 }

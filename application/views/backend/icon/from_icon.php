@@ -85,17 +85,19 @@ echo $model->breadcrumb_backend($list, $active);
         </form>
     </div>
     <div class="col-md-8 col-lg-9">
-
-        <?php $i = 1;
-        foreach ($icon->result() as $rs): ?>
-            <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="margin-bottom: 20px;">
-                <div class="btn-block" data-toggle="tooltip" data-placement="top" title="<?= $rs->icon ?>">
-                    <img src="<?= base_url() ?>icon_menu/<?= $rs->icon ?>" style="width:32px;"/>
-                    <a href="javascript:delete_icon('<?php echo $rs->icon_id ?>')"><i class="fa fa-trash text-danger"></i></a>
+        <div class="row">
+            <?php
+            $i = 1;
+            foreach ($icon->result() as $rs):
+                ?>
+                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" style="margin-bottom: 20px;">
+                    <div class="btn-block" data-toggle="tooltip" data-placement="top" title="<?= $rs->icon ?>">
+                        <img src="<?= base_url() ?>icon_menu/<?= $rs->icon ?>" style="height:32px;"/>
+                        <a href="javascript:delete_icon('<?php echo $rs->icon_id ?>')"><i class="fa fa-trash text-danger"></i></a>
+                    </div>
                 </div>
-                
-            </div>
-<?php endforeach; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 <script type="text/javascript">

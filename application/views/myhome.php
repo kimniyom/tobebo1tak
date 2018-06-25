@@ -13,6 +13,7 @@ $style = $this->menubar_model->get_style();
 <!--
  ########### HomePage ################
 -->
+
 <div class="box_homepage">
     <div class="container" id="set_homepage">
         <div id="homepage"></div>

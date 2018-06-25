@@ -62,6 +62,12 @@
         <script src="<?php echo base_url() ?>js/library/configweb.js" type="text/javascript"></script>
         <script src="<?php echo base_url() ?><?php echo $path ?>/js/system.js" type="text/javascript"></script>
         
+        <!-- FullCarlendar-->
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.css">
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/lib/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/locale/th.js"></script> 
+        
         <!-- Datetime Picker --> 
         <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" type="text/css" media="all" />
         <script src="<?= base_url() ?>assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
@@ -87,11 +93,7 @@
         <!-- images hover effect -->
         <link href="<?php echo base_url() ?><?php echo $path ?>/css/images-hover-effect.css" rel="stylesheet" type="text/css" />
 
-        <!-- FullCarlendar-->
-        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.css">
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/lib/moment.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/locale/th.js"></script>    
+      
 
     </head>
 
@@ -493,6 +495,7 @@
                     -->
                     <!-- Slide News -->
                     <div id="menu_and_news" style="display: none; margin-top: 0px; padding-top: 0px;">
+                        <?php if ($style->showlastnews == "1") { ?>
                         <h3><i class="fa fa-newspaper-o"></i> ข่าวล่าสุด</h3>
                         <hr id="hr"/>
                         <div class="row">
@@ -545,6 +548,7 @@
                         </div>
                         -->
                         <div class="bottom-line"></div>
+                        <?php } ?>
 
                         <?php
                         $groupN = $groupnewsModel->groupnews_frontent_active();

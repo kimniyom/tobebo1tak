@@ -1,12 +1,12 @@
+<style type="text/css">
+    #box-add-groupnews .row{
+        margin-bottom: 10px;
+    }
+    #box-edit-groupnews .row{
+        margin-bottom: 10px;
+    }
+</style>
 <?php $path = base_url() . "assets/CK-Editor/"; ?>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#add_groupnew").click(function () {
-            $("#box-add-groupnews").modal();
-        });
-    });
-</script>
-
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('#tb_mas_menu').dataTable({
@@ -62,15 +62,17 @@ echo $model->breadcrumb_backend($list, $active);
         <?php } ?>
         แสดงข้อมูลล่าสุดหน้าเว็บ | 
         <button type="button" class="btn btn-success btn-sm" id="add_groupnew">
-            <span class=" glyphicon glyphicon-plus"></span> เพิ่มกลุ่มข่าวประชาสัมพันธ์
+            <span class=" glyphicon glyphicon-plus"></span> เพิ่มกลุ่ม
         </button>
     </div>
+
     <table width="100%" id="tb_mas_menu" class="table table-striped">
         <thead>
-            <tr style=" background: #FFF;">
-                <th align="left" style=" width: 5%;">#</th>
+            <tr style="background: #FFF;">
+                <th style=" width: 5%; text-align: center;">#</th>
                 <th style=" text-align: center; width: 5%;">รหัส</th>
-                <th align="left">ชื่อกลุ่มข่าว</th>
+                <th align="left">ชื่อกลุ่ม</th>
+                <th style=" text-align: center;">จำนวนหน้า</th>
                 <th style=" text-align: center;">Active</th>
                 <th style=" text-align: center;">
                     <button type="button" class="btn btn-default btn-sm" onclick="save_sort_order()"><i class="fa fa-save text-primary"></i> บันทึก</button>
@@ -82,13 +84,16 @@ echo $model->breadcrumb_backend($list, $active);
             <?php
             $i = 1;
             foreach ($groupnews->result() as $rs):
+                $this->db->where("groupnews", $rs->id);
+                $countNews = $this->db->count_all_results("tb_news");
                 ?>
                 <tr>
-                    <td><?= $i++ ?></td>
+                    <td style=" text-align: center;"><?= $i++ ?></td>
                     <td style=" text-align: center;"><?php echo $rs->id ?></td>
                     <td align="left">
                         <a href="<?php echo site_url('backend/news/get_news/' . $rs->id) ?>"><?= $rs->groupname ?></a>
                     </td>
+                    <td style=" text-align: center;"><?php echo $countNews ?></td>
                     <td style=" text-align: center;">
                         <?php if ($rs->active == 1) { ?>
                             <input type="checkbox" id="active" name="active" checked="checked" onclick="set_unactive('<?php echo $rs->id ?>', '0')"/>
@@ -97,23 +102,24 @@ echo $model->breadcrumb_backend($list, $active);
                         <?php } ?>
                     </td>
                     <td style="width: 15%; text-align:center;">
-                        <button type="button" class="btn btn-default btn-sm up"><i class="fa fa-chevron-up text-success"></i>ขึ้น</button>
-                        <button type="button" class="btn btn-default btn-sm down"><i class="fa fa-chevron-down text-warning"></i>ลง</button>
+                        <button type="button" class="btn btn-default btn-xs up"><i class="fa fa-chevron-up text-success"></i>ขึ้น</button>
+                        <button type="button" class="btn btn-default btn-xs down"><i class="fa fa-chevron-down text-warning"></i>ลง</button>
                     </td>
                     <td style=" width: 20%; text-align: center;">
-                        <button type="button" class="btn btn-default btn-sm"
+                        <button type="button" class="btn btn-default btn-xs"
                                 onclick="update('<?php echo $rs->id; ?>');">
-                            <span class=" glyphicon glyphicon-edit"></span> แก้ไข
+                            <i class="fa fa-edit"></i> แก้ไข
                         </button>
-                        <button type="button" class="btn btn-default btn-sm"
+                        <button type="button" class="btn btn-default btn-xs"
                                 onclick="delete_groupnews('<?= $rs->id ?>');">
-                            <span class=" glyphicon glyphicon-trash"></span> ลบ
+                            <i class="fa fa-trash"></i> ลบ
                         </button>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+
 </div>
 <!-- 
     Add Edit Delete 
@@ -125,38 +131,66 @@ echo $model->breadcrumb_backend($list, $active);
             <form id="from" name="from">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 id="myModalLabel"><i class="fa fa-plus-circle"></i> เพิ่มกลุ่มข่าว</h4>
+                    <h4 id="myModalLabel"><i class="fa fa-plus-circle"></i> เพิ่มกลุ่ม</h4>
                 </div>
                 <div class="modal-body">
-                    <label>ชื่อกลุ่ม</label>
-                    <input type="text" id="groupname" name="groupname" style="width:98%;" required="required" class="form-control input-mini"/>
-                    <br/>
-                    <label>สีหัวข้อ</label>
-                    <input type="color" id="headcolor" value="#eeeeee"/>
-                    <label>สีหัวพื้นหลัง</label>
-                    <input type="color" id="background" value="#FFFFFF"/>
-                    <br/>
-                    <label>จำนวน Column</label>
-                    <select id="column" class="form-control">
-                        <option value="3">4</option>
-                        <option value="12">1</option>
-                        <option value="6">2</option>
-                        <option value="4">3</option>
-                    </select>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <label>ชื่อกลุ่ม</label>
+                            <input type="text" id="groupname" name="groupname" required="required" class="form-control" onkeyup="sethead(this.value)"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <label>สีหัวข้อ</label>
+                            <input type="color" id="headcolor" value="#eeeeee"/>
+                            <label>สีหัวพื้นหลัง</label>
+                            <input type="color" id="background" value="#333333"/>
 
-                    <label>ผู้เผยแพร่</label>
-                    <input type="text" id="user_" name="user_" style="width:98%;"  class="form-control input-mini"
-                           value="<?= $this->session->userdata('name') . '-' . $this->session->userdata('lname'); ?>" readonly="readonly"/>
+                            <button type="button" onclick="setcolor()"><i class="fa fa-check"></i> ดูตัวอย่าง</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2">
+                            <label>จำนวน Column</label>
+                        </div>
+                        <div class="col-md-2 col-lg-2">
+                            <select id="column" class="form-control" onchange="setcolumns()">
+                                <option value="3">4</option>
+                                <option value="12">1</option>
+                                <option value="6">2</option>
+                                <option value="4">3</option>
+                            </select>
+                        </div>
+                    </div>
+                
+
+                <div class="row" style=" display: none;">
+                    <div class="col-md-6 col-lg-6">
+                        <label>ผู้เผยแพร่</label>
+                        <input type="text" id="user_" name="user_" class="form-control"
+                               value="<?= $this->session->userdata('name') . '-' . $this->session->userdata('lname'); ?>" readonly="readonly"/>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-success" value="บันทึกข้อมูล" onclick="save()"/>
-                    <input type="reset" class="btn btn-danger" value="ยกเลิก" />
+
+                <label>ตัวอย่าง</label>
+                <div class="ex" style=" padding: 10px; padding-top: 5px;">
+                    <div class="btn" id="_head" style=" border-radius: 0px; font-size: 20px; padding-left: 0px;"><b>ชื่อกลุ่ม</b></div>
+                    <hr id="_hr" style=" margin: 0px; margin-bottom: 10px;"/>
+                    <div id="_ex"></div>
                 </div>
-            </form>
         </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-success" value="บันทึกข้อมูล" onclick="save()"/>
+            <input type="reset" class="btn btn-danger" value="ยกเลิก" />
+        </div>
+        </form>
     </div>
 </div>
+</div>
 
+
+<!-- Edit -->
 <div id="box-edit-groupnews" class="modal fade  bs-example-modal-lg" data-backdrop="static">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -177,6 +211,14 @@ echo $model->breadcrumb_backend($list, $active);
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#add_groupnew").click(function () {
+            setcolumns();
+            setcolor();
+            $("#box-add-groupnews").modal();
+        });
+    });
+
     function save() {
         var groupname = $("#groupname").val();
         var headcolor = $("#headcolor").val();
@@ -209,6 +251,8 @@ echo $model->breadcrumb_backend($list, $active);
         $.post(url, data, function (datas) {
             $("#box-edit-groupnews").modal();
             $("#from-edit").html(datas);
+            setcolumnsupdate();
+            setcolorupdate();
         });
     }
 
@@ -262,16 +306,6 @@ echo $model->breadcrumb_backend($list, $active);
                 }
             });
 
-            //your code goes here, looping over every row.
-            //cells are accessed as easy
-            /*
-             var cellLength = row.cells.length;
-             for(var y=0; y<cellLength; y+=1){
-             var cell = row.cells[y];
-             
-             //do something with every cell here
-             }
-             */
         }
     }
 
@@ -290,14 +324,43 @@ echo $model->breadcrumb_backend($list, $active);
             window.location.reload();
         });
     }
-    
-    function setlastnews(val){
+
+    function setlastnews(val) {
         var url = "<?php echo site_url('backend/groupnews/setlastnews') ?>";
         var data = {val: val};
-        $.post(url,data,function(datas){
+        $.post(url, data, function (datas) {
             window.location.reload();
         });
     }
+
+
+    function setcolumns() {
+        var culumns = $("#column").val();
+        var colselect = (12 / culumns);
+        var col = "";
+        var buttonS = "<button type='button' class='btn btn-default btn-block'><h1><i class='fa fa-photo'></i></h1><hr/>";
+        var buttonE = "</button>";
+        for (i = 1; i < colselect + 1; i++) {
+            col += "<div class='col-lg-" + culumns + "'>" + buttonS + i + buttonE + "</div>";
+        }
+        var ex = "<div class='row'>" + col + "</div>";
+        $("#_ex").html(ex);
+    }
+
+    function sethead(text) {
+        $(".ex #_head").html("<b>" + text + "</b>");
+    }
+
+    function setcolor() {
+        var bg = $("#background").val();
+        var text = $("#headcolor").val();
+        var border = 'solid 2px ' + text;
+        $(".ex").css({'background': bg});
+        $(".ex #_head").css({'color': text});
+        $(".ex #_hr").css({'border': border});
+    }
+
+
 </script>
 
 

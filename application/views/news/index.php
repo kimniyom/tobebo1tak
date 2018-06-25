@@ -58,7 +58,7 @@ echo $model->breadcrumb($list, $active);
                     <font style="font-size: 14px; color: #ff3300;" class="pull-left" id="tagdate"><?php echo $model->thaidate($news->date) ?></font>
                     <div class="img-wrapper">
                         <?php if (!empty($images)) { ?>
-                            <img src="<?php echo base_url() ?>upload_images/news/<?php echo $images; ?>" class="img-responsive img-polaroid img-news-all" style="height:200px;"/>
+                            <img src="<?php echo base_url() ?>upload_images/news/thumb/<?php echo $images; ?>" class="img-responsive img-polaroid img-news-all" style="height:200px;"/>
                         <?php } else { ?>
                             <center>
                                 <img src="<?php echo base_url() ?>images/News-Mic-iPhone-icon.jpg" class="img-responsive img_news img-news-all"/>

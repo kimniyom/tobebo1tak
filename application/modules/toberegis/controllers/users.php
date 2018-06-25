@@ -490,7 +490,8 @@ class users extends CI_Controller {
     }
 
     public function loadmenu(){
-        $userid = $this->input->post('user_id');
+        //$userid = $this->input->post('user_id');
+        $userid = $this->session->userdata('tobe_user_id');
         $this->db->where("user_id", $userid);
         $data['privilege'] = $this->db->get("tobe_user_privilege")->row();
         $this->load->view('toberegis/users/menu',$data);

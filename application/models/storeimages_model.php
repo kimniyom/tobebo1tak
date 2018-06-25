@@ -13,8 +13,10 @@ class storeimages_model extends CI_Model {
         $this->CI->query("SET NAMES 'UTF8'");
     }
 
-    function count() {
-        return $this->db->count_all("album");
+    function count($folederID) {
+        $sql = "SELECT COUNT(*) AS total FROM storeimages_list WHERE folder_id = '$folederID' ";
+        $rs = $this->db->query($sql)->row();
+        return $rs->total;
     }
 
     public function get_folder_all($user_id) {
@@ -25,56 +27,13 @@ class storeimages_model extends CI_Model {
         return $query;
     }
 
-    public function get_album($id = null) {
-        $this->db->select("album.*,mas_user.name,mas_user.lname");
-        $this->db->from("album");
-        $this->db->join("mas_user", "mas_user.user_id = album.owner");
-        $this->db->where("album.id", $id);
-        $this->db->limit("1");
-        $query = $this->db->get();
-
-        return $query->row();
-    }
-
-    public function get_gallery($album_id = null) {
+    public function get_folder_all_type($user_id,$type) {
+        $where = array("user_id" => $user_id,"type" => $type);
         $this->db->select("*");
-        $this->db->from("gallery");
-        $this->db->where("album_id", $album_id);
-        $this->db->order_by("id", "ASC");
+        $this->db->from("storeimages_folder");
+        $this->db->where($where);
         $query = $this->db->get();
-
         return $query;
-    }
-
-    public function album_limit($limit = null) {
-        $this->db->select("*");
-        $this->db->from("album");
-        $this->db->order_by("id", "DESC");
-        $this->db->limit($limit);
-        $query = $this->db->get();
-
-        return $query;
-    }
-
-    public function read_album($album_id = null) {
-        $this->db->select("views");
-        $this->db->from("album");
-        $this->db->where("id", $album_id);
-        //$this->db->limit("1");
-
-        $query = $this->db->get();
-        $rs = $query->row();
-        return $rs->views;
-    }
-
-    public function count_gallery($album_id = null) {
-        $this->db->select("COUNT(*) AS total");
-        $this->db->from("gallery");
-        $this->db->where("album_id", $album_id);
-        $this->db->limit("1");
-        $rs = $this->db->get()->row();
-
-        return $rs->total;
     }
 
 }

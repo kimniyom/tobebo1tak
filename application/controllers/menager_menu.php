@@ -298,7 +298,9 @@ class menager_menu extends CI_Controller {
         $dengue = $this->db->get();
         foreach ($dengue->result() as $file):
             //Delete File
-            unlink("file_download/" . $file->file);
+            if(file_exists("file_download/" . $file->file)){
+                unlink("file_download/" . $file->file);
+            }
         endforeach;
 
         //Delete dengue
@@ -306,7 +308,9 @@ class menager_menu extends CI_Controller {
         $this->db->delete("dengue");
 
         //Delete Img adminmenu
+        /*
         unlink("icon_menu/" . $adminmenu->admin_menu_images);
+        */
         $this->db->where("admin_menu_id", $id);
         $this->db->delete("admin_menu");
     }

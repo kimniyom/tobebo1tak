@@ -35,7 +35,7 @@
             upper: upper
         };
         $.post(url, data, function (success) {
-            window.location = "<?php echo site_url() ?>/backend/menubar";
+            window.location = "<?php echo site_url('backend/menubar') ?>";
         });
     }
 </script>

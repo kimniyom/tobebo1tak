@@ -26,9 +26,7 @@ $active = $head;
             <div class="list-group-item">ลงทะเบียน: <?php echo $user->d_update ?></div>
 
         </div>
-        <div id="menu">
-           
-        </div>
+        <?php $this->load->view('toberegis/users/menu') ?>
     </div>
     <div class="col-md-9 col-lg-9">
         <h4><i class="fa fa-unlock"></i>สิทธิ์ผู้ใช้งาน</h4>
@@ -59,7 +57,7 @@ $active = $head;
 <script type="text/javascript">
     $(document).ready(function () {
         $("#ampur").attr('disabled', true);
-        loadmenu();
+        //loadmenu();
     });
     function getschool(privilege) {
         $("#filters").html("loading...");

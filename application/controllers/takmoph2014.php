@@ -19,8 +19,17 @@ class takmoph2014 extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('session');
     }
+    
+    public function Auth(){
+        if(!$this->session->userdata('status')){
+            redirect('users/login','refresh');
+        } else {
+            return true;
+        }
+    }
 
     public function output($deta = '', $page = '', $head = '') {
+        $this->Auth();
         $data['detail'] = $deta;
         $data['page'] = $page;
         $data['head'] = $head;

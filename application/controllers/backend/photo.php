@@ -180,7 +180,7 @@ class photo extends CI_Controller {
 
     public function uoload_gallery($album_id = null) {
         if ($this->session->userdata('user_id') != '') {
-            //$targetFolder = 'upload_images/photo'; // Relative to the root
+            $targetFolder = 'upload_images/photo'; // Relative to the root
             if (!empty($_FILES)) {
 
                 $tempFile = $_FILES['Filedata']['tmp_name'];
@@ -212,7 +212,7 @@ class photo extends CI_Controller {
                         'album_id' => $album_id
                     );
                     $this->db->insert('gallery', $data);
-
+                    $this->Thumnail($targetFolder . "/" . $Name, $targetFolder . "/thumb", $Name);
                     //move_uploaded_file($tempFile, $targetFile);
                     echo $Name;
                 } else {
@@ -222,6 +222,22 @@ class photo extends CI_Controller {
         } else {
             echo "0";
         }
+    }
+
+    public function Thumnail($original, $originalPath, $name) {
+        $this->load->library('image_lib');
+
+        $config['image_library'] = 'gd2';
+        $config['source_image'] = $original;
+        $config['create_thumb'] = false;
+        $config['maintain_ratio'] = true;
+        $config['width'] = 300;
+        $config['height'] = 300;
+        $config['new_image'] = $originalPath . "/" . $name;
+
+        $this->image_lib->clear();
+        $this->image_lib->initialize($config);
+        $this->image_lib->resize();
     }
 
     public function get_gallery() {

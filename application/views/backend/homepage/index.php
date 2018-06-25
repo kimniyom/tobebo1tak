@@ -70,42 +70,65 @@ echo $model->breadcrumb_backend($list, $active);
                     <hr style="border:<?php echo $rs->head_color ?> solid 2px; margin-top: 5px; margin-bottom: 5px;"/>
 
                     <ul class="list-group">
+
+                        <?php
+                        $subhomepagegroup = $sub_homepage->get_subhomepage($rs->id, $rs->limit);
+                        foreach ($subhomepagegroup->result() as $sms):
+                            $users = $this->user->view($sms->owner);
+                            if ($sms->final == "0") {
+                                ?>
+                                <li class="list-group-item">
+                                    <font style="color:blue;">
+                                    <i class="fa fa-folder-o"></i> <i class="fa fa-calendar"></i>
+                                    <?php echo $model->thaidate($sms->create_date) ?>
+                                    </font>
+
+                                    <a href="<?php echo site_url('backend/sub_homepage/viewpper/' . $sms->id . "/" . $rs->id) ?>">
+                                        <b><?php echo $sms->title ?><i class="fa fa-angle-right text-warning"></i></b></a>
+
+                                    <div class="pull-right">
+                                        <?php if ($sms->owner == $this->session->userdata('user_id') || $this->session->userdata('status') == 'S') { ?>
+                                            <?php if ($sms->final == 0) { ?>
+                                                <a href="<?php echo site_url('backend/sub_homepage/update/' . $sms->id . '/' . true) ?>">
+                                                    <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></button></a>
+                                            <?php } else { ?>
+                                                <a href="<?php echo site_url('backend/sub_homepage/update/' . $sms->id) ?>">
+                                                    <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></button></a>
+                                            <?php } ?>
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="delete_subhomepage('<?php echo $sms->id ?>')"><i class="fa fa-trash-o"></i></button>
+                                        <?php } ?>
+                                    </div>
+                                </li>
+                                <?php
+                            }
+                        endforeach;
+                        ?>
+
                         <?php
                         $subhomepage = $sub_homepage->get_subhomepage($rs->id, $rs->limit);
                         foreach ($subhomepage->result() as $sm):
-                            $users = $this->user->view($sm->owner);
-                            ?>
-                            <li class="list-group-item">
-                                <font style="color:red;">
-                                <i class="fa fa-calendar"></i>
-                                <?php echo $model->thaidate($sm->create_date) ?>
-                                </font>
-                                <?php if ($sm->final == 0) { ?>
-                                    <a href="<?php echo site_url('backend/sub_homepage/viewpper/' . $sm->id . "/" . $rs->id) ?>">
-                                        <?php echo $sm->title ?>
-                                        <i class="fa fa-angle-right text-warning"></i>
-                                    </a>
-                                <?php } else { ?>
+                            if ($sm->final == "1") {
+                                $users = $this->user->view($sm->owner);
+                                ?>
+                                <li class="list-group-item">
+                                    <font style="color:red;">
+                                    <i class="fa fa-calendar"></i>
+                                    <?php echo $model->thaidate($sm->create_date) ?>
+                                    </font>
+
                                     <?php echo $sm->title ?><em style=" color: #999999;">(โดย : <?php echo $users->name . ' ' . $users->lname ?>)</em>
-                                <?php } ?>
-                                <div class="pull-right">
-                                    <?php if ($sm->final == 1) { ?>
-                                        <a href="<?php echo site_url('backend/sub_homepage/view/' . $sm->id) ?>">
-                                            <button type="button" class="btn btn-info btn-xs"><i class="fa fa-eye"></i></button></a>
-                                    <?php } ?>
-                                    <?php if ($sm->owner == $this->session->userdata('user_id') || $this->session->userdata('status') == 'S') { ?>
-                                        <?php if ($sm->final == 0) { ?>
-                                            <a href="<?php echo site_url('backend/sub_homepage/update/' . $sm->id . '/' . true) ?>">
-                                                <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></button></a>
-                                        <?php } else { ?>
-                                            <a href="<?php echo site_url('backend/sub_homepage/update/' . $sm->id) ?>">
-                                                <button type="button" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i></button></a>
+                                    <div class="pull-right">
+                                        <?php if ($sm->final == 1) { ?>
+                                            <a href="<?php echo site_url('backend/sub_homepage/view/' . $sm->id) ?>">
+                                                <button type="button" class="btn btn-info btn-xs"><i class="fa fa-eye"></i></button></a>
                                         <?php } ?>
-                                        <button type="button" class="btn btn-danger btn-xs" onclick="delete_subhomepage('<?php echo $sm->id ?>')"><i class="fa fa-trash-o"></i></button>
-                                    <?php } ?>
-                                </div>
-                            </li>
-                        <?php endforeach; ?>
+
+                                    </div>
+                                </li>
+                                <?php
+                            }
+                        endforeach;
+                        ?>
                         <?php if ($subhomepage) { ?>
                             <a href="<?php echo site_url('backend/sub_homepage/all/' . $rs->id) ?>">
                                 <button type="button" class="btn btn-default pull-right"

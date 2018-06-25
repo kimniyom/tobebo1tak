@@ -65,7 +65,7 @@
         <!-- Notify -->
         <link rel="stylesheet" href="<?php echo base_url() ?>css/animate.css">
         <script type="text/javascript" src="<?php echo base_url() ?>assets/bootstrap-notify/bootstrap-notify.min.js"></script>
-
+        
 
         <?php
         $this->load->model('menubar_model', 'menu');

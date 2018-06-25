@@ -239,15 +239,31 @@ class takmoph_admin extends CI_Controller {
     }
 
     public function SaveMenuAdmin() {
-        $admin_menu_id = $_POST['admin_menu_id'];
+        //$admin_menu_id = $this->input->post('admin_menu_id');
+        $admin_menu_name = $this->input->post('admin_menu_name');
+        $admin_menu_link = $this->input->post('admin_menu_link');
+        $icon = $this->input->post('icon');
         $data = array(
-            'admin_menu_name' => $_POST['admin_menu_name'],
-            'admin_menu_link' => $_POST['admin_menu_link'],
+            'admin_menu_name' => $admin_menu_name,
+            'admin_menu_link' => $admin_menu_link,
+            'admin_menu_images' => $icon,
             'typelink' => '1'
         );
 
-        $this->db->where("admin_menu_id = '$admin_menu_id' ");
-        $this->db->update('admin_menu', $data);
+        $this->db->insert("admin_menu",$data);
+    }
+
+    public function SaveUpdateMenu(){
+        $admin_menu_id = $this->input->post('admin_menu_id');
+        $admin_menu_name = $this->input->post('admin_menu_name');
+        $admin_menu_link = $this->input->post('admin_menu_link');
+        $icon = $this->input->post('icon');
+        $data = array(
+            'admin_menu_name' => $admin_menu_name,
+            'admin_menu_images' => $icon
+        );
+        $this->db->where("admin_menu_id",$admin_menu_id);
+        $this->db->update("admin_menu",$data);
     }
 
 }

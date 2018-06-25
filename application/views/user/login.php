@@ -18,30 +18,28 @@
 <div class="container">
     <div class="modal fade" tabindex="-1" role="dialog" id="dialog-login" data-backdrop="static" style="margin-top:10%;">
         <div class="modal-dialog modal-sm">
-            <div class="modal-content" style="box-shadow:none;">
+            <div class="modal-content" style="box-shadow:none; background: none;">
                 <div class="modal-header">
                     <h4 class="modal-title" style="text-align:center;"><i class="fa fa-group"></i> Admin login</h4>
                 </div>
                 <div class="modal-body">
-                    
-                        <div class="row">
-                            <div class="col-md-2 col-lg-2">
-                                <i class="fa fa-user" style="margin-top:10px;"></i>
-                            </div>
-                            <div class="col-md-10 col-lg-10">
-                                    <input type="text" class="form-control" id="username" placeholder="Username">
-                            </div>
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2">
+                            <i class="fa fa-user" style="margin-top:10px;"></i>
                         </div>
-                     
-                        <div class="row" style="margin-top:10px;">
-                            <div class="col-md-2 col-lg-2">
-                                <i class="fa fa-key" style="margin-top:10px;"></i> 
-                            </div>
-                             <div class="col-md-10 col-lg-10">
-                                    <input type="password" class="form-control" id="password" placeholder="Password">                                             
-                            </div>
+                        <div class="col-md-10 col-lg-10">
+                            <input type="text" class="form-control" id="username" placeholder="Username" style=" color: #cccccc;">
                         </div>
+                    </div>
 
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-2 col-lg-2">
+                            <i class="fa fa-key" style="margin-top:10px;"></i> 
+                        </div>
+                        <div class="col-md-10 col-lg-10">
+                            <input type="password" class="form-control" id="password" placeholder="Password" style=" color: #cccccc;">                                             
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-block" onclick="do_login()"><i class="fa fa-sign-in"></i> login</button>

@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
         <?php
         //Use Model,libraries
         $this->load->library('takmoph_libraries');
@@ -63,11 +62,16 @@
         <script src="<?php echo base_url() ?>js/library/configweb.js" type="text/javascript"></script>
         <script src="<?php echo base_url() ?><?php echo $path ?>/js/system.js" type="text/javascript"></script>
         
+        <!-- FullCarlendar-->
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.css">
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/lib/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/locale/th.js"></script> 
         <!-- Datetime Picker --> 
         <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" type="text/css" media="all" />
         <script src="<?= base_url() ?>assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-        
-        
+
+
         <!-- Datatable -->
         <link rel="stylesheet" href="<?= base_url() ?>assets/DataTables-1.10.10/media/css/dataTables.bootstrap.css" type="text/css" media="all" />
         <script src="<?= base_url() ?>assets/DataTables-1.10.10/media/js/jquery.dataTables.js" type="text/javascript"></script>
@@ -87,12 +91,8 @@
 
         <!-- images hover effect -->
         <link href="<?php echo base_url() ?><?php echo $path ?>/css/images-hover-effect.css" rel="stylesheet" type="text/css" />
-        
-         <!-- FullCarlendar-->
-        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.css">
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/lib/moment.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/locale/th.js"></script>    
+
+           
 
     </head>
 
@@ -127,59 +127,59 @@
                                 <a href="<?php echo site_url() ?>" style="color: <?php echo $style->color_text ?>;"><i class="fa fa-home"></i> หน้าแรก</a>
                             </li>
 
-                             <!-- GetMenuBar -->
+                            <!-- GetMenuBar -->
 
-                                <?php
-                                foreach ($navbar->result() as $nb):
-                                    ?>
-                                    <?php if ($nb->type == '0') { ?>
-                                        <li>
-                                            <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
-                                               style="color:<?php echo $style->color_text ?>;">
-                                                <?php echo $nb->title ?></a>
-                                        </li>
-                                    <?php } else if ($nb->type == '2') { ?>
-                                        <li>
-                                            
-                                            <a href="<?php echo $nb->link ?>" target="_blank" style="color:<?php echo $style->color_text ?>;">
-                                                <?php echo $nb->title ?></a>
-                                        </li>
-                                    <?php } else { ?>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle"
-                                               data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:<?php echo $style->color_text ?>;">
-                                                <?php echo $nb->title ?> <span class="caret"></span>
-                                            </a>
-                                            <ul class="dropdown-menu">
+                            <?php
+                            foreach ($navbar->result() as $nb):
+                                ?>
+                                <?php if ($nb->type == '0') { ?>
+                                    <li>
+                                        <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
+                                           style="color:<?php echo $style->color_text ?>;">
+                                            <?php echo $nb->title ?></a>
+                                    </li>
+                                <?php } else if ($nb->type == '2') { ?>
+                                    <li>
 
-                                                <!--
-                                                    ########## Subnavbar ###########
-                                                -->
+                                        <a href="<?php echo $nb->link ?>" target="_blank" style="color:<?php echo $style->color_text ?>;">
+                                            <?php echo $nb->title ?></a>
+                                    </li>
+                                <?php } else { ?>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle"
+                                           data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:<?php echo $style->color_text ?>;">
+                                            <?php echo $nb->title ?> <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
 
-                                                <?php
-                                                $subnav = $barmodel->get_sub_navbarmenu($nb->id);
-                                                foreach ($subnav->result() as $snSub):
-                                                    ?>
-                                                    <?php if($snSub->type != '2') { ?>
+                                            <!--
+                                                ########## Subnavbar ###########
+                                            -->
+
+                                            <?php
+                                            $subnav = $barmodel->get_sub_navbarmenu($nb->id);
+                                            foreach ($subnav->result() as $snSub):
+                                                ?>
+                                                <?php if ($snSub->type != '2') { ?>
                                                     <li>
                                                         <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>">
                                                             <i class="fa fa-angle-right"></i>
                                                             <?php echo $snSub->title ?>
                                                         </a>
                                                     </li>
-                                                    <?php } else { ?>
+                                                <?php } else { ?>
                                                     <li>
                                                         <a href="<?php echo $snSub->link ?>" target="_bank">
                                                             <i class="fa fa-angle-right"></i>
                                                             <?php echo $snSub->title ?>
                                                         </a>
                                                     </li>
-                                                    <?php } ?>
-                                                <?php endforeach; ?>
-                                            </ul>
-                                        </li>
-                                    <?php } ?>
-                                <?php endforeach; ?> 
+                                                <?php } ?>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </li>
+                                <?php } ?>
+                            <?php endforeach; ?> 
                             <li>
                                 <a href="<?php echo site_url('site/sitemap') ?>" style="color:<?php echo $style->color_text ?>;">ผังเว็บไซต์</a>
                             </li>     
@@ -250,51 +250,55 @@
                 ## Slide Hot News 
                 ##################
                 -->
-                <div class="alert" id="box-express"
-                     style="border-bottom:<?php echo $style->color_navbar ?> solid 1px;">
-                    <div class="container">
-                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <!-- Indicators -->
-                            <!-- Wrapper for slides -->
+                <?php
+                $express_model = new newexpress_model();
+                $newsexpress = $express_model->get_express();
+                if ($newsexpress->num_rows() > 0) {
+                    ?>
+                    <div class="alert" id="box-express"
+                         style="border-bottom:<?php echo $style->color_navbar ?> solid 1px;">
+                        <div class="container">
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <!-- Wrapper for slides -->
 
-                            <div class="carousel-inner" role="listbox">
-                                <?php
-                                $express_model = new newexpress_model();
-                                $newsexpress = $express_model->get_express();
-                                $i = 0;
-                                foreach ($newsexpress->result() as $ns):
-                                    $i++;
-                                    if ($i == 1) {
-                                        $class = "item active";
-                                    } else {
-                                        $class = "item";
-                                    }
-                                    ?>
-                                    <div class="<?php echo $class; ?>">
-                                        <div class="text-express" style="color: #ff0033;">
-                                            <font style="color: #ff0033;"><i class="fa fa-fire"></i> ประกาศด่วน</font>
-                                            <?php echo $this->tak->thaidate($ns->create_date); ?>
-                                            <a href="<?php echo site_url('newexpress/view/' . $this->takmoph_libraries->encode($ns->id)) ?>">
-                                                <button type="button" class="btn btn-warning btn-xs">อ่าน ... <i class="fa fa-angle-double-right"></i></button></a>
-                                            <br/>
-                                            <?php echo $ns->title; ?>
+                                <div class="carousel-inner" role="listbox">
+                                    <?php
+                                    $i = 0;
+                                    foreach ($newsexpress->result() as $ns):
+                                        $i++;
+                                        if ($i == 1) {
+                                            $class = "item active";
+                                        } else {
+                                            $class = "item";
+                                        }
+                                        ?>
+                                        <div class="<?php echo $class; ?>">
+                                            <div class="text-express" style="color: #ff0033;">
+                                                <font style="color: #ff0033;"><i class="fa fa-fire"></i> ประกาศด่วน</font>
+                                                <?php echo $this->tak->thaidate($ns->create_date); ?>
+                                                <a href="<?php echo site_url('newexpress/view/' . $this->takmoph_libraries->encode($ns->id)) ?>">
+                                                    <button type="button" class="btn btn-warning btn-xs">อ่าน ... <i class="fa fa-angle-double-right"></i></button></a>
+                                                <br/>
+                                                <?php echo $ns->title; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
+                                    <?php endforeach; ?>
+                                </div>
 
-                            <!-- Controls -->
-                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style=" background: none;">
-                                <span class="fa fa-angle-left btn pull-left" aria-hidden="true" id="btn-PN"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style=" background: none;">
-                                <span class="fa fa-angle-right btn pull-right" aria-hidden="true" id="btn-PN"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style=" background: none;">
+                                    <span class="fa fa-angle-left btn pull-left" aria-hidden="true" id="btn-PN"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style=" background: none;">
+                                    <span class="fa fa-angle-right btn pull-right" aria-hidden="true" id="btn-PN"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php } ?>
                 <!--
                 #####################
                 ## Menu Left 
@@ -305,8 +309,8 @@
                 ## Menu And News 
                 ################
                 -->
-                <div id="controlmenu" style="display: none; background: #ededed;">
-                    <div class="well" style=" background: none; border:none;">
+                <div id="controlmenu" style="display: none; background: #ededed; margin-bottom: 0px;">
+                    <div class="well" style=" background: none; border:none; margin-bottom: 0px;">
                         <h3><i class="fa fa-th-large"></i> เมนู</h3>
                         <hr id="hr" style="border:<?php echo $style->color_navbar ?> solid 1px;"/>
                         <!--
@@ -327,6 +331,7 @@
                                 <?php
                                 if ($rs->mas_status == '0') {
                                     ?>
+
                                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" id="Smenu">
                                         <a href="<?= site_url($rs->link . '/' . $this->takmoph_libraries->encode($rs->admin_menu_id) . '/' . $rs->mas_menu) ?>" style="text-decoration: none;" data-toggle="tooltip" data-placement="top" title="<?php echo $rs->mas_menu ?>">
                                             <div id="submenu" class="btn btn-block hvr-trim" 
@@ -413,158 +418,161 @@
                 ## ข่าวล่าสุด
                 ####################
                 -->
-                
-                <?php 
+
+                <?php
                 $homenews = $newsModel->get_news_limit(8);
-                if($homenews->num_rows() > 0){
-                ?>
-                <div id="controlnew" style=" display: none;  padding-bottom: 0px;">
-                    <div class="well" style=" background: none;border:none; box-shadow: none; margin-bottom: 0px; padding-bottom: 0px;">
-                        <!-- Slide News -->
-                        <div id="menu_and_news" style="display: none; margin-top: 0px; padding-top: 0px; padding-bottom: 0px;">
-                            <h3><i class="fa fa-newspaper-o"></i> ข่าวล่าสุด</h3>
-                            <hr id="hr" style="border:<?php echo $style->color_navbar ?> solid 1px;"/>
-                            <div class="row">
-                                <?php
-                                $i = 0;
-                                
-                                foreach ($homenews->result() as $new):
-                                    $i++;
-                                    ?>
-                                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                        <div class="container-card" style="max-height: 200px;border:<?php echo $style->color_navbar ?> solid 1px;">
-                                            <div class="img-wrapper">
-                                                <?php if (!empty($new->images)) { ?>
-                                                    <img src="<?php echo base_url() ?>upload_images/news/<?php echo $new->images; ?>" class="img-responsive img-polaroid" style="height:100px;"/>
-                                                <?php } else { ?>
-                                                    <center>
-                                                        <img src="<?php echo base_url() ?>images/News-Mic-iPhone-icon.jpg" class="img-responsive img_news" style="height:100px;"/>
-                                                    </center>
-                                                <?php } ?>
-                                            </div>
-                                            <p class="detail" style=" font-size: 12px;">
-                                                <?php
-                                                //$this->session->userdata('width');
-                                                $text = strlen($new->titel);
-                                                if ($text > 160) {
-                                                    //echo iconv_substr($news->titel,'0','100')."...";
-                                                    if ($this->session->userdata('width') > 1000 || $this->session->userdata('width') <= 768) {
-                                                        print mb_substr($new->titel, 0, 30, 'UTF-8') . "...";
+                if ($homenews->num_rows() > 0) {
+                    ?>
+                    <div id="controlnew" style=" display: none;  padding-bottom: 0px;">
+                        <div class="well" style=" background: none;border:none; box-shadow: none; margin-bottom: 0px; padding-bottom: 0px;">
+                            <!-- Slide News -->
+                            <?php if ($style->showlastnews == "1") { ?>
+                            <div id="menu_and_news" style="display: none; margin-top: 0px; padding-top: 0px; padding-bottom: 0px;">
+                                <h3><i class="fa fa-newspaper-o"></i> ข่าวล่าสุด</h3>
+                                <hr id="hr" style="border:<?php echo $style->color_navbar ?> solid 1px;"/>
+                                <div class="row">
+                                    <?php
+                                    $i = 0;
+
+                                    foreach ($homenews->result() as $new):
+                                        $i++;
+                                        ?>
+                                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                            <div class="container-card" style="max-height: 200px;border:<?php echo $style->color_navbar ?> solid 1px;">
+                                                <div class="img-wrapper">
+                                                    <?php if (!empty($new->images)) { ?>
+                                                        <img src="<?php echo base_url() ?>upload_images/news/<?php echo $new->images; ?>" class="img-responsive img-polaroid" style="height:100px;"/>
+                                                    <?php } else { ?>
+                                                        <center>
+                                                            <img src="<?php echo base_url() ?>images/News-Mic-iPhone-icon.jpg" class="img-responsive img_news" style="height:100px;"/>
+                                                        </center>
+                                                    <?php } ?>
+                                                </div>
+                                                <p class="detail" style=" font-size: 12px;">
+                                                    <?php
+                                                    //$this->session->userdata('width');
+                                                    $text = strlen($new->titel);
+                                                    if ($text > 160) {
+                                                        //echo iconv_substr($news->titel,'0','100')."...";
+                                                        if ($this->session->userdata('width') > 1000 || $this->session->userdata('width') <= 768) {
+                                                            print mb_substr($new->titel, 0, 30, 'UTF-8') . "...";
+                                                        } else {
+                                                            echo $new->titel;
+                                                        }
                                                     } else {
                                                         echo $new->titel;
                                                     }
-                                                } else {
-                                                    echo $new->titel;
-                                                }
-                                                ?><br/>
-                                            </p>
-                                            <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($new->id) . '/' . $new->groupnews) ?>">
-                                                <button type="button" class="btn btn-danger btn-xs" id="btn-card"> อ่านข่าว ...</button>
+                                                    ?><br/>
+                                                </p>
+                                                <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($new->id) . '/' . $new->groupnews) ?>">
+                                                    <button type="button" class="btn btn-danger btn-xs" id="btn-card"> อ่านข่าว ...</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+
+                                <div class="bottom-line"></div>
+                            </div>
+                            <?php } ?>
+                            <!-- EndSlide News -->
+
+
+                            <?php
+                            $groupN = $groupnewsModel->groupnews_frontent_active();
+                            foreach ($groupN->result() as $Gn):
+                                $homenewss = $newsModel->get_news_limit_group($Gn->id, 4);
+
+                                if ($Gn->headcolor != '') {
+                                    $headcolor = $Gn->headcolor;
+                                } else {
+                                    $headcolor = "#eeeeee";
+                                }
+                                if ($Gn->background != '' || $Gn->background != '#FFFFFF') {
+                                    $padding = "5px;";
+                                } else {
+                                    $padding = "none;";
+                                }
+                                if ($homenewss->num_rows() > 0):
+                                    ?>
+                                    <div style="background:<?php echo $Gn->background ?>; padding:<?php echo $padding; ?>;">
+                                        <h3 style="color:<?php echo $headcolor ?>"><i class="fa fa-newspaper-o"></i> <?php echo $Gn->groupname ?></h3>
+                                        <hr id="hr" style="border-color:<?php echo $headcolor ?>"/>
+                                        <div class="row">
+                                            <?php
+                                            $i = 0;
+                                            foreach ($homenewss->result() as $news):
+                                                $fnew = $newsModel->get_first_images_news($news->id);
+                                                $i++;
+                                                ?>
+                                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-<?php echo $Gn->column ?>">
+
+                                                    <?php
+                                                    if ($Gn->column == '12') {
+                                                        echo $lib->setcolumn($Gn->column, $news->images, $news->titel, $news->date, $news->id, $news->groupnews);
+                                                    } else {
+                                                        ?>
+                                                        <div class="container-card" style="max-height: 300px;border-color:<?php echo $headcolor ?>">
+                                                            <div class="img-wrapper">
+                                                                <?php if (!empty($fnew)) { ?>
+                                                                    <img src="<?php echo base_url() ?>upload_images/news/thumb/<?php echo $fnew; ?>" class="img-responsive img-polaroid" style="height:200px;"/>
+                                                                <?php } else { ?>
+                                                                    <center>
+                                                                        <img src="<?php echo base_url() ?>images/News-Mic-iPhone-icon.jpg" class="img-responsive img_news" style="height:100px;"/>
+                                                                    </center>
+                                                                <?php } ?>
+                                                            </div>
+                                                            <p class="detail text-responsive" style=" font-size: 12px;">
+
+                                                                <?php
+                                                                //$this->session->userdata('width');
+                                                                /*
+                                                                  $text = strlen($news->titel);
+                                                                  if ($text > 160) {
+                                                                  //echo iconv_substr($news->titel,'0','100')."...";
+                                                                  if ($this->session->userdata('width') > 1000 || $this->session->userdata('width') <= 768) {
+                                                                  print mb_substr($news->titel, 0, 30, 'UTF-8') . "...";
+                                                                  } else {
+                                                                  echo $news->titel;
+                                                                  }
+                                                                  } else {
+                                                                  echo $news->titel;
+                                                                  }
+                                                                 */
+                                                                echo $news->titel;
+                                                                ?><br/>
+
+                                                            </p>
+                                                            <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($news->id) . '/' . $news->groupnews) ?>">
+                                                                <button type="button" class="btn btn-danger btn-xs" id="btn-card"> อ่านข่าว ...</button>
+                                                            </a>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div><!-- End Col -->
+
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <div class="row" style=" clear: both;">
+                                            <a href="<?php echo site_url('news/newsall/' . $this->takmoph_libraries->encode($Gn->id)) ?>" class=" pull-right" style=" margin-right: 20px;">
+                                                <button type="button" class="btn btn-default btn-sm" style=" margin-right: 0px;">ข่าวทั้งหมด <i class="fa fa-arrow-circle-o-right"></i></button>
                                             </a>
                                         </div>
+                                        <div class="bottom-line"></div>
                                     </div>
-                                <?php endforeach; ?>
-                            </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
 
-                            <div class="bottom-line"></div>
+
                         </div>
-                        <!-- EndSlide News -->
-
-
-                        <?php
-                        $groupN = $groupnewsModel->groupnews_frontent_active();
-                        foreach ($groupN->result() as $Gn):
-                            $homenewss = $newsModel->get_news_limit_group($Gn->id, 4);
-                         
-                            if ($Gn->headcolor != '') {
-                                $headcolor = $Gn->headcolor;
-                            } else {
-                                $headcolor = "#eeeeee";
-                            }
-                            if ($Gn->background != '' || $Gn->background != '#FFFFFF') {
-                                $padding = "5px;";
-                            } else {
-                                $padding = "none;";
-                            }
-                            if ($homenewss->num_rows() > 0):
-                                ?>
-                                <div style="background:<?php echo $Gn->background ?>; padding:<?php echo $padding; ?>;">
-                                    <h3 style="color:<?php echo $headcolor ?>"><i class="fa fa-newspaper-o"></i> <?php echo $Gn->groupname ?></h3>
-                                    <hr id="hr" style="border-color:<?php echo $headcolor ?>"/>
-                                    <div class="row">
-                                        <?php
-                                        $i = 0;
-                                        foreach ($homenewss->result() as $news):
-                                            $fnew = $newsModel->get_first_images_news($news->id);
-                                            $i++;
-                                            ?>
-                                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-<?php echo $Gn->column ?>">
-
-                                                <?php
-                                                if ($Gn->column == '12') {
-                                                    echo $lib->setcolumn($Gn->column, $news->images, $news->titel, $news->date, $news->id, $news->groupnews);
-                                                } else {
-                                                    ?>
-                                                    <div class="container-card" style="max-height: 200px;border-color:<?php echo $headcolor ?>">
-                                                        <div class="img-wrapper">
-                                                            <?php if (!empty($fnew)) { ?>
-                                                                <img src="<?php echo base_url() ?>upload_images/news/<?php echo $fnew; ?>" class="img-responsive img-polaroid" style="height:100px;"/>
-                                                            <?php } else { ?>
-                                                                <center>
-                                                                    <img src="<?php echo base_url() ?>images/News-Mic-iPhone-icon.jpg" class="img-responsive img_news" style="height:100px;"/>
-                                                                </center>
-                                                            <?php } ?>
-                                                        </div>
-                                                        <p class="detail text-responsive" style=" font-size: 12px;">
-
-                                                            <?php
-                                                            //$this->session->userdata('width');
-                                                            /*
-                                                              $text = strlen($news->titel);
-                                                              if ($text > 160) {
-                                                              //echo iconv_substr($news->titel,'0','100')."...";
-                                                              if ($this->session->userdata('width') > 1000 || $this->session->userdata('width') <= 768) {
-                                                              print mb_substr($news->titel, 0, 30, 'UTF-8') . "...";
-                                                              } else {
-                                                              echo $news->titel;
-                                                              }
-                                                              } else {
-                                                              echo $news->titel;
-                                                              }
-                                                             */
-                                                            echo $news->titel;
-                                                            ?><br/>
-
-                                                        </p>
-                                                        <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($news->id) . '/' . $news->groupnews) ?>">
-                                                            <button type="button" class="btn btn-danger btn-xs" id="btn-card"> อ่านข่าว ...</button>
-                                                        </a>
-                                                    </div>
-                                                <?php } ?>
-                                            </div><!-- End Col -->
-
-                                        <?php endforeach; ?>
-                                    </div>
-                                    <div class="row" style=" clear: both;">
-                                        <a href="<?php echo site_url('news/newsall/' . $this->takmoph_libraries->encode($Gn->id)) ?>" class=" pull-right" style=" margin-right: 20px;">
-                                            <button type="button" class="btn btn-default btn-sm" style=" margin-right: 0px;">ข่าวทั้งหมด <i class="fa fa-arrow-circle-o-right"></i></button>
-                                        </a>
-                                    </div>
-                                    <div class="bottom-line"></div>
-                                </div>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-
-
-                    </div>
-                </div> <!-- Endcontrolnews-->
+                    </div> <!-- Endcontrolnews-->
                 <?php } ?>
-            
+
                 <!-- 
                  ################
                  ## Content Page
                  ################
                 -->
+
                 <div id="tooplate_content">
                     <div class="container"  style=" background: none;word-wrap: break-word; box-shadow: none;">
                         <?php
@@ -576,30 +584,33 @@
                         ?>
                     </div>
                 </div> 
-
                 <!--
     ####################
     ## Album
     ####################
                 -->
+                <?php 
+                    $photo = $photoModel->album_limit(10);
+                    if($photo->num_rows() > 0){
+                ?>
                 <div id="main-album" style=" display: none;">
-                    <div class="alert" id="bg_gray" style="width:100%; border-radius:0px; margin-bottom:0px;">
-                        <div  style=" padding-left:0px;">
-                            <h3><i class="fa fa-file-image-o"></i> รูปภาพ / กิจกรรม</h3>
+                    <div class="alert" id="bg_gray" style="width:100%; border-radius:0px; margin-bottom:0px; margin-top: 0px;">
+                        <div  style="padding-left:0px; margin-top: 0px;">
+                            <h3 style=" margin-top: 0px; padding-top: 5px;"><i class="fa fa-file-image-o"></i> รูปภาพ / กิจกรรม</h3>
                             <hr id="hr"/>
                             <div class="slider5" style="margin-bottom:0px; padding-bottom:0px;">
                                 <?php
-                                $photo = $photoModel->album_limit(10);
+                                
                                 foreach ($photo->result() as $albums):
                                     $firstAlbum = $photoModel->get_first_album($albums->id);
                                     ?>
 
                                     <a href="<?php echo site_url('photo/gallery/' . $albums->id) ?>" class="hover14">
                                         <div class="slide">
-                                            <div class="container-card" style="height:160px; text-align: center; box-shadow:none; margin-bottom:0px;">
+                                            <div class="container-card" style="height:200px; text-align: center; box-shadow:none; margin-bottom:0px;">
                                                 <figure>
                                                     <div class="img-wrapper">
-                                                        <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $firstAlbum ?>" class="img-responsive" style="height:160px;" title="<?php echo $albums->title ?>"/>
+                                                        <img src="<?php echo base_url() ?>upload_images/photo/thumb/<?php echo $firstAlbum ?>" class="img-responsive" style="height:200px;" title="<?php echo $albums->title ?>"/>
                                                     </div>
                                                 </figure>
                                             </div>
@@ -614,52 +625,51 @@
                         </div>
                     </div>
                 </div>
-
+                <?php } ?>
                 <!--
 ####################
 ## Menu System
 ####################
                 -->
-                <?php $menu_system = $this->tak->get_menu_system();?>
-                <?php if($menu_system->num_rows() > 0){ ?>
-                <div id="main-menu-system" style=" display: none;">
-                    <div class="well" id="box-menu-system"
-                         style="border-radius:0px; background: none;">
-                        <div class="bottom-line"></div>
-                        <div style="margin-top: 0px;">
-                            <div style=" margin-bottom: 30px;">
-                                <h3 style="color:#ff6600; text-shadow:none;"><i class="fa fa-th"></i> ระบบงาน</h3>
-                                <hr id="hr" style="border:<?php echo $style->color_navbar ?> solid 1px;"/>
-                                <div class="row">
+                <?php $menu_system = $this->tak->get_menu_system(); ?>
+                <?php if ($menu_system->num_rows() > 0) { ?>
+                    <div id="main-menu-system" style=" display: none;">
+                        <div class="well" id="box-menu-system"
+                             style="border-radius:0px; background: none;">
+                            <div class="bottom-line"></div>
+                            <div style="margin-top: 0px;">
+                                <div style=" margin-bottom: 30px;">
+                                    <h3 style="color:#ff6600; text-shadow:none;"><i class="fa fa-th"></i> ระบบงาน</h3>
+                                    <hr id="hr" style="border:<?php echo $style->color_navbar ?> solid 1px;"/>
+                                    <div class="row">
 
-                                    <!-- Menu Program -->
-                                    <?php
-                                    
-                                    foreach ($menu_system->result() as $mm):
-                                        ?>
-                                        <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                            <a href="<?= $mm->link ?>" target="_blank" style=" text-decoration: none;">
-                                                <div class="hvr-grow" style=" width: 100%;">
-                                                    <div class="container-card" 
-                                                         style="max-height: 150px; text-align: center;" 
-                                                         id="menu-hover">
-                                                        <div class="img-wrapper">
-                                                            <img src="<?php echo base_url() ?>icon_menu/<?php echo $mm->system_images ?>" class="img-responsive" style="height:100px;"/>
+                                        <!-- Menu Program -->
+                                        <?php
+                                        foreach ($menu_system->result() as $mm):
+                                            ?>
+                                            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                                                <a href="<?= $mm->link ?>" target="_blank" style=" text-decoration: none;">
+                                                    <div class="hvr-grow" style=" width: 100%;">
+                                                        <div class="container-card" 
+                                                             style="max-height: 150px; text-align: center;" 
+                                                             id="menu-hover">
+                                                            <div class="img-wrapper">
+                                                                <img src="<?php echo base_url() ?>icon_menu/<?php echo $mm->system_images ?>" class="img-responsive" style="height:100px;"/>
+                                                            </div>
+                                                            <p class="detail" style=" margin: 0px; padding: 2px; font-weight: bold; padding-top: 10px;">
+                                                                <?php echo $mm->system_title ?><br/>
+                                                            </p>
                                                         </div>
-                                                        <p class="detail" style=" margin: 0px; padding: 2px; font-weight: bold; padding-top: 10px;">
-                                                            <?php echo $mm->system_title ?><br/>
-                                                        </p>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                                </a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <?php } ?>
                 <!--
                 ####################
@@ -741,13 +751,14 @@
 
         <!-- Script to Activate the Carousel -->
         <script>
+
             $('.carousel').carousel({
                 interval: 5000 //changes the speed
             });
 
 
             $(document).ready(function () {
-
+                Setscreen();
                 var width = $(window).width();
                 if (width < 768) {
                     $(".img_news").css("width", "100px");
@@ -825,6 +836,11 @@
                 });
             }
 
+            function Setscreen() {
+                var mm = $("#submenu").innerWidth();
+                var wh = (mm-25);
+                $(".text-menu").css({'text-overflow': 'ellipsis', 'white-space': 'nowrap', 'width': wh, 'overflow': 'hidden','text-align':'left'});
+            }
 
         </script>
     </body>

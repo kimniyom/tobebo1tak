@@ -71,7 +71,12 @@
         <!-- Jquery Library -->
         <script src="<?php echo base_url() ?>js/library/configweb.js" type="text/javascript"></script>
         <script src="<?php echo base_url() ?><?php echo $path ?>/js/system.js" type="text/javascript"></script>
-
+        
+        <!-- FullCarlendar-->
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.css">
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/lib/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/locale/th.js"></script> 
         <!-- Datetime Picker --> 
         <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" type="text/css" media="all" />
         <script src="<?= base_url() ?>assets/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
@@ -97,11 +102,7 @@
         <!-- images hover effect -->
         <link href="<?php echo base_url() ?><?php echo $path ?>/css/images-hover-effect.css" rel="stylesheet" type="text/css" />
 
-        <!-- FullCarlendar-->
-        <link rel="stylesheet" href="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.css">
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/lib/moment.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>assets/fullcalendar/locale/th.js"></script>    
+       
 
     </head>
 
@@ -267,57 +268,60 @@
         <!--
             #### Slide Hot News ####
         -->
-        <div class="alert" id="box-express">
-            <div class="container">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <!-- Indicators -->
-                    <!-- Wrapper for slides -->
+        <?php
+        $express_model = new newexpress_model();
+        $newsexpress = $express_model->get_express();
+        if ($newsexpress->num_rows() > 0) {
+            ?>
+            <div class="alert" id="box-express">
+                <div class="container">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <!-- Wrapper for slides -->
 
-                    <div class="carousel-inner" role="listbox">
-                        <?php
-                        $express_model = new newexpress_model();
-                        $newsexpress = $express_model->get_express();
-                        $i = 0;
-                        foreach ($newsexpress->result() as $ns):
-                            $i++;
-                            if ($i == 1) {
-                                $class = "item active";
-                            } else {
-                                $class = "item";
-                            }
-                            ?>
-                            <div class="<?php echo $class; ?>">
-                                <div class="text-express" style="color: #ff0033;">
-                                    <font style="color: #ff0033;"><i class="fa fa-fire"></i> ประกาศด่วน</font>
-                                    <?php echo $this->tak->thaidate($ns->create_date); ?>
-                                    <a href="<?php echo site_url('newexpress/view/' . $this->takmoph_libraries->encode($ns->id)) ?>">
-                                        <button type="button" class="btn btn-warning btn-xs">อ่าน ... <i class="fa fa-angle-double-right"></i></button></a>
-                                    <br/>
-                                    <?php echo $ns->title; ?>
+                        <div class="carousel-inner" role="listbox">
+                            <?php
+                            $i = 0;
+                            foreach ($newsexpress->result() as $ns):
+                                $i++;
+                                if ($i == 1) {
+                                    $class = "item active";
+                                } else {
+                                    $class = "item";
+                                }
+                                ?>
+                                <div class="<?php echo $class; ?>">
+                                    <div class="text-express" style="color: #ff0033;">
+                                        <font style="color: #ff0033;"><i class="fa fa-fire"></i> ประกาศด่วน</font>
+                                        <?php echo $this->tak->thaidate($ns->create_date); ?>
+                                        <a href="<?php echo site_url('newexpress/view/' . $this->takmoph_libraries->encode($ns->id)) ?>">
+                                            <button type="button" class="btn btn-warning btn-xs">อ่าน ... <i class="fa fa-angle-double-right"></i></button></a>
+                                        <br/>
+                                        <?php echo $ns->title; ?>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                            <?php endforeach; ?>
+                        </div>
 
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style=" background: none;">
-                        <span class="fa fa-angle-left btn pull-left" aria-hidden="true" id="btn-PN"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style=" background: none;">
-                        <span class="fa fa-angle-right btn pull-right" aria-hidden="true" id="btn-PN"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style=" background: none;">
+                            <span class="fa fa-angle-left btn pull-left" aria-hidden="true" id="btn-PN"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style=" background: none;">
+                            <span class="fa fa-angle-right btn pull-right" aria-hidden="true" id="btn-PN"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        <?php } ?>
         <!--
         ################ 
         ## Menu And News 
         ################
         -->
-        <div id="menu_and_news" style=" display: none;">
+        <div id="menu_and_news" style=" display: none; margin-bottom: 0px;">
 
             <div class="well" id="bg_gray">
                 <div class="bottom-line"></div>
@@ -569,7 +573,6 @@
         -->
         <div id="tooplate_content">
             <div class=" container" style=" padding-left: 0px;word-wrap: break-word;">
-
                 <?php
                 if ($detail == "") {
                     $this->load->view($page . ".php");
