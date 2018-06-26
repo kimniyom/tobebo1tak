@@ -113,7 +113,7 @@ $eid = $this->takmoph_libraries->url_encode($this->session->userdata('tobe_user_
 echo $model->breadcrumb_backend($list, $active, 'toberegis/users/detailuser/' . $eid);
 ?>
 
-<div class="well" style=" clear: both;">
+<div class="wells" style=" clear: both;">
     <div class="pull-right">
         <a href="<?php echo site_url('toberegis/news/update/' . $news->id) ?>">
             <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> แก้ไข</button></a>

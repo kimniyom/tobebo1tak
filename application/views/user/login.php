@@ -1,4 +1,17 @@
 <meta charset="UTF-8"/>
+<style type="text/css">
+    #box-login{
+        background: #4ec3bb;
+        background: -moz-linear-gradient(top, #4ec3bb 0%, #37adab 47%, #108790 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, #4ec3bb), color-stop(47%, #37adab), color-stop(100%, #108790));
+        background: -webkit-linear-gradient(top, #4ec3bb 0%, #37adab 47%, #108790 100%);
+        background: -o-linear-gradient(top, #4ec3bb 0%, #37adab 47%, #108790 100%);
+        background: -ms-linear-gradient(top, #4ec3bb 0%, #37adab 47%, #108790 100%);
+        background: linear-gradient(to bottom, #4ec3bb 0%, #37adab 47%, #108790 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4ec3bb', endColorstr='#108790', GradientType=0 );
+        border: none;
+    }
+</style>
 <script src="<?php echo base_url() ?>js/jquery-1.11.3.min.js" type="text/javascript"></script>
 
 <!-- Bootstrap 3-->
@@ -18,31 +31,33 @@
 <div class="container">
     <div class="modal fade" tabindex="-1" role="dialog" id="dialog-login" data-backdrop="static" style="margin-top:10%;">
         <div class="modal-dialog modal-sm">
-            <div class="modal-content" style="box-shadow:none; background: none;">
+            <div class="modal-content" style="box-shadow:none;" id="box-login">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="text-align:center;"><i class="fa fa-group"></i> Admin login</h4>
+                    <h4 class="modal-title" style="text-align:center;color: #ffffff;"><i class="fa fa-lock"></i> login</h4>
+                    <p style=" text-align:  center; color: #FFFFFF; font-size: 18px;">เข้าสู่ระบบเพื่อจัดการเว็บไซต์</p>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-2 col-lg-2">
-                            <i class="fa fa-user" style="margin-top:10px;"></i>
+                            <i class="fa fa-user" style="margin-top:10px;color: #FFFFFF;"></i>
                         </div>
                         <div class="col-md-10 col-lg-10">
-                            <input type="text" class="form-control" id="username" placeholder="Username" style=" color: #cccccc;">
+                            <input type="text" class="form-control" id="username" placeholder="Username" style=" color: #ffffff;">
                         </div>
                     </div>
 
                     <div class="row" style="margin-top:10px;">
                         <div class="col-md-2 col-lg-2">
-                            <i class="fa fa-key" style="margin-top:10px;"></i> 
+                            <i class="fa fa-key" style="margin-top:10px; color: #FFFFFF;"></i> 
                         </div>
                         <div class="col-md-10 col-lg-10">
-                            <input type="password" class="form-control" id="password" placeholder="Password" style=" color: #cccccc;">                                             
+                            <input type="password" class="form-control" id="password" placeholder="Password" style=" color: #ffffff;">                                             
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-block" onclick="do_login()"><i class="fa fa-sign-in"></i> login</button>
+                    <button type="button" class="btn btn-success btn-block" onclick="do_login()"><i class="fa fa-sign-in"></i> login</button>
+                    
                 </div>
             </div><!-- /.modal-content -->
             <br/>

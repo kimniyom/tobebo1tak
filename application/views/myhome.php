@@ -31,6 +31,7 @@ $style = $this->menubar_model->get_style();
         $("#controlmenu").show();
         $("#controlnewhot").show();
         $("#controlnew").show();
+        $("#main-news-sub").show();
         $(".BL").show();
         $("#newsgroup").show();
 
