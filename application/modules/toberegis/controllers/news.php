@@ -62,6 +62,7 @@ class news extends CI_Controller {
             'title' => $this->input->post('title'),
             'detail' => $this->input->post('detail'),
             'user_id' => $this->session->userdata('tobe_user_id'),
+            'type' => $this->session->userdata('tobe_type'),
             'qrcode' => $qrcodeName,
             'date' => date('Y-m-d H:i:s')
         );

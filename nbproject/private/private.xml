@@ -3,5 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group/>
+        <group name="yii">
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/upload_images_news.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/album_news.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/update.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/storeimages/listimages.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/users/detailuser.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/controllers/storeimg.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/template.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/show_news.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/storeimg/index.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/from_edit_news.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/create.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/controllers/news.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/storeimg/listimages.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/news/view.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/storeimages/index.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/models/tobenews_model.php</file>
+        </group>
     </open-files>
 </project-private>
