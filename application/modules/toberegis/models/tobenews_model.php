@@ -117,6 +117,10 @@ class tobenews_model extends CI_Model {
         return $this->db->query($sql);
     }
 
+    public function GetnewsAll($limit = null){
+        if()
+    }
+
     
 
 }

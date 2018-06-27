@@ -41,6 +41,9 @@
         <style type="text/css">
             #body{
                 background: #4d0b03;
+                /*background:url('images/bg-bd.png') top repeat-x #ffffff;*/
+                /*
+                background: #4d0b03;
                 background: -moz-linear-gradient(top, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
                 background: -webkit-gradient(left top, left bottom, color-stop(0%, #4d0b03), color-stop(47%, #df5e18), color-stop(100%, #FFFFFF));
                 background: -webkit-linear-gradient(top, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
@@ -51,6 +54,7 @@
                 border: none;
                 background-repeat: no-repeat;
                 background-attachment: fixed;
+                */
             } /*#f8f8f8*/
             #nav ul li a{font-size:24px; background: <?php echo $style->color_head ?>;}
             #nav ul li a:active{background: <?php echo $style->color_head ?>;}
