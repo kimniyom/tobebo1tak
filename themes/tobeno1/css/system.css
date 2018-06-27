@@ -40,11 +40,11 @@ body {
 
 #body {
     font-family: 'thaisanslite';
-    font-size: 17px;
+    font-size: 20px;
 }
 
 #body .btn {
-    font-size: 17px;
+    font-size: 20px;
 }
 
 body .panel {
@@ -666,5 +666,4 @@ section {
 .nav-tabs li a{
     font-size: 20px;
 }
-
 

@@ -127,7 +127,8 @@ $autoload['model'] = array(
     'template_model',
     'groupnews_model',
     'manager_model',
-    'modulemanager/modulemanager_model'
+    'modulemanager/modulemanager_model',
+    'toberegis/tobenews_model'
 );
 
 

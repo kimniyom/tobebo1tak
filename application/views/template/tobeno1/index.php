@@ -522,7 +522,9 @@
 
                     <div id="menu_and_news" style="display: none; margin-top: 0px; padding-top: 0px;">
                         <?php if ($style->showlastnews == "1") { ?>
-                            <div style=" padding:2px 5px;  color: <?php echo $style->color_text ?>; font-size: 24px;"><i class="fa fa-newspaper-o"></i> ล่าสุด</div>
+                            <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>">
+                                <i class="fa fa-newspaper-o"></i> ล่าสุด
+                            </div>
                             <hr id="hr" style=" border: <?php echo $style->color_text ?> solid 1px;"/>
                             <div class="row">
                                 <?php
@@ -573,7 +575,7 @@
                             if ($homenewss->num_rows() > 0):
                                 ?>
                                 <div style="background:<?php echo $Gn->background ?>; padding:<?php echo $padding; ?>;">
-                                    <div style=" padding:2px 5px; padding:2px 5px; font-size:24px; color:<?php echo $style->color_text ?>"><i class="fa fa-newspaper-o"></i> <?php echo $Gn->groupname ?></div>
+                                    <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"><i class="fa fa-newspaper-o"></i> <?php echo $Gn->groupname ?></div>
                                     <hr id="hr" style="border-color:<?php echo $headcolor ?>"/>
                                     <div class="row">
                                         <?php
@@ -646,36 +648,32 @@
                     ## end of content 
                     ####################
                     -->
+
                     <div id="main-news-sub" style=" display: none;">
-                        <div style=" padding:2px 5px; padding:2px 5px; font-size:24px; color:<?php echo $style->color_text ?>">
+                        <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>">
                             <i class="fa fa-bell-o"></i> ข่าวประชาสัมพันธ์ / กิจกรรม(เขตพื้นที่)
                         </div>
                         <div id="exTab1">
 
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">ล่าสุด</a></li>
-                                <li role="presentation"><a href="#ampur" aria-controls="ampur" role="tab" data-toggle="tab">อำเภอ</a></li>
-                                <li role="presentation"><a href="#community" aria-controls="community" role="tab" data-toggle="tab">ชุมชน</a></li>
-                                <li role="presentation"><a href="#school" aria-controls="school" role="tab" data-toggle="tab">โรงเรียน / สถานศึกษา</a></li>
-                                <li role="presentation"><a href="#government" aria-controls="government" role="tab" data-toggle="tab"> หน่วยงานราชการ/รัฐวิสาหกิจ</a></li>
-                                <li role="presentation"><a href="#company" aria-controls="company" role="tab" data-toggle="tab"> สถานประกอบการ</a></li>
+                                <li role="presentation" class="active"><a href="#newstobe" aria-controls="newstobe" role="tab" data-toggle="tab" onclick="newstobe('')">ล่าสุด</a></li>
+                                <li role="presentation"><a href="#ampur" aria-controls="ampur" role="tab" data-toggle="tab" onclick="newstobe(2)">อำเภอ</a></li>
+                                <li role="presentation"><a href="#community" aria-controls="community" role="tab" data-toggle="tab" onclick="newstobe(4)">ชุมชน</a></li>
+                                <li role="presentation"><a href="#school" aria-controls="school" role="tab" data-toggle="tab" onclick="newstobe(3)">โรงเรียน / สถานศึกษา</a></li>
+                                <li role="presentation"><a href="#government" aria-controls="government" role="tab" data-toggle="tab" onclick="newstobe(7)"> หน่วยงานราชการ/รัฐวิสาหกิจ</a></li>
+                                <li role="presentation"><a href="#company" aria-controls="company" role="tab" data-toggle="tab" onclick="newstobe(6)"> สถานประกอบการ</a></li>
                             </ul>
 
                             <!-- Tab panes -->
-                            <div class="tab-content" id="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="home">home</div>
-                                <div role="tabpanel" class="tab-pane" id="ampur">ampur</div>
-                                <div role="tabpanel" class="tab-pane" id="community">community</div>
-                                <div role="tabpanel" class="tab-pane" id="school">school</div>
-                                <div role="tabpanel" class="tab-pane" id="government">government</div>
-                                <div role="tabpanel" class="tab-pane" id="company">company</div>
+                            <div class="tab-content" id="tab-content" style=" padding: 0px; margin: 0px;">
+                                <div role="tabpanel" class="tab-pane active" id="contentnewstobe" style=" padding: 0px; margin: 0px;"></div>
                             </div>
                         </div>
                     </div>
-
-                </div>
+                    
             </div>
+        </div>
             <!--
             ####################
             ## Album
@@ -685,7 +683,7 @@
             $photo = $photoModel->album_limit(10);
             if ($photo->num_rows() > 0) {
                 ?>
-                <div id="main-album" style=" display: none;">
+                <div id="main-album" style=" display: none; clear: both;">
                     <div class="alert" style="width:100%; border-radius:0px; margin-bottom:0px; border: none; box-shadow: none;">
                         <div  style=" padding-left:0px;">
                             <div style=" padding:2px 5px; background: #009900; color: #ffff00;" class="btn"><i class="fa fa-file-image-o"></i> รูปภาพ / กิจกรรม</div>
@@ -950,6 +948,15 @@
                 $(".text-menu").css({'text-overflow': 'ellipsis', 'white-space': 'nowrap', 'width': wh, 'overflow': 'hidden', 'text-align': 'left'});
             }
 
+            function newstobe(type){
+                $("#contentnewstobe").html("loading...");
+                var url = "<?php echo site_url('toberegis/tobenews/tobehome') ?>";
+                var data = {type: type};
+                $.post(url,data,function(datas){
+                    $("#contentnewstobe").html(datas);
+                });
+            }
+
 
             $(".container-card").css({'border': '#eeeeee solid 1px','border-radius':'5px', 'box-shadow': 'none', 'color': '#666666', 'text-align': 'center', 'font-size': '20px'});
             $(".container-card").hover(function () {
@@ -958,6 +965,7 @@
             }, function () {
                 $(this).css({'border': '#eeeeee solid 1px', 'box-shadow': 'none', 'color': '#666666'});
             });
+            newstobe();
         </script>
     </body>
 </html>

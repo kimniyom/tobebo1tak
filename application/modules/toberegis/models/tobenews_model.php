@@ -117,8 +117,25 @@ class tobenews_model extends CI_Model {
         return $this->db->query($sql);
     }
 
-    public function GetnewsAll($limit = null){
-        if()
+    public function GetnewsAll($limit = null,$type){
+        if($type == ""){
+            $where = "1=1";
+        } else {
+            $where = " n.type='$type'";
+        }
+
+        if(isset($limit)){
+            $Limit = "LIMIT $limit";
+        } else {
+            $Limit = "";
+        }
+
+        $sql = "SELECT n.*,u.`name`,u.lname,t.type AS typename
+            FROM tobe_news n INNER JOIN tobe_user u ON n.user_id = u.id
+            INNER JOIN tobe_user_type t ON n.type = t.id 
+            WHERE $where
+            ORDER BY n.id DESC $Limit";
+        return $this->db->query($sql);
     }
 
     
