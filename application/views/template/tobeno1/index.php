@@ -39,28 +39,15 @@
 
         <?php //echo $this->background_model->background_active() ?>
         <style type="text/css">
-            #body{
-                background: #4d0b03;
-                /*background:url('images/bg-bd.png') top repeat-x #ffffff;*/
-                /*
-                background: #4d0b03;
-                background: -moz-linear-gradient(top, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
-                background: -webkit-gradient(left top, left bottom, color-stop(0%, #4d0b03), color-stop(47%, #df5e18), color-stop(100%, #FFFFFF));
-                background: -webkit-linear-gradient(top, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
-                background: -o-linear-gradient(top, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
-                background: -ms-linear-gradient(top, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
-                background: linear-gradient(to bottom, #4d0b03 0%, #df5e18 47%, #FFFFFF 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d0b03', endColorstr='#FFFFFF', GradientType=0 );
-                border: none;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-                */
-            } /*#f8f8f8*/
+            #body{<?php echo $this->background_model->background_active() ?>;} 
             #nav ul li a{font-size:24px; background: <?php echo $style->color_head ?>;}
             #nav ul li a:active{background: <?php echo $style->color_head ?>;}
             #nav ul li a:after{background: <?php echo $style->color_head ?>;}
             #nav ul li a:hover{font-size:24px; background: <?php echo $style->color_head ?>; color:#4d0b03;}
             #nav ul li a:focus{background: <?php echo $style->color_head ?>;}
+            #nav{
+                border:<?php echo $style->color_head ?> solid 1px 
+            }
             .dropdown ul li a{
                 font-size:20px;
                 color: #999999;
@@ -145,9 +132,9 @@
             </div>
         </div>
 
-        <div class="container" id="main-content" style="box-shadow: #999999 0px 0px 0px 0px; margin-top: 0px; padding-top: 0px;">
+        <div class="container" id="main-content" style="box-shadow: #999999 0px 0px 50px 0px; margin-top: 0px; padding-top: 0px;border-radius: 10px 10px 0px 0px;">
             <!-- Navigation -->
-            <nav class="navbar navbar-default" role="navigation" id="nav" style="border-radius: 0px; margin-bottom:15px; background: <?php echo $style->color_head ?>; border:<?php echo $style->color_head ?> solid 1px;"><!--*id="nav-bar"-->
+            <nav class="navbar navbar-default" role="navigation" id="nav" style="border-radius: 10px 10px 0px 0px; margin-bottom:15px; background: <?php echo $style->color_head ?>;"><!--*id="nav-bar"-->
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="container">
                     <div class="navbar-header">
@@ -161,7 +148,11 @@
                             -->
                             <font style="color:<?php echo $style->color_text ?>;"><i class="fa fa-bars"></i> Menu</font>
                         </button>
-                        <a class="navbar-brand" href="#" style=" margin-top: 0px; font-size:24px; color: <?php echo $style->color_text ?>;"><?php echo $style->webname_short ?></a>
+                        
+                        <a class="navbar-brand" href="#" style=" margin-top: 0px; font-size:24px; color: <?php echo $style->color_text ?>;">
+                           
+                            <?php echo $style->webname_short ?></a>
+                    
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none;">
@@ -204,14 +195,14 @@
                                                 ?>
                                                 <?php if ($snSub->type != '2') { ?>
                                                     <li>
-                                                        <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>" style=" color: #ff0033;">
+                                                        <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>" style="color:<?php echo $style->color_text ?>">
                                                             <i class="fa fa-angle-right"></i>
                                                             <?php echo $snSub->title ?>
                                                         </a>
                                                     </li>
                                                 <?php } else { ?>
                                                     <li>
-                                                        <a href="<?php echo $snSub->link ?>" target="_bank" style=" color: #ff0033;">
+                                                        <a href="<?php echo $snSub->link ?>" target="_bank" style="color:<?php echo $style->color_text ?>">
                                                             <i class="fa fa-angle-right"></i>
                                                             <?php echo $snSub->title ?>
                                                         </a>
@@ -245,118 +236,118 @@
                     ################
                     -->
                     <?php if ($manager->active == '1') { ?>
-
+                        
                         <center>
-                            <img src="<?php echo base_url() ?>upload_images/manager/<?php echo $manager->images ?>" width="150" class="img-responsive img-thumbnail"/>
-                            <div class="well well-sm">
+                            <img src="<?php echo base_url() ?>upload_images/manager/<?php echo $manager->images ?>" width="150" class="img-responsive" style=" margin-top: 5px;"/>
+                            <div class="well well-sm" style=" background: none; border: none; box-shadow: none; color: <?php echo $style->color_head ?>">
                                 <?php echo $manager->name ?></br>
                                 <?php echo $manager->position ?>
                             </div>
                         </center>
 
                     <?php } ?>
-
-                    <div class="panel panel-default" style="border-color:<?php echo $style->color_head ?>;">
-                        <div class="panel-heading" style="color:<?php echo $style->color_text ?>; background:<?php echo $style->color_head ?>;">
-                            <i class="fa fa-th-large"></i> <font style=" font-size: 22px;">เมนู</font>
-                        </div>
-
-                        <!--
-                            #
-                            #
-                            # Link Menu
-                            #
-                            #
-                        -->
-
-                        <?php
-                        $menu = $this->tak->get_mas_menu();
-                        foreach ($menu->result() as $rs):
-                            $menu_model = new menu_model();
-                            //$color = $menu_model->get_color($rs->menu_color);
-                            ?>
-
-                            <?php
-                            if ($rs->mas_status == '0') {
-                                ?>
-                                <a href="<?= site_url($rs->link . '/' . $this->takmoph_libraries->encode($rs->admin_menu_id) . '/' . $rs->mas_menu) ?>" style="text-decoration: none;">
-                                    <div id="submenu" class="btn btn-block hvr-curl-top-right" style="background:<?php echo $rs->bgcolor ?>;color:<?php echo $rs->textcolor ?>; border-radius:0px;">
-                                        <div class="text-menu">
-                                            <img src="<?= base_url() ?>icon_menu/<?= $rs->menu_icon ?>" style="height:32px;"/>
-                                            <?= $rs->mas_menu ?>
-                                        </div>
-                                    </div>
-                                </a>
-
-                                <!-- ลิงค์ ข้างนอก -->
-                            <?php } else if ($rs->mas_status == '2') {
-                                ?>
-
-                                <a href="<?php echo $rs->link_out; ?>" target="_blank" style=" text-decoration: none;">
-                                    <div id="submenu" class="btn btn-block hvr-curl-top-right" style="background:<?php echo $rs->bgcolor ?>;color:<?php echo $rs->textcolor ?>; border-radius:0px;">
-                                        <div class="text-menu"> 
-                                            <img src="<?= base_url() ?>icon_menu/<?= $rs->menu_icon ?>" style="height:32px;"/>
-                                            <?= $rs->mas_menu ?>
-                                        </div>
-                                    </div></a>
-
-                                <!-- Droupdown -->
-                                <?php
-                            } else {
-                                ?>
-
-                                <a href="<?php echo site_url('menu/submenu/' . $this->takmoph_libraries->encode($rs->id)); ?>" style=" text-decoration: none;">
-                                    <div id="submenu" class="btn btn-block hvr-curl-top-right" style="background:<?php echo $rs->bgcolor ?>;color:<?php echo $rs->textcolor ?>; border-radius:0px;">                              
-                                        <div class="text-menu"> 
-                                            <img src="<?= base_url() ?>icon_menu/<?= $rs->menu_icon ?>" style="height:32px;"/> <?= $rs->mas_menu ?>
-                                        </div>
-                                    </div></a>
-                            <?php } ?>
-                        <?php endforeach; ?>
-
-                        <!-- 
-                        #######################################
-                        ## Menu Down Load
-                        ########################################
-                        -->
-                        <a href="<?php echo site_url('formdownload'); ?>" style="text-decoration:">
-                            <div id="submenu" class="btn btn-info btn-block hvr-curl-top-right" style="border-radius:0px;">
-                                <div class="text-menu"> 
-                                    <img src="<?= base_url() ?>icon_menu/folder-icon.png" style="height:32px;"/>
-                                    แบบฟอร์มต่าง ๆ 
-                                </div>
-                            </div></a>
-                        <!-- 
-                        #######################################
-                        ## END MENU GROUP
-                        ########################################
-                        -->
+                    <div style="padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_head ?>">
+                        <i class="fa fa-th-large"></i> เมนู
                     </div>
+                    <hr id="hr" style=" border: <?php echo $style->color_head ?> solid 1px;"/>
+                    <!--
+                        #
+                        #
+                        # Link Menu
+                        #
+                        #
+                    -->
 
                     <?php
-                    $modules = $this->modulemanager_model->Get_moduleActive();
-                    foreach ($modules->result() as $md) {
+                    $menu = $this->tak->get_mas_menu();
+                    foreach ($menu->result() as $rs):
+                        $menu_model = new menu_model();
+                        //$color = $menu_model->get_color($rs->menu_color);
                         ?>
-                        <div style=" text-align: center;">
-                            <a href="<?php echo site_url($md->module) ?>" style=" text-decoration: none; font-size: 18px; font-weight: bold;">
-                                <div class="panel" style=" border-radius: 5px;">
-                                    <center>
-                                        <img src="<?php echo base_url() ?>assets/module/<?php echo $md->module ?>/images/icon.png" class=" img-responsive" style=" max-height: 80px;"/>
-                                        <?php echo $md->thainame ?>
-                                    </center>
+
+                        <?php
+                        if ($rs->mas_status == '0') {
+                            ?>
+                            <a href="<?= site_url($rs->link . '/' . $this->takmoph_libraries->encode($rs->admin_menu_id) . '/' . $rs->mas_menu) ?>" style="text-decoration: none;">
+                                <div id="submenu" class="btn btn-block hvr-curl-top-right" style="background: #f2f2f2; color: #333333; border-radius:0px; margin-bottom: 5px;">
+                                    <div class="text-menu">
+                                        <img src="<?= base_url() ?>icon_menu/<?= $rs->menu_icon ?>" style="height:32px;"/>
+                                        <?= $rs->mas_menu ?>
+                                    </div>
                                 </div>
                             </a>
-                        </div>
-                    <?php } ?>
 
+                            <!-- ลิงค์ ข้างนอก -->
+                        <?php } else if ($rs->mas_status == '2') {
+                            ?>
+
+                            <a href="<?php echo $rs->link_out; ?>" target="_blank" style=" text-decoration: none;">
+                                <div id="submenu" class="btn btn-block hvr-curl-top-right" style="background: #f2f2f2; color: #333333; border-radius:0px; margin-bottom: 5px;">
+                                    <div class="text-menu"> 
+                                        <img src="<?= base_url() ?>icon_menu/<?= $rs->menu_icon ?>" style="height:32px;"/>
+                                        <?= $rs->mas_menu ?>
+                                    </div>
+                                </div></a>
+
+                            <!-- Droupdown -->
+                            <?php
+                        } else {
+                            ?>
+                            <a href="<?php echo site_url('menu/submenu/' . $this->takmoph_libraries->encode($rs->id)); ?>" style=" text-decoration: none;">
+                                <div id="submenu" class="btn btn-block hvr-curl-top-right" style="background: #f2f2f2; color: #333333; border-radius:0px; margin-bottom: 5px;">                              
+                                    <div class="text-menu"> 
+                                        <img src="<?= base_url() ?>icon_menu/<?= $rs->menu_icon ?>" style="height:32px;"/> <?= $rs->mas_menu ?>
+                                    </div>
+                                </div></a>
+                        <?php } ?>
+                    <?php endforeach; ?>
+
+                    <!-- 
+                    #######################################
+                    ## Menu Down Load
+                    ########################################
+                    -->
+                    <a href="<?php echo site_url('formdownload'); ?>" style="text-decoration:">
+                        <div id="submenu" class="btn btn-block hvr-curl-top-right" style="border-radius:0px; background: #f2f2f2; color: #333333;">
+                            <div class="text-menu"> 
+                                <img src="<?= base_url() ?>icon_menu/folder-icon.png" style="height:32px;"/>
+                                แบบฟอร์มต่าง ๆ 
+                            </div>
+                        </div></a>
+                    <!-- 
+                    #######################################
+                    ## END MENU GROUP
+                    ########################################
+                    -->
+                    <div class="row" style=" margin-top: 5px;">
+                        <?php
+                        $modules = $this->modulemanager_model->Get_moduleActive();
+                        foreach ($modules->result() as $md) {
+                            ?>
+                            <div class="col-md-12 col-lg-12 col-sm-6">
+                                <div style=" text-align: center;">
+                                    <a href="<?php echo site_url($md->module) ?>" style=" text-decoration: none; font-size: 18px; font-weight: bold;">
+                                        <div class="btn btn-block hvr-curl-top-right" style=" background: #f2f2f2; margin-bottom: 5px; color: #333333;">
+                                            <center>
+                                                <img src="<?php echo base_url() ?>assets/module/<?php echo $md->module ?>/images/icon.png" class=" img-responsive" style=" max-height: 80px;"/>
+                                                <?php echo $md->thainame ?>
+                                            </center>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
                     <!-- 
                         ####################
                         ## ข่าว HOT
                         ####################
                     -->
-
-                    <i class="fa fa-fire"></i> <font style=" font-size: 24px;">HOT</font>
-                    <hr style=" margin-top: 5px;"/>
+                    <div style="padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_head ?>">
+                        <i class="fa fa-fire"></i> ข่าวยอดนิยม
+                    </div>
+                    <hr id="hr" style=" border: <?php echo $style->color_head ?> solid 1px;"/>
+    
                     <div class="row">
                         <?php
                         $i = 0;
@@ -369,7 +360,7 @@
                             <?php
                             if ($i == '1') {
                                 ?>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
                                     <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($hotNews->id) . '/' . $hotNews->groupnews) ?>" style=" text-decoration: none;">
                                         <div class="container-card link-hot" style=" max-height: 250px; border: none;">
                                             <div id="div-bg-boxnew"></div>
@@ -522,10 +513,10 @@
 
                     <div id="menu_and_news" style="display: none; margin-top: 0px; padding-top: 0px;">
                         <?php if ($style->showlastnews == "1") { ?>
-                            <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>">
+                            <div style="padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>">
                                 <i class="fa fa-newspaper-o"></i> ล่าสุด
                             </div>
-                            <hr id="hr" style=" border: <?php echo $style->color_text ?> solid 1px;"/>
+                            <hr id="hr" style=" border: <?php echo $style->color_head ?> solid 1px;"/>
                             <div class="row">
                                 <?php
                                 $i = 0;
@@ -575,7 +566,7 @@
                             if ($homenewss->num_rows() > 0):
                                 ?>
                                 <div style="background:<?php echo $Gn->background ?>; padding:<?php echo $padding; ?>;">
-                                    <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"><i class="fa fa-newspaper-o"></i> <?php echo $Gn->groupname ?></div>
+                                    <div style="padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"><i class="fa fa-newspaper-o"></i> <?php echo $Gn->groupname ?></div>
                                     <hr id="hr" style="border-color:<?php echo $headcolor ?>"/>
                                     <div class="row">
                                         <?php
@@ -585,7 +576,6 @@
                                             $i++;
                                             ?>
                                             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-<?php echo $Gn->column ?>">
-
                                                 <?php
                                                 if ($Gn->column == '12') {
                                                     echo $lib->setcolumn($Gn->column, $news->images, $news->titel, $news->date, $news->id, $news->groupnews);
@@ -624,10 +614,7 @@
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
-
                     <!-- EndSlide News -->
-
-
                     <!-- 
                      ################
                      ## Content Page
@@ -671,9 +658,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                </div>
             </div>
-        </div>
             <!--
             ####################
             ## Album
@@ -694,12 +681,12 @@
                                     $firstAlbum = $photoModel->get_first_album($albums->id);
                                     ?>
 
-                                    <a href="<?php echo site_url('photo/gallery/' . $albums->id) ?>" class="hover14">
+                                    <a href="<?php echo site_url('photo/gallery/' . $albums->id) ?>" class="hover11">
                                         <div class="slide">
-                                            <div class="container-card" style="height:160px; text-align: center; box-shadow:none; margin-bottom:0px;">
+                                            <div class="container-card" style="height:180px; text-align: center; box-shadow:none; margin-bottom:0px;">
                                                 <figure>
                                                     <div class="img-wrapper">
-                                                        <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $firstAlbum ?>" class="img-responsive" style="height:160px;"/>
+                                                        <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $firstAlbum ?>" class="img-responsive" style="height:180px;"/>
                                                         <div id="album-title">
                                                             <?php echo $albums->title ?>
                                                         </div>
@@ -783,12 +770,12 @@
                                     <?php if ($nb->type == '0') { ?>
                                         <div class="col-sm-6 col-md-3 col-lg-3">
                                             <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
-                                               style="color:<?php echo $style->color_text ?>;">
+                                               style="color:<?php echo $style->color_head ?>;">
                                                 <b><?php echo $nb->title ?></b></a>
                                         </div>
                                     <?php } else { ?>
                                         <div class="col-sm-6 col-md-3 col-lg-3">
-                                            <span class="caret"></span> <b><font style="color:<?php echo $style->color_text ?>;"><?php echo $nb->title ?></font></b>
+                                            <span class="caret"></span> <b><font style="color:<?php echo $style->color_head ?>;"><?php echo $nb->title ?></font></b>
                                             <br/>
                                             <!--
                                                 ########## Subnavbar ###########
@@ -799,7 +786,7 @@
                                                 foreach ($subnav->result() as $snSub):
                                                     ?>
                                                     <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>"
-                                                       style="color:<?php echo $style->color_text ?>;">- <?php echo $snSub->title ?></a> <br/>
+                                                       style="color:<?php echo $style->color_head ?>;">- <?php echo $snSub->title ?></a> <br/>
                                                    <?php endforeach; ?>
                                             </div>
                                         </div>
@@ -849,6 +836,7 @@
                     $("#myCarousel").hide();//Set Banner Show
                     $(".img_news").css("width", "100px");
                     $(".font_news").css("font-size", "12px");
+                    $("#main-contents").hide();
                 }
 
                 /*
@@ -894,6 +882,7 @@
                         pager: false
                     });
                     $("#box-hot-new").hide();
+                    
                 }
             });
 
@@ -905,12 +894,12 @@
                     if ($(this).scrollTop() > 65) {
                         //$("#boxlogohospital").hide();
                         nav.addClass("navbar-fixed-top");
-                        nav.css({'box-shadow': '#000000 0px 0px 10px 0px'});
+                        nav.css({'box-shadow': '#000000 0px 0px 10px 0px', 'border-radius': '0px'});
                         //nav.fadeIn();
                     } else {
                         //$("#boxlogohospital").show();
                         nav.removeClass("navbar-fixed-top");
-                        nav.css({'box-shadow': 'none'});
+                        nav.css({'box-shadow': 'none', 'border-radius': '10px 10px 0px 0px'});
                     }
                 });
 
@@ -948,17 +937,17 @@
                 $(".text-menu").css({'text-overflow': 'ellipsis', 'white-space': 'nowrap', 'width': wh, 'overflow': 'hidden', 'text-align': 'left'});
             }
 
-            function newstobe(type){
-                $("#contentnewstobe").html("loading...");
+            function newstobe(type) {
+                $("#contentnewstobe").html("<center>loading...</center>");
                 var url = "<?php echo site_url('toberegis/tobenews/tobehome') ?>";
                 var data = {type: type};
-                $.post(url,data,function(datas){
+                $.post(url, data, function (datas) {
                     $("#contentnewstobe").html(datas);
                 });
             }
 
 
-            $(".container-card").css({'border': '#eeeeee solid 1px','border-radius':'5px', 'box-shadow': 'none', 'color': '#666666', 'text-align': 'center', 'font-size': '20px'});
+            $(".container-card").css({'border': '#eeeeee solid 1px', 'border-radius': '5px', 'box-shadow': 'none', 'color': '#666666', 'text-align': 'center', 'font-size': '20px'});
             $(".container-card").hover(function () {
                 //'font-size': '20px','padding':'5px','color':'#666666','text-align':'center'
                 $(this).css({'border': 'none', 'box-shadow': '#cccccc 0px 0px 10px 0px', 'color': '#df5e18', 'text-align': 'center', 'font-size': '20px'});

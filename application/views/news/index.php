@@ -65,7 +65,7 @@ echo $model->breadcrumb($list, $active);
                             </center>
                         <?php } ?>
                     </div>
-                    <p class="detail" style=" color: #996600;">
+                    <p class="details" style=" color: #996600;">
                         <?php echo $news->titel ?><br/>
                     </p>
                     <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($news->id) . '/' . $group->id) ?>">

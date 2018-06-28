@@ -76,12 +76,13 @@ $shareUrl = current_url();
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
         <div class="row" style=" margin-bottom: 0px;">
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                <!--
-                <?php //if ($news->qrcode) { ?>
-                    <a href="<?php //echo base_url() ?>qrcode/<?php //echo $news->qrcode ?>" class="fancybox">
-                        <img src="<?php echo base_url() ?>qrcode/<?php //echo $news->qrcode ?>" class="img img-responsive" width="80"/></a>
-                <?php //} ?>
-                -->
+                
+                <?php if ($news->qrcode) { ?>
+                    <a href="<?php echo base_url() ?>qrcode/<?php echo $news->qrcode ?>" class="fancybox">
+                        <img src="<?php echo base_url() ?>qrcode/<?php echo $news->qrcode ?>" class="img img-responsive" width="80"/></a>
+                <?php } else { ?>
+                    <img src="<?php echo base_url() . "assets/module/toberegis/images/logotak.png" ?>" class="img img-responsive" width="80"/>
+                <?php } ?>
             </div>
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                 <i class="fa fa-eye text-primary"></i> อ่าน : <?php echo $news->views ?>
@@ -159,21 +160,11 @@ $shareUrl = current_url();
                                     </center>
                                 <?php } ?>
                             </div>
-                            <p class="detail" id="details">
+                            <p class="details">
                                 <?php
-                                //$this->session->userdata('width');
-                                $text = strlen($hots->titel);
-                                if ($text > 160) {
-                                    //echo iconv_substr($news->titel,'0','100')."...";
-                                    if ($this->session->userdata('width') > 1000 || $this->session->userdata('width') <= 768) {
-                                        print mb_substr($hots->titel, 0, 40, 'UTF-8') . "...";
-                                    } else {
-                                        echo $hots->titel;
-                                    }
-                                } else {
+                 
                                     echo $hots->titel;
-                                }
-                                ?><br/>
+                                ?>
                             </p>
                             <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($hots->id) . '/' . $hots->groupnews) ?>">
                                 <button type="button" class="btn btn-danger btn-xs" id="btn-card"> รายละเอียด ...</button>
@@ -206,6 +197,7 @@ $shareUrl = current_url();
             ?>
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-12" style=" padding: 0px;">
                 <div class="container-card set-views-card" style="max-height: 200px;">
+                    <div id="div-bg-boxnew"></div>
                     <div class="img-wrapper">
                         <?php if (!empty($images)) { ?>
                             <img src="<?php echo base_url() ?>upload_images/news/thumb/<?php echo $images; ?>" class="img-responsive img-polaroid" style="height:100px;"/>
@@ -215,22 +207,10 @@ $shareUrl = current_url();
                             </center>
                         <?php } ?>
                     </div>
-                    <p class="detail">
+                    <p class="details">
                         <?php
-                        $this->session->userdata('width');
-
-                        $text = strlen($news->titel);
-                        if ($text > 160) {
-                            //echo iconv_substr($news->titel,'0','100')."...";
-                            if ($this->session->userdata('width') > 1000 || $this->session->userdata('width') <= 768) {
-                                print mb_substr($news->titel, 0, 30, 'UTF-8') . "...";
-                            } else {
-                                echo $news->titel;
-                            }
-                        } else {
                             echo $news->titel;
-                        }
-                        ?><br/>
+                        ?>
                     </p>
                     <a href="<?php echo site_url('news/view/' . $this->takmoph_libraries->encode($news->id) . '/' . $news->groupnews) ?>">
                         <button type="button" class="btn btn-primary btn-xs" id="btn-card"> รายละเอียด ...</button>

@@ -16,6 +16,7 @@ class news extends CI_Controller {
         $this->load->library('session');
         $this->load->library('ciqrcode');
         $this->load->helper('string');
+        
     }
 
     public function Auth() {

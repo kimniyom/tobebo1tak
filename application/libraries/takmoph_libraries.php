@@ -175,4 +175,8 @@ class takmoph_libraries {
         }
     }
 
+    function Setchangwat(){
+        return "63";
+    }
+
 }

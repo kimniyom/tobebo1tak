@@ -11,6 +11,7 @@ class users_model extends CI_Model {
         parent::__construct();
         $this->CI = $this->load->database('default', TRUE);
         $this->CI->query("SET NAMES 'UTF8'");
+        $this->load->library('takmoph_libraries');
     }
 
     public function typeuser(){
@@ -96,6 +97,29 @@ class users_model extends CI_Model {
         $this->db->insert("tobe_log_login", $log);
     }
 
+     public function Getlocation($userID,$type){
+        $changwat = $this->takmoph_libraries->Setchangwat();
+        if($type == "1"){
+            $sql = "SELECT p.*,a.ampurname as locationname
+                FROM tobe_user_privilege p 
+                INNER JOIN campur a ON p.ampur = a.ampurcodefull
+                WHERE p.user_id = '$userID' AND a.changwatcode = '$changwatcode' ";
+        } else if($type == "4"){
+            $sql = "SELECT p.*,a.tambonname as locationname
+                FROM tobe_user_privilege p 
+                INNER JOIN ctambon a ON p.privilege = a.tamboncodefull AND p.ampur = a.ampurcodefull
+                WHERE p.user_id = '$userID' AND a.changwatcode = '$changwatcode' ";
+        } else {
+            $sql = "SELECT p.*,o.name as locationname
+                FROM tobe_user_privilege p INNER JOIN tobe_occupation o ON p.privilege = o.id
+                WHERE p.user_id = '$userID' ";
+        }
+
+        $result = $this->db->query($sql);
+        $rs = $result->row();
+        return $rs->locationname;
+
+    }
 
 }
 
