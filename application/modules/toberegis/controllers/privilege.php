@@ -17,7 +17,7 @@ class privilege extends CI_Controller {
     }
 
     public function Auth(){
-        if($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || !empty($this->session->userdata('user_register'))){
+        if($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != ""){
             return TRUE;
         } else {
             redirect('users/login','refresh');

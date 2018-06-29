@@ -55,7 +55,7 @@ $autoload['packages'] = array();
   |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
  */
 
-$autoload['libraries'] = array('database', 'session', 'encrypt', 'takmoph_libraries');
+$autoload['libraries'] = array('database', 'session', 'encrypt', 'takmoph_libraries','toberegis/tobeconfig');
 
 
 /*

@@ -14,7 +14,7 @@ class storeimages extends CI_Controller {
     }
 
     public function Auth() {
-        if ($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || !empty($this->session->userdata('user_register')) || $this->session->userdata('tobe_user_id') != "") {
+        if ($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || $this->session->userdata('tobe_user_id') != "") {
             return TRUE;
         } else {
             redirect('users/login', 'refresh');
