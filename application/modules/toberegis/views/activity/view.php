@@ -22,10 +22,10 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
-        SetImgResponsive(".detail-new");
-        Settitleimg();
+        //SetImgResponsive(".detail-new");
+        //Settitleimg();
     });
-
+/*
     function SetImgResponsive(BoxID) {
         var BoxPost = BoxID;
         var tn_array = $(BoxPost + ' img').map(function () {
@@ -45,7 +45,7 @@
     }
 
     function Settitleimg() {
-        var firstIMG = "<?php echo $firstIMG ?>";
+        var firstIMG = "<?php //echo $firstIMG ?>";
         if (firstIMG != "") {
             var img = document.getElementById('img-new');
             var widthIMG = img.clientWidth;
@@ -57,6 +57,7 @@
             }
         }
     }
+    */
 </script>
 
 <script type="text/javascript">
@@ -99,7 +100,6 @@
 
 </script>
 
-
 <?php
 $this->load->library('takmoph_libraries');
 
@@ -110,14 +110,14 @@ $list = array(
 );
 $active = $head;
 $eid = $this->takmoph_libraries->url_encode($this->session->userdata('tobe_user_id'));
-echo $model->breadcrumb_backend($list, $active, 'toberegis/activity/detailuser/' . $eid);
+echo $model->breadcrumb_backend($list, $active, 'toberegis/users/detailuser/' . $eid);
 ?>
 
 <div class="wells" style=" clear: both;">
     <div class="pull-right">
         <a href="<?php echo site_url('toberegis/activity/update/' . $activity->id) ?>">
             <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> แก้ไข</button></a>
-        <button type="button" class="btn btn-default" onclick="javascript:delete_news('<?php echo $activity->id ?>')"><i class="fa fa-trash"></i> ลบ</button>
+        <button type="button" class="btn btn-default" onclick="javascript:delete_activity('<?php echo $activity->id ?>')"><i class="fa fa-trash"></i> ลบ</button>
     </div>   
     <h3 style=" margin-top: 0px;"><?php echo $activity->title; ?></h3>
     <hr/>

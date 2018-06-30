@@ -34,7 +34,7 @@ $style = $this->menubar_model->get_style();
         $("#main-news-sub").show();
         $(".BL").show();
         $("#newsgroup").show();
-
+        $("#activity").show();
         $("#homepage").html("loading ...");
         var url = "<?php echo base_url('index.php/homepage/index') ?>";
         var data = {a: 1};

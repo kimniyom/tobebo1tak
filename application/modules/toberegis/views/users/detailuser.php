@@ -24,7 +24,6 @@ $active = $head;
             <div class="list-group-item">ชื่อ - สกุล: <?php echo $user->name . " " . $user->lname ?></div>
             <div class="list-group-item">สถานะ: <?php echo $type->type ?></div>
             <div class="list-group-item">ลงทะเบียน: <?php echo $user->d_update ?></div>
-
         </div>
         <?php $this->load->view('toberegis/users/menu') ?>
     </div>
@@ -44,9 +43,18 @@ $active = $head;
         </div>
         <hr/>
         <div class="row">
-            <div class="col-md-3 col-lg-3">
-                <button type="button" class="btn btn-default">
+            <div class="col-md-5 col-lg-5">
+                <div class="well" style=" text-align: center;">
                     สมาชิก TO BE NUMBER ONE<br/>
+                    ในเขตรับผิดชอบ
+                    <div id="countperson"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <button type="button" class="btn btn-default btn-lg">
+                    <i class="fa fa-users"></i> รายชื่อสมาชิก<br/>
                     <div id="countperson"></div>
                 </button>
             </div>
@@ -108,11 +116,10 @@ $active = $head;
     }
 
     function countperson() {
-        var ampur = $("#ampur").val();
-        var privilege = $("#filter").val();
+        var user_id = "<?php echo $user->id ?>";
         var type = "<?php echo $user->type ?>";
         var url = "<?php echo site_url('toberegis/users/countperson') ?>";
-        var data = {ampur: ampur, privilege: privilege,type: type};
+        var data = {user_id: user_id,type: type};
         $.post(url, data, function (datas) {
             $("#countperson").html(datas);
         });

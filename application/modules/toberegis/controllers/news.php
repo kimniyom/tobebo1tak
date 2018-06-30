@@ -16,7 +16,6 @@ class news extends CI_Controller {
         $this->load->library('session');
         $this->load->library('ciqrcode');
         $this->load->helper('string');
-        
     }
 
     public function Auth() {
@@ -68,7 +67,7 @@ class news extends CI_Controller {
             'date' => date('Y-m-d H:i:s')
         );
         $this->db->insert('tobe_news', $data);
-        
+
         $sql = "select MAX(id) as id from tobe_news ";
         $rs = $this->db->query($sql)->row();
         $news_id = $this->takmoph_libraries->encode($rs->id);
@@ -80,8 +79,8 @@ class news extends CI_Controller {
         $params['savename'] = 'qrcode/' . $qrcodeName;
         $this->ciqrcode->generate($params);
 
-        
-        
+
+
         $json = array("id" => $news_id);
         echo json_encode($json);
         //echo $this->tak->redir('backend/news/from_upload_images_news/' . $_POST['new_id']);
@@ -111,7 +110,7 @@ class news extends CI_Controller {
         $results = $this->db->get_where("tobe_news", array("id" => $new_id));
         $rs = $results->row();
         if ($rs->qrcode == "") {
-            $qrcodeName = md5($new_id . "tobe_".date("His")) . ".png";
+            $qrcodeName = md5($new_id . "tobe_" . date("His")) . ".png";
             $news_id = $this->takmoph_libraries->encode($new_id);
             //QrCode
             $params['data'] = base_url() . 'toberegis/news/view/' . $news_id;
@@ -152,10 +151,15 @@ class news extends CI_Controller {
                 if (file_exists('upload_images/news/' . $rs->images)) {
                     unlink('upload_images/news/' . $rs->images);
                 }
-                if (file_exists('qrcode/' . $rs->qrcode)) {
-                    unlink('qrcode/' . $rs->qrcode);
-                }
+
             endforeach;
+        }
+        
+        $this->db->where("id", $new_id);
+        $rss = $this->db->get("tobe_news")->row();
+
+        if (file_exists('qrcode/' . $rss->qrcode)) {
+            unlink('qrcode/' . $rss->qrcode);
         }
 
         $this->db->where('new_id', $new_id);
@@ -167,10 +171,8 @@ class news extends CI_Controller {
         //echo $this->tak->redir('backend/news/get_news/');
     }
 
-    
-
     public function from_upload_images_news($new_id = '') {
-        
+
         $new_model = new news_model();
         $data['news'] = $new_model->get_news_where($new_id);
 

@@ -148,11 +148,11 @@
                             -->
                             <font style="color:<?php echo $style->color_text ?>;"><i class="fa fa-bars"></i> Menu</font>
                         </button>
-                        
+
                         <a class="navbar-brand" href="#" style=" margin-top: 0px; font-size:24px; color: <?php echo $style->color_text ?>;">
-                           
+
                             <?php echo $style->webname_short ?></a>
-                    
+
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none;">
@@ -236,7 +236,7 @@
                     ################
                     -->
                     <?php if ($manager->active == '1') { ?>
-                        
+
                         <center>
                             <img src="<?php echo base_url() ?>upload_images/manager/<?php echo $manager->images ?>" width="150" class="img-responsive" style=" margin-top: 5px;"/>
                             <div class="well well-sm" style=" background: none; border: none; box-shadow: none; color: <?php echo $style->color_head ?>">
@@ -347,7 +347,7 @@
                         <i class="fa fa-fire"></i> ข่าวยอดนิยม
                     </div>
                     <hr id="hr" style=" border: <?php echo $style->color_head ?> solid 1px;"/>
-    
+
                     <div class="row">
                         <?php
                         $i = 0;
@@ -606,10 +606,12 @@
                                     </div>
                                     <div class="row" style=" clear: both;">
                                         <a href="<?php echo site_url('news/newsall/' . $this->takmoph_libraries->encode($Gn->id)) ?>" class=" pull-right" style=" margin-right: 20px;">
-                                            <button type="button" class="btn btn-default btn-sm hvr-curl-top-right" style=" margin-right: 0px;">ดูทั้งหมด <i class="fa fa-arrow-circle-o-right"></i></button>
+                                            <button type="button" class="btn btn-default btn-sm hvr-curl-top-right" style=" margin-right: 0px; background:none; color: #999999; border: none;">ดูทั้งหมด <i class="fa fa-arrow-circle-o-right"></i></button>
                                         </a>
                                     </div>
+                                    <!--
                                     <div class="bottom-line"></div>
+                                    -->
                                 </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -658,54 +660,65 @@
                             </div>
                         </div>
                     </div>
+                    <!--
+####################
+## Album
+####################
+                    -->
 
-                </div>
-            </div>
-            <!--
-            ####################
-            ## Album
-            ####################
-            -->
-            <?php
-            $photo = $photoModel->album_limit(10);
-            if ($photo->num_rows() > 0) {
-                ?>
-                <div id="main-album" style=" display: none; clear: both;">
-                    <div class="alert" style="width:100%; border-radius:0px; margin-bottom:0px; border: none; box-shadow: none;">
-                        <div  style=" padding-left:0px;">
-                            <div style=" padding:2px 5px; background: #009900; color: #ffff00;" class="btn"><i class="fa fa-file-image-o"></i> รูปภาพ / กิจกรรม</div>
-                            <hr id="hr" style=" border: #009900 solid 1px;"/>
-                            <div class="slider5" style="margin-bottom:0px; padding-bottom:0px;">
-                                <?php
-                                foreach ($photo->result() as $albums):
-                                    $firstAlbum = $photoModel->get_first_album($albums->id);
-                                    ?>
+                    <?php
+                    $photo = $photoModel->album_limit(10);
+                    if ($photo->num_rows() > 0) {
+                        ?>
+                        <div id="main-album" style=" display: none; clear: both;">
+                            <div class="alert" style="width:100%; border-radius:0px; margin-bottom:0px; border: none; box-shadow: none;padding: 0px; margin: 0px;">
+                                <div style=" padding-left:0px;">
+                                    <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_head ?>">
+                                        <b><i class="fa fa-image"></i> รูปภาพ / กิจกรรม(จังหวัด)</b>
+                                    </div>
+                                    <hr id="hr" style="border-color:<?php echo $style->color_head ?>"/>
+                                    <div class="slider5" style="margin-bottom:0px; padding-bottom:0px;">
+                                        <?php
+                                        foreach ($photo->result() as $albums):
+                                            $firstAlbum = $photoModel->get_first_album($albums->id);
+                                            ?>
 
-                                    <a href="<?php echo site_url('photo/gallery/' . $albums->id) ?>" class="hover11">
-                                        <div class="slide">
-                                            <div class="container-card" style="height:180px; text-align: center; box-shadow:none; margin-bottom:0px;">
-                                                <figure>
-                                                    <div class="img-wrapper">
-                                                        <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $firstAlbum ?>" class="img-responsive" style="height:180px;"/>
-                                                        <div id="album-title">
-                                                            <?php echo $albums->title ?>
-                                                        </div>
+                                            <a href="<?php echo site_url('photo/gallery/' . $albums->id) ?>" class="hover11">
+                                                <div class="slide">
+                                                    <div class="container-card" style="height:180px; text-align: center; box-shadow:none; margin-bottom:0px;">
+                                                        <figure>
+                                                            <div class="img-wrapper">
+                                                                <img src="<?php echo base_url() ?>upload_images/photo/<?php echo $firstAlbum ?>" class="img-responsive" style="height:180px;"/>
+                                                                <div id="album-title">
+                                                                    <?php echo $albums->title ?>
+                                                                </div>
+                                                            </div>
+                                                        </figure>
                                                     </div>
-                                                </figure>
-                                            </div>
-                                        </div>
-                                    </a>
-                                <?php endforeach; ?>
+                                                </div>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    <a href="<?php echo site_url('photo/page') ?>" class=" pull-right">
+                                        <button type="button" class="btn btn-default btn-sm hvr-curl-top-right" style=" margin-right: 0px; background:none; color: #999999; border: none;">ดูทั้งหมด <i class="fa fa-arrow-circle-o-right"></i></button></a>
+                                </div>
                             </div>
-                            <center><br/>
-                                <a href="<?php echo site_url('photo/page') ?>">
-                                    <button type="button" class="btn btn-info btn-sm">ดูทั้งหมด ...</button></a>
-                            </center>
+                        </div>
+                    <?php } ?>  
+
+                    <div id="activity" style=" clear: both; display: none;">
+                        <div style=" padding:2px 5px; padding:2px 5px; font-weight: bold; font-size:28px; color:<?php echo $style->color_head ?>">
+                            <b><i class="fa fa-image"></i> <i class="fa fa-university"></i> รูปภาพ / กิจกรรม(พื้นที่)</b>
+                        </div>
+                        <hr id="hr" style="margin-bottom:0px;border-color:<?php echo $style->color_head ?>"/>
+                        <div id="content-activity">
+
                         </div>
                     </div>
 
                 </div>
-            <?php } ?>
+            </div>
+
             <!--
            ####################
            ## Menu System
@@ -720,7 +733,6 @@
                     <div class="well" id="box-menu-system"
                          style="border-radius:0px; border: none;">
                         <div class="bottom-line"></div>
-
                         <div style="margin-top: 0px;">
                             <div  style=" margin-bottom: 30px;">
                                 <div style=" padding:2px 5px; background: #009900; color: #ffff00;" class="btn"><i class="fa fa-th"></i> ระบบงาน</div>
@@ -882,7 +894,7 @@
                         pager: false
                     });
                     $("#box-hot-new").hide();
-                    
+
                 }
             });
 
@@ -945,7 +957,15 @@
                     $("#contentnewstobe").html(datas);
                 });
             }
-
+            
+            function activity(){
+                 $("#content-activity").html("<center>loading...</center>");
+                var url = "<?php echo site_url('toberegis/tobeactivity/index') ?>";
+                var data = {};
+                $.post(url, data, function (datas) {
+                    $("#content-activity").html(datas);
+                });
+            }
 
             $(".container-card").css({'border': '#eeeeee solid 1px', 'border-radius': '5px', 'box-shadow': 'none', 'color': '#666666', 'text-align': 'center', 'font-size': '20px'});
             $(".container-card").hover(function () {
@@ -955,6 +975,7 @@
                 $(this).css({'border': '#eeeeee solid 1px', 'box-shadow': 'none', 'color': '#666666'});
             });
             newstobe();
+            activity();
         </script>
     </body>
 </html>

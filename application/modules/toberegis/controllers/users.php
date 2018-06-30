@@ -473,17 +473,16 @@ class users extends CI_Controller {
 
     public function countperson() {
         $report = new report_model();
-        $ampur = $this->input->post('ampur');
-        $privilege = $this->input->post('privilege');
+        $user_id = $this->input->post('user_id');
         $type = $this->input->post('type');
+        
+        $this->db->where("user_id",$user_id);
+        $privilege = $this->db->get("tobe_user_privilege")->row();
+
         if ($type != "2" || $type != "4") {
-            $this->db->where("id", $privilege);
-            $rs = $this->db->get("tobe_occupation")->row();
-            $level = $rs->level;
-            $levels = "level$level = '$privilege'";
-            $total = $report->Countpersoninprivilege(63, $ampur, $levels, $type);
+            $total = $report->Countpersoninprivilege($privilege->privilege, $type);
         } else if($type == "4"){
-            
+            $total = $report->Countpersoninprivilegetambon($privilege->privilege, $type);
         }
         //echo $total;
         echo "จำนวน " . $total . " คน";
@@ -495,6 +494,10 @@ class users extends CI_Controller {
         $this->db->where("user_id", $userid);
         $data['privilege'] = $this->db->get("tobe_user_privilege")->row();
         $this->load->view('toberegis/users/menu',$data);
+    }
+    
+    public function getmember($type,$userid){
+        
     }
 
 }

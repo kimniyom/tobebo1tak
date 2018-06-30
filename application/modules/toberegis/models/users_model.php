@@ -103,12 +103,12 @@ class users_model extends CI_Model {
             $sql = "SELECT p.*,a.ampurname as locationname
                 FROM tobe_user_privilege p 
                 INNER JOIN campur a ON p.ampur = a.ampurcodefull
-                WHERE p.user_id = '$userID' AND a.changwatcode = '$changwatcode' ";
+                WHERE p.user_id = '$userID' AND a.changwatcode = '$changwat' ";
         } else if($type == "4"){
             $sql = "SELECT p.*,a.tambonname as locationname
                 FROM tobe_user_privilege p 
                 INNER JOIN ctambon a ON p.privilege = a.tamboncodefull AND p.ampur = a.ampurcodefull
-                WHERE p.user_id = '$userID' AND a.changwatcode = '$changwatcode' ";
+                WHERE p.user_id = '$userID' AND a.changwatcode = '$changwat' ";
         } else {
             $sql = "SELECT p.*,o.name as locationname
                 FROM tobe_user_privilege p INNER JOIN tobe_occupation o ON p.privilege = o.id

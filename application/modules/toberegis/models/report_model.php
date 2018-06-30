@@ -11,6 +11,7 @@ class report_model extends CI_Model {
         parent::__construct();
         $this->CI = $this->load->database('default', TRUE);
         $this->CI->query("SET NAMES 'UTF8'");
+        $this->load->library('toberegis/tobeconfig');
     }
 
     function GetreportAmphur($type = null, $changwat = 63) {
@@ -122,10 +123,20 @@ class report_model extends CI_Model {
         return $this->db->query($sql)->row();
     }
 
-    function Countpersoninprivilege($changwat = 63, $ampur = null, $privilege = null, $type = null) {
+    function Countpersoninprivilege($privilege = null, $type = null) {
+        $changwat = tobeconfig::Getchangwat();
         $sql = "SELECT COUNT(*) AS total
-                FROM tobe_register r 
-                WHERE r.changwat = '$changwat' AND r.ampur = '$ampur' AND $privilege ";
+                FROM tobe_register t 
+                WHERE t.changwat = '$changwat' AND (t.level3 = '$privilege' OR t.level2 = '$privilege' OR t.occupation = '$privilege')";
+        $result = $this->db->query($sql)->row();
+        return $result->total;
+    }
+
+    function Countpersoninprivilegetambon($privilege = null) {
+        $changwat = tobeconfig::Getchangwat();
+        $sql = "SELECT COUNT(*) AS total
+                FROM tobe_register t 
+                WHERE t.changwat = '$changwat' AND t.tambon = '$privilege'";
         $result = $this->db->query($sql)->row();
         return $result->total;
     }

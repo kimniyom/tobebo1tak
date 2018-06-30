@@ -15,7 +15,6 @@ class activity extends CI_Controller {
         $this->load->library('session');
         $this->load->library('ciqrcode');
         $this->load->helper('string');
-        
     }
 
     public function Auth() {
@@ -64,7 +63,7 @@ class activity extends CI_Controller {
             'date' => date('Y-m-d H:i:s')
         );
         $this->db->insert('tobe_activity', $data);
-        
+
         $sql = "select MAX(id) as id from tobe_activity ";
         $rs = $this->db->query($sql)->row();
         $activity_id = $this->takmoph_libraries->url_encode($rs->id);
@@ -76,8 +75,8 @@ class activity extends CI_Controller {
         $params['savename'] = 'qrcode/tobeactivity/' . $qrcodeName;
         $this->ciqrcode->generate($params);
 
-        
-        
+
+
         $json = array("id" => $activity_id);
         echo json_encode($json);
         //echo $this->tak->redir('backend/news/from_upload_images_news/' . $_POST['new_id']);
@@ -103,11 +102,11 @@ class activity extends CI_Controller {
 
     public function edit_activity() {
         //header("Content-Type: image/png");
-        $activity_id = $this->input->post('_activity_id');
+        $activity_id = $this->input->post('activity_id');
         $results = $this->db->get_where("tobe_activity", array("id" => $activity_id));
         $rs = $results->row();
         if ($rs->qrcode == "") {
-            $qrcodeName = md5($activity_id . "tobeactivity_".date("His")) . ".png";
+            $qrcodeName = md5($activity_id . "tobeactivity_" . date("His")) . ".png";
             $activitys_id = $this->takmoph_libraries->url_encode($activity_id);
             //QrCode
             $params['data'] = base_url() . 'toberegis/tobeactivity/view/' . $activitys_id;
@@ -117,14 +116,14 @@ class activity extends CI_Controller {
             $params['savename'] = 'qrcode/tobeactivity/' . $qrcodeName;
             $this->ciqrcode->generate($params);
             $data_update = array(
-                'title' => $this->input->post('_title'),
-                'detail' => $this->input->post('_detail'),
+                'title' => $this->input->post('title'),
+                'detail' => $this->input->post('detail'),
                 'qrcode' => $qrcodeName
             );
         } else {
             $data_update = array(
-                'title' => $this->input->post('_title'),
-                'detail' => $this->input->post('_detail')
+                'title' => $this->input->post('title'),
+                'detail' => $this->input->post('detail')
             );
         }
         $this->db->where('id', $activity_id);
@@ -134,39 +133,38 @@ class activity extends CI_Controller {
         //echo $this->tak->redir('takmoph_admin/get_news/');
     }
 
-    public function delete_news() {
+    public function delete() {
+        $activity_id = $this->input->post('activity_id');
 
-        $new_id = $this->input->post('news_id');
-
-        $sql = "SELECT * FROM tobeimages_news WHERE new_id = '" . $new_id . "'";
+        $sql = "SELECT * FROM tobe_activity_images WHERE activity_id = '$activity_id'";
         $result = $this->db->query($sql);
         if ($result->num_rows() > 0) {
             foreach ($result->result() as $rs):
-                if (file_exists('upload_images/news/thumb/' . $rs->images)) {
-                    unlink('upload_images/news/thumb/' . $rs->images);
+                if (file_exists('upload_images/tobeactivity/thumb/' . $rs->images)) {
+                    unlink('upload_images/tobeactivity/thumb/' . $rs->images);
                 }
-                if (file_exists('upload_images/news/' . $rs->images)) {
-                    unlink('upload_images/news/' . $rs->images);
-                }
-                if (file_exists('qrcode/' . $rs->qrcode)) {
-                    unlink('qrcode/' . $rs->qrcode);
+                if (file_exists('upload_images/tobeactivity/' . $rs->images)) {
+                    unlink('upload_images/tobeactivity/' . $rs->images);
                 }
             endforeach;
         }
+        $this->db->where("id", $activity_id);
+        $rss = $this->db->get("tobe_activity")->row();
+        if (file_exists('qrcode/tobeactivity/' . $rss->qrcode)) {
+            unlink('qrcode/tobeactivity/' . $rss->qrcode);
+        }
 
-        $this->db->where('new_id', $new_id);
-        $this->db->delete('tobeimages_news');
+        $this->db->where('activity_id', $activity_id);
+        $this->db->delete('tobe_activity_images');
 
-        $this->db->where('id', $new_id);
-        $this->db->delete('tobe_news');
+        $this->db->where('id', $activity_id);
+        $this->db->delete('tobe_activity');
 
         //echo $this->tak->redir('backend/news/get_news/');
     }
 
-    
-
     public function from_upload_images_news($new_id = '') {
-        
+
         $new_model = new news_model();
         $data['news'] = $new_model->get_news_where($new_id);
 
