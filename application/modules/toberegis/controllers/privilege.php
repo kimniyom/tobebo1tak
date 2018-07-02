@@ -102,6 +102,7 @@ class privilege extends CI_Controller {
         //$data = "";
         //$this->output($data, $page, "ข้อมูลสมาชิก");
     }
+    
 
     public function createuser(){
         $page = "users/create";

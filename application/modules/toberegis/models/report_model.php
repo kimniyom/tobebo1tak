@@ -141,6 +141,15 @@ class report_model extends CI_Model {
         return $result->total;
     }
 
+    function Countpersoninprivilegeampur($privilege = null) {
+        $changwat = tobeconfig::Getchangwat();
+        $sql = "SELECT COUNT(*) AS total
+                FROM tobe_register t 
+                WHERE t.changwat = '$changwat' AND t.ampur = '$privilege'";
+        $result = $this->db->query($sql)->row();
+        return $result->total;
+    }
+
 }
 
 /*

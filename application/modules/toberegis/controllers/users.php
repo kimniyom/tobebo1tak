@@ -302,6 +302,9 @@ class users extends CI_Controller {
             endforeach;
             $str .= "</select>";
             $str .= "</div>";
+            $str .= "<script type='text/javascript'>";
+            $str .= "$(document).ready(function(){ countperson(); });";
+            $str .= "</script>";
         } else if ($type == 3) {
             $amphur = $this->model->Amphur();
             $str .= "<div class='col-md-3 col-lg-3'>";
@@ -475,29 +478,109 @@ class users extends CI_Controller {
         $report = new report_model();
         $user_id = $this->input->post('user_id');
         $type = $this->input->post('type');
-        
-        $this->db->where("user_id",$user_id);
-        $privilege = $this->db->get("tobe_user_privilege")->row();
 
-        if ($type != "2" || $type != "4") {
+        $this->db->where("user_id", $user_id);
+        $privilege = $this->db->get("tobe_user_privilege")->row();
+        $TypeArr = array("2", "4");
+        if (!in_array($type, $TypeArr)) {
             $total = $report->Countpersoninprivilege($privilege->privilege, $type);
-        } else if($type == "4"){
+        } else if ($type == "4") {
             $total = $report->Countpersoninprivilegetambon($privilege->privilege, $type);
+        } else if ($type == "2") {
+            $total = $report->Countpersoninprivilegeampur($privilege->ampur);
         }
-        //echo $total;
-        echo "จำนวน " . $total . " คน";
+        echo "จำนวน <b class='text-danger'>" . number_format($total) . "</b> คน";
     }
 
-    public function loadmenu(){
+    public function loadmenu() {
         //$userid = $this->input->post('user_id');
         $userid = $this->session->userdata('tobe_user_id');
         $this->db->where("user_id", $userid);
         $data['privilege'] = $this->db->get("tobe_user_privilege")->row();
-        $this->load->view('toberegis/users/menu',$data);
+        $this->load->view('toberegis/users/menu', $data);
     }
-    
-    public function getmember($type,$userid){
-        
+
+    public function getmember($type, $userid) {
+        $this->db->where("id", $userid);
+        $data['user'] = $this->db->get("tobe_user")->row();
+        $this->db->where("id", $data['user']->type);
+        $data['type'] = $this->db->get("tobe_user_type")->row();
+
+        $this->db->where("user_id", $userid);
+        $privilege = $this->db->get("tobe_user_privilege")->row();
+        $TypeArr = array("2", "4");
+        if (!in_array($type, $TypeArr)) {
+            $data['userid'] = $userid;
+            $data['member'] = $this->getlistmember($privilege->privilege);
+            $data['filter'] = "";
+            $page = "toberegis/users/listmember";
+        } else if ($type == "2") {
+            $data['userid'] = $userid;
+            $data['member'] = "";
+            $data['filter'] = $this->Gettype();
+            $page = "toberegis/users/listmember";
+        } else if ($type == "4") {
+            $data['userid'] = $userid;
+            $data['member'] = $this->getlistmembertambon($privilege->privilege);
+            $data['filter'] = "";
+            $page = "toberegis/users/listmember";
+        }
+
+        $this->output($data, $page, "รายชื่อสมาชิก");
+    }
+
+    public function getlistmember($privilege) {
+        $changwat = tobeconfig::Getchangwat();
+        $sql = "select * from tobe_register where changwat = '$changwat' and (level2 = '$privilege' or level3 = '$privilege')";
+        return $this->db->query($sql);
+    }
+
+    public function getlistmembertambon($privilege) {
+        $changwat = tobeconfig::Getchangwat();
+        $sql = "select * from tobe_register where changwat = '$changwat' and tambon = '$privilege' ";
+        return $this->db->query($sql);
+    }
+
+    public function getlistmemberampur($privilege) {
+        $changwat = tobeconfig::Getchangwat();
+        $sql = "select * from tobe_register where changwat = '$changwat' and ampur = '$privilege' ";
+        return $this->db->query($sql);
+    }
+
+    public function Gettype() {
+        $sql = "select * from tobe_type ";
+        $filter = $this->db->query($sql);
+        $str = "";
+        $str .= "<div class='col-md-4 col-lg-4'>";
+        $str .= "<label>ประเภท</label>";
+        $str .= "<select id='type' class='form-control'>";
+        $str .= "<option value=''>== Setting ==</option>";
+        foreach ($filter->result() as $rs):
+            $str .= "<option value='" . $rs->id . "'>" . $rs->typename . "</option>";
+        endforeach;
+        $str .= "</select>";
+        $str .= "</div>";
+        return $str;
+    }
+
+    public function Getlevel2() {
+        $type = $this->input->post('type');
+        $sqlmaster = "select * from tobe_occupation o WHERE type = '$type' AND upper = '0' AND final = '0'";
+        $rsupper = $this->db->query($sqlmaster)->row();
+        $upper = $rsupper->id;
+        $sql = "select * from tobe_occupation where upper = '$upper' ";
+        $filter = $this->db->query($sql);
+        $str = "";
+        $str .= "<div class='col-md-4 col-lg-4'>";
+        $str .= "<label>ประเภท</label>";
+        $str .= "<select id='level2' class='form-control'>";
+        $str .= "<option value=''>== Setting ==</option>";
+        foreach ($filter->result() as $rs):
+            $str .= "<option value='" . $rs->id . "'>" . $rs->name . "</option>";
+        endforeach;
+        $str .= "</select>";
+        $str .= "</div>";
+        return $str;
     }
 
 }

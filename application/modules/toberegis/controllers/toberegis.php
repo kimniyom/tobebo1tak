@@ -19,7 +19,7 @@ class toberegis extends CI_Controller {
     }
 
     public function Auth(){
-        if($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != ""){
+        if($this->session->userdata('status') == "S" || $this->session->userdata('user_register') != "" || $this->session->userdata('tobe_user_id') != ""){
             return TRUE;
         } else {
             redirect('users/login','refresh');
@@ -182,7 +182,6 @@ class toberegis extends CI_Controller {
             $data['level2'] = $this->occupation($data['datas']->level2);
             $data['level3'] = $this->occupation($data['datas']->level3);
             $this->output($data, $page, "ข้อมูลสมาชิก");
-           
         }
     }
 
@@ -196,5 +195,4 @@ class toberegis extends CI_Controller {
         }
     }
 
-    
 }

@@ -53,10 +53,11 @@ $active = $head;
         </div>
         <div class="row">
             <div class="col-md-3 col-lg-3">
+                <a href="<?php echo site_url('toberegis/users/getmember/'.$user->type.'/'.$user->id) ?>">
                 <button type="button" class="btn btn-default btn-lg">
                     <i class="fa fa-users"></i> รายชื่อสมาชิก<br/>
                     <div id="countperson"></div>
-                </button>
+                </button></a>
             </div>
         </div>
     </div>
