@@ -175,26 +175,28 @@ class users extends CI_Controller {
     }
 
     public function detailuser($eid) {
-        $id = $this->takmoph_libraries->url_decode($eid);
-        $checkStatus = $this->Auth();
-        if ($checkStatus == TRUE) {
-            $this->db->where("id", $id);
-            $data['user'] = $this->db->get("tobe_user")->row();
+        if ($this->Auth() == TRUE) {
+            $id = $this->takmoph_libraries->url_decode($eid);
+            $checkStatus = $this->Auth();
+            if ($checkStatus == TRUE) {
+                $this->db->where("id", $id);
+                $data['user'] = $this->db->get("tobe_user")->row();
 
-            $this->db->where("id", $data['user']->type);
-            $data['type'] = $this->db->get("tobe_user_type")->row();
-            if ($this->session->userdata('status') == "S") {
-                $page = "users/detailuserview";
-            } else {
-                $page = "users/detailuser";
+                $this->db->where("id", $data['user']->type);
+                $data['type'] = $this->db->get("tobe_user_type")->row();
+                if ($this->session->userdata('status') == "S") {
+                    $page = "users/detailuserview";
+                } else {
+                    $page = "users/detailuser";
+                }
+                $head = $data['user']->name;
+                $this->db->where("user_id", $data['user']->id);
+                $privilege = $this->db->get("tobe_user_privilege")->row();
+                $data['filter'] = $this->filter($data['user']->type, $privilege->ampur, $privilege->privilege);
+                $data['news'] = $privilege->news;
+                $data['activity'] = $privilege->activity;
+                $this->output($data, $page, $head);
             }
-            $head = $data['user']->name;
-            $this->db->where("user_id", $data['user']->id);
-            $privilege = $this->db->get("tobe_user_privilege")->row();
-            $data['filter'] = $this->filter($data['user']->type, $privilege->ampur, $privilege->privilege);
-            $data['news'] = $privilege->news;
-            $data['activity'] = $privilege->activity;
-            $this->output($data, $page, $head);
         }
     }
 
@@ -513,16 +515,19 @@ class users extends CI_Controller {
             $data['userid'] = $userid;
             $data['member'] = $this->getlistmember($privilege->privilege);
             $data['filter'] = "";
+            $data['ampur'] = "";
             $page = "toberegis/users/listmember";
         } else if ($type == "2") {
             $data['userid'] = $userid;
             $data['member'] = "";
             $data['filter'] = $this->Gettype();
+            $data['ampur'] = $privilege->ampur;
             $page = "toberegis/users/listmember";
         } else if ($type == "4") {
             $data['userid'] = $userid;
             $data['member'] = $this->getlistmembertambon($privilege->privilege);
             $data['filter'] = "";
+            $data['ampur'] = "";
             $page = "toberegis/users/listmember";
         }
 
@@ -553,7 +558,7 @@ class users extends CI_Controller {
         $str = "";
         $str .= "<div class='col-md-4 col-lg-4'>";
         $str .= "<label>ประเภท</label>";
-        $str .= "<select id='type' class='form-control'>";
+        $str .= "<select id='type' class='form-control' onchange='Getlevel2()'>";
         $str .= "<option value=''>== Setting ==</option>";
         foreach ($filter->result() as $rs):
             $str .= "<option value='" . $rs->id . "'>" . $rs->typename . "</option>";
@@ -564,23 +569,92 @@ class users extends CI_Controller {
     }
 
     public function Getlevel2() {
+        $changwat = tobeconfig::Getchangwat();
         $type = $this->input->post('type');
-        $sqlmaster = "select * from tobe_occupation o WHERE type = '$type' AND upper = '0' AND final = '0'";
-        $rsupper = $this->db->query($sqlmaster)->row();
-        $upper = $rsupper->id;
-        $sql = "select * from tobe_occupation where upper = '$upper' ";
-        $filter = $this->db->query($sql);
+        $ampur = $this->input->post('ampur');
+        if ($type == "3") {
+            $sql = "select tamboncodefull as id,tambonname as name from ctambon where ampurcode = '$ampur' and changwatcode = '$changwat'";
+            $filter = $this->db->query($sql);
+            $text = "ชุมชน";
+        } else {
+            $sqlmaster = "select * from tobe_occupation o WHERE type = '$type' AND upper = '0' AND final = '0'";
+            $rsupper = $this->db->query($sqlmaster)->row();
+            $upper = $rsupper->id;
+            $sql = "select * from tobe_occupation where upper = '$upper' AND ampur = '$ampur'";
+            $filter = $this->db->query($sql);
+            $text = $rsupper->name;
+        }
         $str = "";
         $str .= "<div class='col-md-4 col-lg-4'>";
-        $str .= "<label>ประเภท</label>";
+        $str .= "<label>" . $text . "</label>";
         $str .= "<select id='level2' class='form-control'>";
-        $str .= "<option value=''>== Setting ==</option>";
+        $str .= "<option value=''>== ทั้งหมด ==</option>";
         foreach ($filter->result() as $rs):
             $str .= "<option value='" . $rs->id . "'>" . $rs->name . "</option>";
         endforeach;
         $str .= "</select>";
         $str .= "</div>";
-        return $str;
+        echo $str;
+    }
+
+    public function Getlistmembertype() {
+        $type = $this->input->post('type');
+        $ampur = $this->input->post('ampur');
+        $level2 = $this->input->post('level2');
+        if (!empty($level2)) {
+            $data['result'] = $this->getdatamemberINlocation($type, $ampur, $level2);
+        } else {
+            $data['result'] = $this->getdatamemberAll($type, $ampur);
+        }
+        $this->load->view("toberegis/users/listmemberall", $data);
+    }
+
+    function getdatamemberAll($type, $ampur) {
+        $changwat = tobeconfig::Getchangwat();
+        if ($type == "3") {
+            $sql = "select tamboncodefull as id,tambonname as name from ctambon where ampurcode = '$ampur' and changwatcode = '$changwat'";
+            $result = $this->db->query($sql);
+            $filterArr = array();
+            foreach ($result->result() as $rs):
+                $filterArr[] = "'" . $rs->id . "'";
+            endforeach;
+            $filter = implode(",", $filterArr);
+            $sqlmember = "select * from tobe_register where changwat = '$changwat' and ampur = '$ampur' and tambon IN($filter)";
+        } else {
+            $sqlmaster = "select * from tobe_occupation o WHERE type = '$type' AND upper = '0' AND final = '0'";
+            $rsupper = $this->db->query($sqlmaster)->row();
+            $upper = $rsupper->id;
+            $sql = "select * from tobe_occupation where upper = '$upper' AND ampur = '$ampur'";
+            $result = $this->db->query($sql);
+            $filterArr = array();
+            foreach ($result->result() as $rs):
+                $filterArr[] = "'" . $rs->id . "'";
+            endforeach;
+            $filters = implode(",", $filterArr);
+            if($filters != ""){
+                $filter = $filters;
+            } else {
+                $filter = "'-1'";
+            }
+            $sqlmember = "select * from tobe_register where changwat = '$changwat' and ampur = '$ampur' and level2 IN($filter)";
+        }
+
+        //return $sqlmember;
+        $query = $this->db->query($sqlmember);
+        return $query;
+    }
+
+    function getdatamemberINlocation($type, $ampur, $filter) {
+        $changwat = tobeconfig::Getchangwat();
+        if ($type == "3") {
+            $sqlmember = "select * from tobe_register where changwat = '$changwat' and ampur = '$ampur' and tambon = '$filter'";
+        } else {
+            $sqlmember = "select * from tobe_register where changwat = '$changwat' and ampur = '$ampur' and level2 = '$filter'";
+        }
+
+        //return $sqlmember;
+        $query = $this->db->query($sqlmember);
+        return $query;
     }
 
 }
