@@ -66,6 +66,10 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
+            #icon-footer{
+                width:100px;
+                margin-bottom:10px;
+            }
 
         </style>
         <!-- New Themes -->
@@ -770,8 +774,26 @@
         ## Footer 
         ########################
             -->
+            <nav class="navbar navbar-inverse" role="navigation"   style="margin-bottom:0px;background:<?php echo $style->color_head ?>; border-radius:0px; border-top: <?php echo $style->color_head ?> solid 5px;">
+                <div style="color: #009900;">
+                    <div class="row">
+                        <div class="col-lg-12" style=" text-align: center;">
+                            <div style="padding:2px 5px; margin-bottom:0px;  font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"> หน่วยงานที่เกี่ยวข้อง</div>
+                                    
+                            <img src="<?php echo base_url() . $path ?>/images/tak-icon.png" id="icon-footer"/>
+                            <img src="<?php echo base_url() . $path ?>/images/moph-icon.png" id="icon-footer"/>
+                            <img src="<?php echo base_url() . $path ?>/images/icon-work.png" id="icon-footer"/>
+                            <img src="<?php echo base_url() . $path ?>/images/lean-logo.png" id="icon-footer"/>
+                            <img src="<?php echo base_url() . $path ?>/images/row-icon.png" id="icon-footer"/>
+                            <img src="<?php echo base_url() . $path ?>/images/panit-icon.png" id="icon-footer"/>
+                            <img src="<?php echo base_url() . $path ?>/images/san-icon.png" id="icon-footer"/>
+                        </div>
+                    </div>
+                </div>
+        </nav>
             <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" border-top: <?php echo $style->color_head ?> solid 5px;">
                 <div style="color: #009900;">
+                    
                     <div class="row">
                         <div class="col-sm-6 col-md-5 col-lg-5"><?php echo $style->footer ?></div>
                         <div class="col-sm-6 col-md-7 col-lg-7">
@@ -957,9 +979,9 @@
                     $("#contentnewstobe").html(datas);
                 });
             }
-            
-            function activity(){
-                 $("#content-activity").html("<center>loading...</center>");
+
+            function activity() {
+                $("#content-activity").html("<center>loading...</center>");
                 var url = "<?php echo site_url('toberegis/tobeactivity/index') ?>";
                 var data = {};
                 $.post(url, data, function (datas) {
