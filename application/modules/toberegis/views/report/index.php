@@ -19,66 +19,75 @@
 $this->load->library('takmoph_libraries');
 $model = new takmoph_libraries();
 $list = array(
-    array("label" => 'Dashboard',"url" => 'toberegis')
+    array("label" => 'Dashboard', "url" => 'toberegis')
 );
 $active = $head;
 ?>
 
 <?php echo $model->breadcrumb_backend($list, $active); ?>
 
-
-<hr id="hr"/>
-
-<h3>
-<i class="fa fa-comment"></i> สมาชิก TO BE NUMBER ONE (<?php echo $type->typename ?>)
-</h3>
-
-<hr id="hr"/>
-<div class="well">
-    <h2 style="color:red; text-align:center;">จำนวนสมาชิกทั้งหมด <?php echo number_format($countType)?> ราย</h2>
+<div style=" clear: both;">
+    <hr id="hr"/>
+    <h3>
+        <i class="fa fa-comment"></i> สมาชิก TO BE NUMBER ONE (<?php echo $type->typename ?>)
+    </h3>
 </div>
-<hr/>
 
-<hr/>
-<div id="chartamphur"></div>
-<hr/>
-<div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-users"></i> จำนวนผู้ลงทะเบียน</div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>อำเภอ</th>
-            <th style="text-align: right;">จำนวน</th>
-            <th style="text-align: center;"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php 
-        $sum = 0;
-        foreach($table->result() as $rs): 
-            $sum = ($sum + $rs->total);
-            ?>
-        <tr>
-            <td><?php echo $rs->ampurcodefull." ".$rs->ampurname ?></td>
-            <td style="text-align: right;"><?php echo number_format($rs->total) ?></td>
-             <td style="text-align: center;"><a href="<?php echo site_url('toberegis/tobereport/office/'.$type->id.'/'.$rs->ampurcodefull) ?>">คลิกดูข้อมูล</a></td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-             <th style="text-align:center;">รวม</th>
-            <th style="text-align:right;"><?php echo number_format($sum) ?></th>
-        </tr>
-    </tfoot>
-</table>
+<div class="row">
+    <div class="col-md-3 col-lg-3">
+        <div class="list-group">
+            <?php foreach ($setting->result() as $st): ?>
+                <a href="<?php echo site_url('toberegis/tobereport/index/' . $st->id) ?>" class="list-group-item <?php echo ($st->id == $typeselect) ? "active" : ""; ?>"><?php echo $st->typename ?></a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="col-md-9 col-lg-9">
+        <div class="well">
+            <h2 style="color:red; text-align:center;">จำนวนสมาชิกทั้งหมด <?php echo ($countType) ?> ราย</h2>
+        </div>
+        <hr/>
+        <div id="chartamphur"></div>
+        <hr/>
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="fa fa-users"></i> จำนวนผู้ลงทะเบียน</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>อำเภอ</th>
+                        <th style="text-align: right;">จำนวน</th>
+                        <th style="text-align: center;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sum = 0;
+                    foreach ($table->result() as $rs):
+                        $sum = ($sum + $rs->total);
+                        ?>
+                        <tr>
+                            <td><?php echo $rs->ampurcodefull . " " . $rs->ampurname ?></td>
+                            <td style="text-align: right;"><?php echo number_format($rs->total) ?></td>
+                            <td style="text-align: center;"><a href="<?php echo site_url('toberegis/tobereport/location/' . $type->id . '/' . $rs->ampurcodefull) ?>">คลิกดูข้อมูล</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th style="text-align:center;">รวม</th>
+                        <th style="text-align:right;"><?php echo number_format($sum) ?></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     Highcharts.chart('chartamphur', {
         chart: {
             type: 'column'
         },
-        credits:false,
+        credits: false,
         title: {
             text: 'จำนวนสมาชิก TO BE NUMBER ONE'
         },
@@ -108,22 +117,22 @@ $active = $head;
             pointFormat: 'จำนวนคนลงทะเบียน: <b>{point.y:.0f} ราย</b>'
         },
         series: [{
-            name: 'อำเภอ',
-            colorByPoint: true,
-            data: [<?php echo $chartamphur ?>],
-            dataLabels: {
-                enabled: true,
-                rotation: -45,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y:.0f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
+                name: 'อำเภอ',
+                colorByPoint: true,
+                data: [<?php echo $chartamphur ?>],
+                dataLabels: {
+                    enabled: true,
+                    rotation: -45,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.0f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
                 }
-            }
-        }]
+            }]
     });
 </script>
 

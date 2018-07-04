@@ -28,21 +28,25 @@ class tobereport extends CI_Controller {
         $page = "report/index";
         $ReportAmphur = $this->report->GetreportAmphur($type);
         $data['type'] = $this->model->TypeRow($type);
-        $data['countType'] = $this->report->CountType($type);
+        $data['countType'] = $this->report->CountType($type,"");
         foreach($ReportAmphur->result() as $rs):
             $ChartAmphurArr[] = "['".$rs->ampurname."',".$rs->total."]";
         endforeach;
         $data['table'] = $ReportAmphur;
         $data['chartamphur'] = implode(",",$ChartAmphurArr);
+        $data['typeselect'] = $type;
+        $data['setting'] = $this->db->get("tobe_type");
         $this->output($data, $page, $data['type']->typename);
     }
 
-    public function Office($type=null,$amphur = null) {
+    public function Location($type=null,$amphur = null) {
         $page = "report/office";
-        $ReportOffice = $this->report->GetreportOffice($type,$amphur);
+        $data['ampurlist'] = $this->report->Getampur();
+        $ReportOffice = $this->report->GetreportLocation($type,$amphur);
         $data['type'] = $this->model->TypeRow($type);
         $data['amphur'] = $this->model->AmphurRow($amphur);
         $data['countType'] = $this->report->CountType($type,$amphur);
+        $data['ampurselect'] = $amphur;
         /*
         foreach($ReportAmphur->result() as $rs):
             $ChartAmphurArr[] = "['".$rs->distname."',".$rs->total."]";
