@@ -37,10 +37,9 @@ $active = $head;
 <hr/>
 <div class="row">
     <div class="col-md-3 col-lg-3">
-        <h4>อำเภอ</h4>
         <div class="list-group">
             <?php foreach ($ampurlist->result() as $am): ?>
-                <a href="<?php echo site_url('toberegis/tobereport/location/' . $type->id . "/" . $am->ampurcodefull) ?>" class="list-group-item <?php echo ($am->ampurcodefull == $ampurselect) ? "active" : ""; ?>"><?php echo $am->ampurname ?></a>
+                <a href="<?php echo site_url('toberegis/tobereport/location/' . $type->id . "/" . $am->ampurcodefull) ?>" class="list-group-item <?php echo ($am->ampurcodefull == $ampurselect) ? "active" : ""; ?>"><?php echo "อำเภอ".$am->ampurname ?></a>
             <?php endforeach; ?>
         </div>
     </div>

@@ -69,7 +69,7 @@ class tobeactivity extends CI_Controller {
 
         /*แบ่งหน้า*/
         $config['total_rows'] = $count; //จำนวนอะไรบางอย่างทั้งหมดของเราโดยปกติจะใช้การนับจำนวนใน database เอา
-        $config['per_page'] = 1; //จำนวนอะไรบางอย่างของเราต่อหนึ่งหน้า ซึ่งจะได้จำนวนหน้าทั้งหมดเท่ากับ total_rows/per_page
+        $config['per_page'] = 15; //จำนวนอะไรบางอย่างของเราต่อหนึ่งหน้า ซึ่งจะได้จำนวนหน้าทั้งหมดเท่ากับ total_rows/per_page
         $config['uri_segment'] = 5;
 
         $config['base_url'] = $pages; //url ของหน้าที่เราจะแบ่ง
@@ -119,7 +119,7 @@ class tobeactivity extends CI_Controller {
 
         $config['base_url'] = site_url("toberegis/tobeactivity/pagegroup/" . $this->uri->segment(4)); //url ของหน้าที่เราจะแบ่ง
         $config['total_rows'] = $count; //จำนวนอะไรบางอย่างทั้งหมดของเราโดยปกติจะใช้การนับจำนวนใน database เอา
-        $config['per_page'] = 1; //จำนวนอะไรบางอย่างของเราต่อหนึ่งหน้า ซึ่งจะได้จำนวนหน้าทั้งหมดเท่ากับ total_rows/per_page
+        $config['per_page'] = 15; //จำนวนอะไรบางอย่างของเราต่อหนึ่งหน้า ซึ่งจะได้จำนวนหน้าทั้งหมดเท่ากับ total_rows/per_page
         $config['uri_segment'] = 5;
         //config for bootstrap pagination class integration
         $config['full_tag_open'] = '<ul class="pagination">';
@@ -163,7 +163,7 @@ class tobeactivity extends CI_Controller {
 
         $config['base_url'] = site_url("toberegis/tobeactivity/pageall/" . $this->uri->segment(4)); //url ของหน้าที่เราจะแบ่ง
         $config['total_rows'] = $count; //จำนวนอะไรบางอย่างทั้งหมดของเราโดยปกติจะใช้การนับจำนวนใน database เอา
-        $config['per_page'] = 1; //จำนวนอะไรบางอย่างของเราต่อหนึ่งหน้า ซึ่งจะได้จำนวนหน้าทั้งหมดเท่ากับ total_rows/per_page
+        $config['per_page'] = 15; //จำนวนอะไรบางอย่างของเราต่อหนึ่งหน้า ซึ่งจะได้จำนวนหน้าทั้งหมดเท่ากับ total_rows/per_page
         $config['uri_segment'] = 5;
         //config for bootstrap pagination class integration
         $config['full_tag_open'] = '<ul class="pagination">';
