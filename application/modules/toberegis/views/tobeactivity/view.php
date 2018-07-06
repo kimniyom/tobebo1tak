@@ -56,11 +56,12 @@ echo $model->breadcrumb($list, $active);
             <!-- Shaee FaceBook -->
             <div class="fb-share-button" data-href="<?php echo $shareUrl ?>" data-layout="button_count"></div>
             <center>
-                <p style="color:#999999;">รายละเอียด : <?php
+                <p style="color:#999999;">
+                    <?php
                     if (!empty($activity->detail)) {
                         echo $activity->detail;
                     } else {
-                        echo "-";
+                        echo "";
                     }
                     ?></p>
                 <hr/>
