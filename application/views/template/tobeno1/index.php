@@ -807,7 +807,7 @@ background-repeat: no-repeat;
                     </div>
                 </div>
             </nav>
-            <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" border-top: <?php echo $style->color_head ?> solid 5px;">
+            <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" background: #333333; border-top: <?php echo $style->color_head ?> solid 5px;">
                 <div class="container" style="color: #009900;">
                     <div class="row">
                         <div class="col-sm-6 col-md-5 col-lg-5"><?php echo $style->footer ?></div>
@@ -819,12 +819,12 @@ background-repeat: no-repeat;
                                     <?php if ($nb->type == '0') { ?>
                                         <div class="col-sm-6 col-md-3 col-lg-3">
                                             <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
-                                               style="color:<?php echo $style->color_head ?>;">
+                                               style="color:<?php echo $style->color_text ?>;">
                                                 <b><?php echo $nb->title ?></b></a>
                                         </div>
                                     <?php } else { ?>
                                         <div class="col-sm-6 col-md-3 col-lg-3">
-                                            <span class="caret"></span> <b><font style="color:<?php echo $style->color_head ?>;"><?php echo $nb->title ?></font></b>
+                                            <span class="caret"></span> <b><font style="color:<?php echo $style->color_text ?>;"><?php echo $nb->title ?></font></b>
                                             <br/>
                                             <!--
                                                 ########## Subnavbar ###########
@@ -835,13 +835,18 @@ background-repeat: no-repeat;
                                                 foreach ($subnav->result() as $snSub):
                                                     ?>
                                                     <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>"
-                                                       style="color:<?php echo $style->color_head ?>;">- <?php echo $snSub->title ?></a> <br/>
+                                                       style="color:<?php echo $style->color_text ?>;">- <?php echo $snSub->title ?></a> <br/>
                                                    <?php endforeach; ?>
                                             </div>
                                         </div>
 
                                     <?php } ?>
                                 <?php endforeach; ?>
+                                <div class="col-sm-6 col-md-3 col-lg-3">
+                                            <a href="<?php echo site_url('site/sitemap') ?>"
+                                               style="color:<?php echo $style->color_text ?>;">
+                                                <b>ผังเว็บไซต์</b></a>
+                                </div>
                                 <!-- EndMenuNavbar -->
                             </div>
                         </div>
