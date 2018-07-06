@@ -4,12 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group/>
         <group name="yii">
-            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/controllers/privilege.php</file>
-            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/controllers/toberegis.php</file>
-            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/users/listmember.php</file>
-            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/controllers/users.php</file>
-            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/users/detailuser.php</file>
-            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/modules/toberegis/views/users/listmemberall.php</file>
+            <file>file:/Applications/MAMP/htdocs/tobebo1tak/application/views/template/tobeno1/index.php</file>
         </group>
     </open-files>
 </project-private>

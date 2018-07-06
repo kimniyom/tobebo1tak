@@ -463,51 +463,54 @@
                     ## Slide Hot News 
                     ##################
                     -->
-                    <div class="alert" id="box-express" style=" border: none; display: none;">
-                        <div >
-                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                <!-- Indicators -->
-                                <!-- Wrapper for slides -->
+                    <?php
+                    $express_model = new newexpress_model();
+                    $newsexpress = $express_model->get_express();
+                    if ($newsexpress->num_rows() > 0) {
+                        ?>
+                        <div class="alert" id="box-express" style=" border: none; display: none;">
+                            <div >
+                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                    <!-- Indicators -->
+                                    <!-- Wrapper for slides -->
 
-                                <div class="carousel-inner" role="listbox">
-                                    <?php
-                                    $express_model = new newexpress_model();
-                                    $newsexpress = $express_model->get_express();
-                                    $i = 0;
-                                    foreach ($newsexpress->result() as $ns):
-                                        $i++;
-                                        if ($i == 1) {
-                                            $class = "item active";
-                                        } else {
-                                            $class = "item";
-                                        }
-                                        ?>
-                                        <div class="<?php echo $class; ?>">
-                                            <div class="text-express" style="color: #ff0033;">
-                                                <font style="color: #ff0033;"><i class="fa fa-fire"></i> ประกาศด่วน</font>
-                                                <?php echo $this->tak->thaidate($ns->create_date); ?>
-                                                <a href="<?php echo site_url('newexpress/view/' . $this->takmoph_libraries->encode($ns->id)) ?>">
-                                                    <button type="button" class="btn btn-warning btn-xs">อ่าน ... <i class="fa fa-angle-double-right"></i></button></a>
-                                                <br/>
-                                                <?php echo $ns->title; ?>
+                                    <div class="carousel-inner" role="listbox">
+                                        <?php
+                                        $i = 0;
+                                        foreach ($newsexpress->result() as $ns):
+                                            $i++;
+                                            if ($i == 1) {
+                                                $class = "item active";
+                                            } else {
+                                                $class = "item";
+                                            }
+                                            ?>
+                                            <div class="<?php echo $class; ?>">
+                                                <div class="text-express" style="color: #ff0033;">
+                                                    <font style="color: #ff0033;"><i class="fa fa-fire"></i> ประกาศด่วน</font>
+                                                    <?php echo $this->tak->thaidate($ns->create_date); ?>
+                                                    <a href="<?php echo site_url('newexpress/view/' . $this->takmoph_libraries->encode($ns->id)) ?>">
+                                                        <button type="button" class="btn btn-warning btn-xs">อ่าน ... <i class="fa fa-angle-double-right"></i></button></a>
+                                                    <br/>
+                                                    <?php echo $ns->title; ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
+                                        <?php endforeach; ?>
+                                    </div>
 
-                                <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style=" background: none;">
-                                    <span class="fa fa-angle-left btn pull-left" aria-hidden="true" id="btn-PN"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style=" background: none;">
-                                    <span class="fa fa-angle-right btn pull-right" aria-hidden="true" id="btn-PN"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
+                                    <!-- Controls -->
+                                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style=" background: none;">
+                                        <span class="fa fa-angle-left btn pull-left" aria-hidden="true" id="btn-PN"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style=" background: none;">
+                                        <span class="fa fa-angle-right btn pull-right" aria-hidden="true" id="btn-PN"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    <?php } ?>
                     <!-- 
                     ####################
                     ## ข่าวล่าสุด
@@ -779,7 +782,7 @@
                     <div class="row">
                         <div class="col-lg-12" style=" text-align: center;">
                             <div style="padding:2px 5px; margin-bottom:0px;  font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"> หน่วยงานที่เกี่ยวข้อง</div>
-                                    
+
                             <img src="<?php echo base_url() . $path ?>/images/tak-icon.png" id="icon-footer"/>
                             <img src="<?php echo base_url() . $path ?>/images/moph-icon.png" id="icon-footer"/>
                             <img src="<?php echo base_url() . $path ?>/images/icon-work.png" id="icon-footer"/>
@@ -790,10 +793,10 @@
                         </div>
                     </div>
                 </div>
-        </nav>
+            </nav>
             <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" border-top: <?php echo $style->color_head ?> solid 5px;">
                 <div style="color: #009900;">
-                    
+
                     <div class="row">
                         <div class="col-sm-6 col-md-5 col-lg-5"><?php echo $style->footer ?></div>
                         <div class="col-sm-6 col-md-7 col-lg-7">

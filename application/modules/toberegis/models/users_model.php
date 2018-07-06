@@ -120,6 +120,16 @@ class users_model extends CI_Model {
         return $rs->locationname;
 
     }
+    
+    function Getprivilege($user_id){
+        $this->db->where("user_id",$user_id);
+        $query = $this->db->get("tobe_user_privilege");
+        if($query->num_rows > 0){
+            return $query->row();
+        } else {
+            return "";
+        }
+    }
 
 }
 

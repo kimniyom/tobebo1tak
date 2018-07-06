@@ -182,12 +182,29 @@ $active = $head;
             <div class="col-md-2 col-lg-2"><label>พฤติกรรมการดื่มเครื่องดื่มที่มีแอลกอฮอล์ *</label></div>
             <div class="col-md-10 col-lg-10">
                 <div class="row">
-                    <?php foreach ($alcohol->result() as $lgh): ?>
-                        <div class="col-md-12 col-lg-12">
-                            <input type="radio" name="alcohol" id="alcohol" value="<?php echo $lgh->id ?>" <?php echo ($lgh->id == $datas->alcohol) ? "checked" : ""; ?>/> 
-                            <?php echo $lgh->alcohol ?>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php
+                    if ($privatedata != "") {
+                        if ($privatedata == "1") {
+                            ?>
+                            <?php foreach ($alcohol->result() as $lgh): ?>
+                                <div class="col-md-12 col-lg-12">
+                                    <input type="radio" name="alcohol" id="alcohol" value="<?php echo $lgh->id ?>" <?php echo ($lgh->id == $datas->alcohol) ? "checked" : ""; ?>/> 
+                                    <?php echo $lgh->alcohol ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php } else { ?>
+                            <div class="col-md-12 col-lg-12">
+                                ไม่ได้รับสิทธิ์ดูข้อมูลส่วนนี้
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <?php foreach ($alcohol->result() as $lgh): ?>
+                            <div class="col-md-12 col-lg-12">
+                                <input type="radio" name="alcohol" id="alcohol" value="<?php echo $lgh->id ?>" <?php echo ($lgh->id == $datas->alcohol) ? "checked" : ""; ?>/> 
+                                <?php echo $lgh->alcohol ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -196,12 +213,29 @@ $active = $head;
             <div class="col-md-2 col-lg-2"><label>พฤติกรรมการสูบบุหรี่ *</label></div>
             <div class="col-md-10 col-lg-10">
                 <div class="row">
-                    <?php foreach ($smoking->result() as $sk): ?>
-                        <div class="col-md-12 col-lg-12">
-                            <input type="radio" name="smoking" id="smoking" value="<?php echo $sk->id ?>" <?php echo ($sk->id == $datas->smoking) ? "checked" : ""; ?>/> 
-                            <?php echo $sk->smoking ?>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php
+                    if ($privatedata != "") {
+                        if ($privatedata == "1") {
+                            ?>
+                            <?php foreach ($smoking->result() as $sk): ?>
+                                <div class="col-md-12 col-lg-12">
+                                    <input type="radio" name="smoking" id="smoking" value="<?php echo $sk->id ?>" <?php echo ($sk->id == $datas->smoking) ? "checked" : ""; ?>/> 
+                                    <?php echo $sk->smoking ?>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php } else { ?>
+                            <div class="col-md-12 col-lg-12">
+                                ไม่ได้รับสิทธิ์ดูข้อมูลส่วนนี้
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <?php foreach ($smoking->result() as $sk): ?>
+                            <div class="col-md-12 col-lg-12">
+                                <input type="radio" name="smoking" id="smoking" value="<?php echo $sk->id ?>" <?php echo ($sk->id == $datas->smoking) ? "checked" : ""; ?>/> 
+                                <?php echo $sk->smoking ?>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -209,16 +243,39 @@ $active = $head;
         <div class="row">
             <div class="col-md-2 col-lg-2"><label>เหตุผลที่เข้าร่วมชมรม *</label></div>
             <div class="col-md-10 col-lg-10">
+                <?php
+                if ($privatedata != "") {
+                    if ($privatedata == "1") {
+                        ?>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <input type="radio" name="reason" id="reason" value="1" <?php echo ($datas->reason == 1) ? "checked" : ""; ?>/> ต้องการเข้ารับการบำบัด"ใครติดยา ยกมือขึ้น"
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <input type="radio" name="reason" id="reason" value="2"  <?php echo ($datas->reason == 2) ? "checked" : ""; ?>/> ต้องการร่วมรณรงค์ป้องกันและแก้ไขปัญหายาเสพติด
+                            </div>
+                        </div>
+                    <?php } else { ?>
                 <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <input type="radio" name="reason" id="reason" value="1" <?php echo ($datas->reason == 1) ? "checked" : ""; ?>/> ต้องการเข้ารับการบำบัด"ใครติดยา ยกมือขึ้น"
-                    </div>
+                        <div class="col-md-12 col-lg-12">
+                            ไม่ได้รับสิทธิ์ดูข้อมูลส่วนนี้
+                        </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 col-lg-12">
-                        <input type="radio" name="reason" id="reason" value="2"  <?php echo ($datas->reason == 2) ? "checked" : ""; ?>/> ต้องการร่วมรณรงค์ป้องกันและแก้ไขปัญหายาเสพติด
+                    <?php } ?>
+                <?php } else { ?>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <input type="radio" name="reason" id="reason" value="1" <?php echo ($datas->reason == 1) ? "checked" : ""; ?>/> ต้องการเข้ารับการบำบัด"ใครติดยา ยกมือขึ้น"
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <input type="radio" name="reason" id="reason" value="2"  <?php echo ($datas->reason == 2) ? "checked" : ""; ?>/> ต้องการร่วมรณรงค์ป้องกันและแก้ไขปัญหายาเสพติด
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>

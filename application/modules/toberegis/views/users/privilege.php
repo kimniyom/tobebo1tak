@@ -9,7 +9,7 @@ $this->load->library('takmoph_libraries');
 $model = new takmoph_libraries();
 $list = array(array("label" => 'ผู้ใช้งาน', "url" => 'toberegis/users/index')
 );
-    
+
 $active = $head;
 ?>
 <?php echo $model->breadcrumb_backend($list, $active); ?>
@@ -34,12 +34,17 @@ $active = $head;
         <hr/>
         <div class="row">
             <div class="col-md-4 col-lg-4">
-                <h4><input type="checkbox" id="news" <?php echo ($news == 1) ? "checked" : ""?>/> ข่าวประชาสัมพันธ์</h4>
+                <h4><input type="checkbox" id="news" <?php echo ($news == 1) ? "checked" : "" ?>/> ข่าวประชาสัมพันธ์</h4>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 col-lg-4">
-                <h4><input type="checkbox" id="activity" <?php echo ($activity == 1) ? "checked" : ""?>/> รูปภาพกิจกรรม</h4>
+                <h4><input type="checkbox" id="activity" <?php echo ($activity == 1) ? "checked" : "" ?>/> รูปภาพกิจกรรม</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h4><input type="checkbox" id="privatedata" <?php echo ($privatedata == 1) ? "checked" : "" ?>/> ดูข้อมูลส่วนตัวสมาชิก สูบบุหรี่,ดื่มสุรา,เหตุผลที่เข้าเป็นสมาชิก</h4>
             </div>
         </div>
         <div class="row">
@@ -55,7 +60,7 @@ $active = $head;
         $("#filters").html("loading...");
         var ampur = $("#ampur").val();
         var url = "<?php echo site_url('toberegis/users/getschoolinampur') ?>";
-        var data = {ampur: ampur,privilege: privilege};
+        var data = {ampur: ampur, privilege: privilege};
         $.post(url, data, function (datas) {
             $("#filters").html(datas);
         });
@@ -65,7 +70,7 @@ $active = $head;
         $("#filters").html("loading...");
         var ampur = $("#ampur").val();
         var url = "<?php echo site_url('toberegis/users/gettamboninampur') ?>";
-        var data = {ampur: ampur,privilege: privilege};
+        var data = {ampur: ampur, privilege: privilege};
         $.post(url, data, function (datas) {
             $("#filters").html(datas);
         });
@@ -75,7 +80,7 @@ $active = $head;
         $("#filters").html("loading...");
         var ampur = $("#ampur").val();
         var url = "<?php echo site_url('toberegis/users/getprisonerinampur') ?>";
-        var data = {ampur: ampur,privilege: privilege};
+        var data = {ampur: ampur, privilege: privilege};
         $.post(url, data, function (datas) {
             $("#filters").html(datas);
         });
@@ -85,7 +90,7 @@ $active = $head;
         $("#filters").html("loading...");
         var ampur = $("#ampur").val();
         var url = "<?php echo site_url('toberegis/users/getcompanyinampur') ?>";
-        var data = {ampur: ampur,privilege: privilege};
+        var data = {ampur: ampur, privilege: privilege};
         $.post(url, data, function (datas) {
             $("#filters").html(datas);
         });
@@ -97,13 +102,14 @@ $active = $head;
         var user_id = "<?php echo $user->id ?>";
         var news = $("#news").prop("checked") ? '1' : '0';
         var activity = $("#activity").prop("checked") ? '1' : '0';
+        var privatedata = $("#privatedata").prop("checked") ? '1' : '0';
         var flag = "<?php echo ($flag == 'save') ? 'saveprivilege' : 'updateprivilege' ?>";
         var url = "<?php echo site_url('toberegis/users') ?>" + "/" + flag;
         if (ampur == '') {
             alert("เลือกข้อมูลไม่ครบ...");
             return false;
         }
-        var data = {user_id: user_id, ampur: ampur, filter: filter,news: news,activity: activity};
+        var data = {user_id: user_id, ampur: ampur, filter: filter, news: news, activity: activity, privatedata: privatedata};
         $.post(url, data, function (datas) {
             var euser = datas.id;
             window.location = "<?php echo site_url('toberegis/users/detailuser') ?>" + "/" + euser;

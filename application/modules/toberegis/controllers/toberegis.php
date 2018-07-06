@@ -10,6 +10,7 @@ class toberegis extends CI_Controller {
         $this->load->model('takmoph_model', 'tak');
         $this->load->model('toberegis/toberegis_model', 'model');
         $this->load->model('toberegis/report_model', 'report');
+        $this->load->model('toberegis/users_model', 'usermodel');
         $this->load->helper('url');
         $this->load->library('session');
         $this->load->helper('captcha');
@@ -173,7 +174,13 @@ class toberegis extends CI_Controller {
             $page = "views";
             $this->db->where("id",$id);
             $data['datas'] = $this->db->get("tobe_register")->row();
-
+            
+            $private = $this->usermodel->Getprivilege($this->session->userdata('tobe_user_id'));
+            if($private != ""){
+                $data['privatedata'] = $private->privatedata;
+            } else {
+                  $data['privatedata'] = "";
+            }
             $data['occupation'] = $this->db->get("tobe_occupation");
             $data['education'] = $this->db->get("tobe_education");
             $data['smoking'] = $this->db->get("tobe_smoking");

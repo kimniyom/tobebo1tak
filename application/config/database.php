@@ -51,9 +51,9 @@ if (!defined('BASEPATH'))
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '192.168.0.10';
-$db['default']['username'] = 'kimniyom';
-$db['default']['password'] = '0800260943';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'root';
 $db['default']['database'] = 'tobeno_one';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';

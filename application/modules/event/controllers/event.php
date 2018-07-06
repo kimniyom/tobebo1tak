@@ -42,16 +42,22 @@ class event extends CI_Controller {
          */
         if ($gData) {
             $q = "SELECT * FROM tbl_event WHERE date(event_start)>='$start'  ";
-            $q.=" AND date(event_end)<='$end' ORDER by event_id";
+            $q .= " AND date(event_end)<='$end' ORDER by event_id";
             $result = $this->db->query($q);
             $json_data = array();
             foreach ($result->result() as $rs) {
+                if ($rs->event_end > $rs->event_start) {
+                    $enddate = substr($rs->event_end, -2);
+                    $enddates = substr($rs->event_end, 0, 7) . "-" . ($enddate + 1);
+                } else {
+                    $enddates = $rs->event_end;
+                }
                 $json_data[] = array(
                     "color" => $rs->event_color,
                     "id" => $rs->event_id,
                     "title" => $rs->event_title,
                     "start" => $rs->event_start,
-                    "end" => $rs->event_end,
+                    "end" => $enddates,
                     "url" => "javascript:detailevent('" . $rs->event_id . "')",
                     "allDay" => ($rs->event_allDay == true) ? true : false
 

@@ -195,6 +195,7 @@ class users extends CI_Controller {
                 $data['filter'] = $this->filter($data['user']->type, $privilege->ampur, $privilege->privilege);
                 $data['news'] = $privilege->news;
                 $data['activity'] = $privilege->activity;
+                $data['privatedata'] = $privilege->privatedata;
                 $this->output($data, $page, $head);
             }
         }
@@ -213,6 +214,7 @@ class users extends CI_Controller {
                 $data['flag'] = "save";
                 $data['news'] = "";
                 $data['activity'] = "";
+                $data['privatedata'] = "";
                 $this->output($data, $page, $head);
             } else {
                 redirect("toberegis/users/detailuser/" . $eid, "refresh");
@@ -226,12 +228,14 @@ class users extends CI_Controller {
         $privilege = $this->input->post('filter');
         $news = $this->input->post('news');
         $activity = $this->input->post('activity');
+        $privatedata = $this->input->post('privatedata');
         $columns = array(
             "user_id" => $user_id,
             "ampur" => $ampur,
             "privilege" => $privilege,
             "news" => $news,
-            "activity" => $activity
+            "activity" => $activity,
+            "privatedata" => $privatedata
         );
         $this->db->insert("tobe_user_privilege", $columns);
         $eid = $this->takmoph_libraries->url_encode($user_id);
@@ -252,6 +256,7 @@ class users extends CI_Controller {
             $data['flag'] = "update";
             $data['news'] = $privilege->news;
             $data['activity'] = $privilege->activity;
+            $data['privatedata'] = $privilege->privatedata;
             $this->output($data, $page, $head);
         }
     }
@@ -262,12 +267,14 @@ class users extends CI_Controller {
         $privilege = $this->input->post('filter');
         $news = $this->input->post('news');
         $activity = $this->input->post('activity');
+        $privatedata = $this->input->post('privatedata');
         $columns = array(
             "user_id" => $user_id,
             "ampur" => $ampur,
             "privilege" => $privilege,
             "news" => $news,
-            "activity" => $activity
+            "activity" => $activity,
+            "privatedata" => $privatedata
         );
         $this->db->where("user_id", $user_id);
         $this->db->update("tobe_user_privilege", $columns);

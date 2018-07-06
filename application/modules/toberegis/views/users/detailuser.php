@@ -41,6 +41,11 @@ $active = $head;
                 <h4><?php echo ($activity == 1) ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-remove text-danger'></i>" ?> รูปภาพกิจกรรม</h4>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h4><?php echo ($privatedata == 1) ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-remove text-danger'></i>" ?> ดูข้อมูลส่วนตัวสมาชิก สูบบุหรี่,ดื่มสุรา,เหตุผลที่เข้าเป็นสมาชิก</h4>
+            </div>
+        </div>
         <hr/>
         <div class="row">
             <div class="col-md-5 col-lg-5">
