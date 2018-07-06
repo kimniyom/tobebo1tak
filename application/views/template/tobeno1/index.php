@@ -39,7 +39,18 @@
 
         <?php //echo $this->background_model->background_active() ?>
         <style type="text/css">
-            #body{<?php echo $this->background_model->background_active() ?>;} 
+            #body{
+                background: rgba(252,252,199,1);
+background: -moz-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(252,252,199,1)), color-stop(47%, rgba(246,246,246,0.53)), color-stop(100%, rgba(237,237,237,0)));
+background: -webkit-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+background: -o-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+background: -ms-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+background: linear-gradient(to bottom, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcc7', endColorstr='#ededed', GradientType=0 );
+background-repeat: no-repeat;
+    background-attachment: fixed;
+            } 
             #nav ul li a{font-size:24px; background: <?php echo $style->color_head ?>;}
             #nav ul li a:active{background: <?php echo $style->color_head ?>;}
             #nav ul li a:after{background: <?php echo $style->color_head ?>;}
@@ -772,13 +783,15 @@
                     </div>
                 </div>
             <?php } ?>
-            <!--
+ 
+        </div> <!-- End Container -->
+                   <!--
         ########################
         ## Footer 
         ########################
             -->
             <nav class="navbar navbar-inverse" role="navigation"   style="margin-bottom:0px;background:<?php echo $style->color_head ?>; border-radius:0px; border-top: <?php echo $style->color_head ?> solid 5px;">
-                <div style="color: #009900;">
+                <div class="container" style="color: #009900;">
                     <div class="row">
                         <div class="col-lg-12" style=" text-align: center;">
                             <div style="padding:2px 5px; margin-bottom:0px;  font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"> หน่วยงานที่เกี่ยวข้อง</div>
@@ -795,8 +808,7 @@
                 </div>
             </nav>
             <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" border-top: <?php echo $style->color_head ?> solid 5px;">
-                <div style="color: #009900;">
-
+                <div class="container" style="color: #009900;">
                     <div class="row">
                         <div class="col-sm-6 col-md-5 col-lg-5"><?php echo $style->footer ?></div>
                         <div class="col-sm-6 col-md-7 col-lg-7">
@@ -857,7 +869,6 @@
             #####################
             -->
 
-        </div> <!-- End Container -->
         <a href="#" id="back-to-top" title="Back to top">&uarr; TOP</a>
         <!-- Script to Activate the Carousel -->
         <script>
