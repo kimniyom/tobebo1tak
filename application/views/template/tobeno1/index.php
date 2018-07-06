@@ -146,10 +146,8 @@ background-repeat: no-repeat;
                 <?php echo $style->webname_full ?>
             </div>
         </div>
-
-        <div class="container" id="main-content" style="box-shadow: #999999 0px 0px 50px 0px; margin-top: 0px; padding-top: 0px;border-radius: 10px 10px 0px 0px;">
-            <!-- Navigation -->
-            <nav class="navbar navbar-default" role="navigation" id="nav" style="border-radius: 10px 10px 0px 0px; margin-bottom:15px; background: <?php echo $style->color_head ?>;"><!--*id="nav-bar"-->
+ <!-- Navigation -->
+            <nav class="navbar navbar-default" role="navigation" id="nav" style="border-radius: 0px 0px 0px 0px; margin-bottom:15px; background: <?php echo $style->color_head ?>;"><!--*id="nav-bar"-->
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="container">
                     <div class="navbar-header">
@@ -237,6 +235,8 @@ background-repeat: no-repeat;
                     <!-- /.navbar-collapse -->
                 </div>
             </nav>
+        <div class="container" id="main-content" style="box-shadow: #999999 0px 0px 0px 0px; margin-top: 0px; padding-top: 0px;border-radius: 0px 0px 0px 0px;">
+           
 
             <div class="row" style=" margin: 0px; word-wrap: break-word;">
                 <!--
@@ -947,12 +947,12 @@ background-repeat: no-repeat;
                     if ($(this).scrollTop() > 65) {
                         //$("#boxlogohospital").hide();
                         nav.addClass("navbar-fixed-top");
-                        nav.css({'box-shadow': '#000000 0px 0px 10px 0px', 'border-radius': '0px'});
+                        //nav.css({'box-shadow': '#000000 0px 0px 10px 0px', 'border-radius': '0px'});
                         //nav.fadeIn();
                     } else {
                         //$("#boxlogohospital").show();
                         nav.removeClass("navbar-fixed-top");
-                        nav.css({'box-shadow': 'none', 'border-radius': '10px 10px 0px 0px'});
+                        //nav.css({'box-shadow': 'none', 'border-radius': '10px 10px 0px 0px'});
                     }
                 });
 
