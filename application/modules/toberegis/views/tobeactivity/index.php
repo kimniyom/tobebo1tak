@@ -31,7 +31,7 @@
                     $img = "assets/module/toberegis/images/Logo_TO_BE_NUMBER_ONE.png";
                 }
                 ?>
-                <tr>
+            <tr onclick="detailactivity('<?php echo $this->takmoph_libraries->url_encode($rs->id) ?>')">
                     <td class="img-activity" style=" padding: 0px;">
                         <div class="img-wrapper">
                             <img src="<?php echo base_url() ?><?php echo $img ?>" class="img-polaroid img-news-all" style="height:100px;"/>
@@ -67,6 +67,11 @@
         } else {
             $(".img-activity").css({'width': '30%'});
         }
+    }
+    
+    function detailactivity(eid){
+        var url = "<?php echo site_url('toberegis/tobeactivity/view') ?>" + "/" + eid;
+        window.location = url;
     }
 </script>
 

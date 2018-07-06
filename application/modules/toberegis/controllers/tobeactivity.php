@@ -44,8 +44,12 @@ class tobeactivity extends CI_Controller {
     public function view($eid) {
         $id = $this->takmoph_libraries->url_decode($eid);
         $data['activity'] = $this->db->get_where("tobe_activity", array("id" => $id))->row();
-        $page = "toberegis/activity/view";
+        $page = "toberegis/tobeactivity/view";
         $head = $data['activity']->title;
+        $data['type_id'] = $data['activity']->type;
+        $this->db->where("activity_id",$id);
+        $data['gallery'] = $this->db->get("tobe_activity_images");
+        $data['user'] = $this->tobeuser->DetilUser($data['activity']->user_id);
         $this->output($data, $page, $head);
     }
 
@@ -196,5 +200,23 @@ class tobeactivity extends CI_Controller {
 
         $this->output($data, $page, $head);
     }
+    
+    /*
+    public function ($album_id = null) {
+        $views = $this->photo->read_album($album_id);
+        $newviews = ($views + 1);
+        $columns = array("views" => $newviews);
+        $this->db->where("id", $album_id);
+        $this->db->update("album", $columns);
+
+        $data['gallery'] = $this->photo->get_gallery($album_id);
+        $data['album'] = $this->photo->get_album($album_id);
+        $data['album_id'] = $album_id;
+        $page = "gallery/show_gallery";
+        $head = $data['album']->title;
+        $this->output($data, $page, $head);
+    }
+     * 
+     */
 
 }
