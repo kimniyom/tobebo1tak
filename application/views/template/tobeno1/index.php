@@ -41,15 +41,15 @@
         <style type="text/css">
             #body{
                 background: rgba(252,252,199,1);
-background: -moz-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(252,252,199,1)), color-stop(47%, rgba(246,246,246,0.53)), color-stop(100%, rgba(237,237,237,0)));
-background: -webkit-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
-background: -o-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
-background: -ms-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
-background: linear-gradient(to bottom, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcc7', endColorstr='#ededed', GradientType=0 );
-background-repeat: no-repeat;
-    background-attachment: fixed;
+                background: -moz-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+                background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(252,252,199,1)), color-stop(47%, rgba(246,246,246,0.53)), color-stop(100%, rgba(237,237,237,0)));
+                background: -webkit-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+                background: -o-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+                background: -ms-linear-gradient(top, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+                background: linear-gradient(to bottom, rgba(252,252,199,1) 0%, rgba(246,246,246,0.53) 47%, rgba(237,237,237,0) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcc7', endColorstr='#ededed', GradientType=0 );
+                background-repeat: no-repeat;
+                background-attachment: fixed;
             } 
             #nav ul li a{font-size:24px; background: <?php echo $style->color_head ?>;}
             #nav ul li a:active{background: <?php echo $style->color_head ?>;}
@@ -136,108 +136,105 @@ background-repeat: no-repeat;
     </head>
 
     <body id="body">
-        <div class="container" id="main-contents">
-            <div class="btn btn-default pull-right" id="sign-in" style=" z-index: 1;">
-                <a href="<?php echo site_url('users/login') ?>" style="color:<?php echo $style->color_head ?>;"><i class="fa fa-lock"></i> เข้าสู่ระบบ</a>
-            </div>
-
-            <div id="head-logo" style=" font-size: 28px; z-index: 100; color:<?php echo $style->color_head ?>;padding-left:0px; margin-left:0px;">
-                <img src="<?php echo base_url() ?>upload_images/logo/<?php echo $style->logo ?>" style=" height: 52px;"/>
-                <?php echo $style->webname_full ?>
+        <div style="background:#a30101;">
+            <div class="container" id="main-contents">
+                <div class="btn btn-default pull-right" id="sign-in" style=" z-index: 1;">
+                    <a href="<?php echo site_url('users/login') ?>" style="color:#FFFFFF;"><i class="fa fa-lock"></i> เข้าสู่ระบบ</a>
+                </div>
+                <div id="head-logo" style=" font-size: 28px; z-index: 100; color:#FFFFFF;padding-left:0px; margin-left:0px;">
+                    <img src="<?php echo base_url() ?>upload_images/logo/<?php echo $style->logo ?>" style=" height: 52px;"/>
+                    <?php echo $style->webname_full ?>
+                </div>
             </div>
         </div>
- <!-- Navigation -->
-            <nav class="navbar navbar-default" role="navigation" id="nav" style="border-radius: 0px 0px 0px 0px; margin-bottom:15px; background: <?php echo $style->color_head ?>;"><!--*id="nav-bar"-->
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                                style=" background: <?php echo $style->color_head ?>; border:none;" id="hamberger">
-                            <span class="sr-only">Toggle navigation</span>
-                            <!--
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            -->
-                            <font style="color:<?php echo $style->color_text ?>;"><i class="fa fa-bars"></i> Menu</font>
-                        </button>
+        <!-- Navigation -->
+        <nav class="navbar navbar-default" role="navigation" id="nav" style="border-radius: 0px 0px 0px 0px; margin-bottom:0px; border-bottom:solid 3px <?php echo $style->color_text ?>; background: <?php echo $style->color_head ?>;"><!--*id="nav-bar"-->
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                            style=" background: <?php echo $style->color_head ?>; border:none;" id="hamberger">
+                        <span class="sr-only">Toggle navigation</span>
+                        <!--
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        -->
+                        <font style="color:<?php echo $style->color_text ?>;"><i class="fa fa-bars"></i> Menu</font>
+                    </button>
 
-                        <a class="navbar-brand" href="#" style=" margin-top: 0px; font-size:24px; color: <?php echo $style->color_text ?>;">
-
-                            <?php echo $style->webname_short ?></a>
-
-                    </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none;">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="<?php echo site_url() ?>" style="color:<?php echo $style->color_text ?>;"><i class="fa fa-home"></i> หน้าแรก</a>
-                            </li>
-
-                            <!-- GetMenuBar -->
-
-                            <?php
-                            foreach ($navbar->result() as $nb):
-                                ?>
-                                <?php if ($nb->type == '0') { ?>
-                                    <li>
-                                        <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
-                                           style="color:<?php echo $style->color_text ?>;">
-                                            <?php echo $nb->title ?></a>
-                                    </li>
-                                <?php } else if ($nb->type == '2') { ?>
-                                    <li>
-                                        <a href="<?php echo $nb->link ?>" target="_blank" style="color:<?php echo $style->color_text ?>;">
-                                            <?php echo $nb->title ?></a>
-                                    </li>
-                                <?php } else { ?>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle"
-                                           data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:<?php echo $style->color_text ?>;">
-                                            <?php echo $nb->title ?> <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu" style=" margin-top: 1px; border: none; box-shadow: none;background: <?php echo $style->color_head ?>;">
-
-                                            <!--
-                                                ########## Subnavbar ###########
-                                            -->
-
-                                            <?php
-                                            $subnav = $barmodel->get_sub_navbarmenu($nb->id);
-                                            foreach ($subnav->result() as $snSub):
-                                                ?>
-                                                <?php if ($snSub->type != '2') { ?>
-                                                    <li>
-                                                        <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>" style="color:<?php echo $style->color_text ?>">
-                                                            <i class="fa fa-angle-right"></i>
-                                                            <?php echo $snSub->title ?>
-                                                        </a>
-                                                    </li>
-                                                <?php } else { ?>
-                                                    <li>
-                                                        <a href="<?php echo $snSub->link ?>" target="_bank" style="color:<?php echo $style->color_text ?>">
-                                                            <i class="fa fa-angle-right"></i>
-                                                            <?php echo $snSub->title ?>
-                                                        </a>
-                                                    </li>
-                                                <?php } ?>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </li>
-                                <?php } ?>
-                            <?php endforeach; ?>
-                            <li>
-                                <a href="<?php echo site_url('site/sitemap') ?>" style="color:<?php echo $style->color_text ?>;">ผังเว็บไซต์</a>
-                            </li>
-                            <!-- EndMenuNavbar -->
-                        </ul><!--- /.nav navbar-nav pull-right-->
-                    </div>
-                    <!-- /.navbar-collapse -->
+                    <a class="navbar-brand" href="#" style=" margin-top: 0px; font-size:24px; color: <?php echo $style->color_text ?>;">
+                        <?php echo $style->webname_short ?></a>
                 </div>
-            </nav>
-        <div class="container" id="main-content" style="box-shadow: #999999 0px 0px 0px 0px; margin-top: 0px; padding-top: 0px;border-radius: 0px 0px 0px 0px;">
-           
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="border:none;">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="<?php echo site_url() ?>" style="color:<?php echo $style->color_text ?>;"><i class="fa fa-home"></i> หน้าแรก</a>
+                        </li>
 
+                        <!-- GetMenuBar -->
+
+                        <?php
+                        foreach ($navbar->result() as $nb):
+                            ?>
+                            <?php if ($nb->type == '0') { ?>
+                                <li>
+                                    <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
+                                       style="color:<?php echo $style->color_text ?>;">
+                                        <?php echo $nb->title ?></a>
+                                </li>
+                            <?php } else if ($nb->type == '2') { ?>
+                                <li>
+                                    <a href="<?php echo $nb->link ?>" target="_blank" style="color:<?php echo $style->color_text ?>;">
+                                        <?php echo $nb->title ?></a>
+                                </li>
+                            <?php } else { ?>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle"
+                                       data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:<?php echo $style->color_text ?>;">
+                                        <?php echo $nb->title ?> <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" style=" margin-top: 0px; border: none; box-shadow: none;background: <?php echo $style->color_head ?>;">
+
+                                        <!--
+                                            ########## Subnavbar ###########
+                                        -->
+
+                                        <?php
+                                        $subnav = $barmodel->get_sub_navbarmenu($nb->id);
+                                        foreach ($subnav->result() as $snSub):
+                                            ?>
+                                            <?php if ($snSub->type != '2') { ?>
+                                                <li>
+                                                    <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>" style="color:<?php echo $style->color_text ?>">
+                                                        <i class="fa fa-angle-right"></i>
+                                                        <?php echo $snSub->title ?>
+                                                    </a>
+                                                </li>
+                                            <?php } else { ?>
+                                                <li>
+                                                    <a href="<?php echo $snSub->link ?>" target="_bank" style="color:<?php echo $style->color_text ?>">
+                                                        <i class="fa fa-angle-right"></i>
+                                                        <?php echo $snSub->title ?>
+                                                    </a>
+                                                </li>
+                                            <?php } ?>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </li>
+                            <?php } ?>
+                        <?php endforeach; ?>
+                        <li>
+                            <a href="<?php echo site_url('site/sitemap') ?>" style="color:<?php echo $style->color_text ?>;">ผังเว็บไซต์</a>
+                        </li>
+                        <!-- EndMenuNavbar -->
+                    </ul><!--- /.nav navbar-nav pull-right-->
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </nav>
+        <div class="container" id="main-content" style="box-shadow: #999999 0px 0px 0px 0px; margin-top: 0px; padding-top: 10px;border-radius: 0px 0px 0px 0px;">
             <div class="row" style=" margin: 0px; word-wrap: break-word;">
                 <!--
                 #####################
@@ -255,7 +252,7 @@ background-repeat: no-repeat;
                         <center>
                             <img src="<?php echo base_url() ?>upload_images/manager/<?php echo $manager->images ?>" width="150" class="img-responsive" style=" margin-top: 5px;"/>
                             <div class="well well-sm" style=" background: none; border: none; box-shadow: none; color: <?php echo $style->color_head ?>">
-                                <?php echo $manager->name ?></br>
+                                <?php echo $manager->name ?><br/>
                                 <?php echo $manager->position ?>
                             </div>
                         </center>
@@ -783,96 +780,96 @@ background-repeat: no-repeat;
                     </div>
                 </div>
             <?php } ?>
- 
+
         </div> <!-- End Container -->
-                   <!--
-        ########################
-        ## Footer 
-        ########################
-            -->
-            <nav class="navbar navbar-inverse" role="navigation"   style="margin-bottom:0px;background:<?php echo $style->color_head ?>; border-radius:0px; border-top: <?php echo $style->color_head ?> solid 5px;">
-                <div class="container" style="color: #009900;">
-                    <div class="row">
-                        <div class="col-lg-12" style=" text-align: center;">
-                            <div style="padding:2px 5px; margin-bottom:0px;  font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"> หน่วยงานที่เกี่ยวข้อง</div>
+        <!--
+########################
+## Footer 
+########################
+        -->
+        <nav class="navbar navbar-inverse" role="navigation"   style="margin-bottom:0px;background:<?php echo $style->color_head ?>; border-radius:0px; border-top: <?php echo $style->color_head ?> solid 5px;">
+            <div class="container" style="color: #009900;">
+                <div class="row">
+                    <div class="col-lg-12" style=" text-align: center;">
+                        <div style="padding:2px 5px; margin-bottom:0px;  font-weight: bold; font-size:28px; color:<?php echo $style->color_text ?>"> หน่วยงานที่เกี่ยวข้อง</div>
 
-                            <img src="<?php echo base_url() . $path ?>/images/tak-icon.png" id="icon-footer"/>
-                            <img src="<?php echo base_url() . $path ?>/images/moph-icon.png" id="icon-footer"/>
-                            <img src="<?php echo base_url() . $path ?>/images/icon-work.png" id="icon-footer"/>
-                            <img src="<?php echo base_url() . $path ?>/images/lean-logo.png" id="icon-footer"/>
-                            <img src="<?php echo base_url() . $path ?>/images/row-icon.png" id="icon-footer"/>
-                            <img src="<?php echo base_url() . $path ?>/images/panit-icon.png" id="icon-footer"/>
-                            <img src="<?php echo base_url() . $path ?>/images/san-icon.png" id="icon-footer"/>
-                        </div>
+                        <img src="<?php echo base_url() . $path ?>/images/tak-icon.png" id="icon-footer"/>
+                        <img src="<?php echo base_url() . $path ?>/images/moph-icon.png" id="icon-footer"/>
+                        <img src="<?php echo base_url() . $path ?>/images/icon-work.png" id="icon-footer"/>
+                        <img src="<?php echo base_url() . $path ?>/images/lean-logo.png" id="icon-footer"/>
+                        <img src="<?php echo base_url() . $path ?>/images/row-icon.png" id="icon-footer"/>
+                        <img src="<?php echo base_url() . $path ?>/images/panit-icon.png" id="icon-footer"/>
+                        <img src="<?php echo base_url() . $path ?>/images/san-icon.png" id="icon-footer"/>
                     </div>
                 </div>
-            </nav>
-            <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" background: #333333; border-top: <?php echo $style->color_head ?> solid 5px;">
-                <div class="container" style="color: #009900;">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-5 col-lg-5"><?php echo $style->footer ?></div>
-                        <div class="col-sm-6 col-md-7 col-lg-7">
-                            <div class="row">
-                                <?php
-                                foreach ($navbar->result() as $nb):
-                                    ?>
-                                    <?php if ($nb->type == '0') { ?>
-                                        <div class="col-sm-6 col-md-3 col-lg-3">
-                                            <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
-                                               style="color:<?php echo $style->color_text ?>;">
-                                                <b><?php echo $nb->title ?></b></a>
+            </div>
+        </nav>
+        <nav class="navbar navbar-inverse" role="navigation" id="footer" style=" background: #333333; border-top: <?php echo $style->color_head ?> solid 5px;">
+            <div class="container" style="color: #009900;">
+                <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-5"><?php echo $style->footer ?></div>
+                    <div class="col-sm-6 col-md-7 col-lg-7">
+                        <div class="row">
+                            <?php
+                            foreach ($navbar->result() as $nb):
+                                ?>
+                                <?php if ($nb->type == '0') { ?>
+                                    <div class="col-sm-6 col-md-3 col-lg-3">
+                                        <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($nb->id)) ?>"
+                                           style="color:<?php echo $style->color_text ?>;">
+                                            <b><?php echo $nb->title ?></b></a>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="col-sm-6 col-md-3 col-lg-3">
+                                        <span class="caret"></span> <b><font style="color:<?php echo $style->color_text ?>;"><?php echo $nb->title ?></font></b>
+                                        <br/>
+                                        <!--
+                                            ########## Subnavbar ###########
+                                        -->
+                                        <div style="padding-left:10px;">
+                                            <?php
+                                            $subnav = $barmodel->get_sub_navbarmenu($nb->id);
+                                            foreach ($subnav->result() as $snSub):
+                                                ?>
+                                                <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>"
+                                                   style="color:<?php echo $style->color_text ?>;">- <?php echo $snSub->title ?></a> <br/>
+                                               <?php endforeach; ?>
                                         </div>
-                                    <?php } else { ?>
-                                        <div class="col-sm-6 col-md-3 col-lg-3">
-                                            <span class="caret"></span> <b><font style="color:<?php echo $style->color_text ?>;"><?php echo $nb->title ?></font></b>
-                                            <br/>
-                                            <!--
-                                                ########## Subnavbar ###########
-                                            -->
-                                            <div style="padding-left:10px;">
-                                                <?php
-                                                $subnav = $barmodel->get_sub_navbarmenu($nb->id);
-                                                foreach ($subnav->result() as $snSub):
-                                                    ?>
-                                                    <a href="<?php echo site_url('site/page/' . $this->takmoph_libraries->encode($snSub->id)) ?>"
-                                                       style="color:<?php echo $style->color_text ?>;">- <?php echo $snSub->title ?></a> <br/>
-                                                   <?php endforeach; ?>
-                                            </div>
-                                        </div>
+                                    </div>
 
-                                    <?php } ?>
-                                <?php endforeach; ?>
-                                <div class="col-sm-6 col-md-3 col-lg-3">
-                                            <a href="<?php echo site_url('site/sitemap') ?>"
-                                               style="color:<?php echo $style->color_text ?>;">
-                                                <b>ผังเว็บไซต์</b></a>
-                                </div>
-                                <!-- EndMenuNavbar -->
+                                <?php } ?>
+                            <?php endforeach; ?>
+                            <div class="col-sm-6 col-md-3 col-lg-3">
+                                <a href="<?php echo site_url('site/sitemap') ?>"
+                                   style="color:<?php echo $style->color_text ?>;">
+                                    <b>ผังเว็บไซต์</b></a>
                             </div>
+                            <!-- EndMenuNavbar -->
                         </div>
                     </div>
-                    <hr style="border-top:solid 1px <?php echo $style->color_text ?>;"/>
-                    Copyright © 2015 - <?php echo date('Y') ?> AsbWeb By Theassemblerthemes.
-
-                    <div id="counter" style=" float: right; color: #009900;">
-                        จำนวนผู้เยี่ยมชม <span class="badge"><?php echo number_format($this->counter_model->counter()); ?></span> คน
-                    </div>
-
                 </div>
-            </nav>
-            <nav class="navbar navbar-inverse" role="navigation" id="footer-credit" style=" border: none;">
-                <div style="padding-top:20px;">
-                    <div style="font-size:10px; color: #009900; text-align:center;">
-                        &copy; Create By The Assembler Themes | Kimniyom | Mini CMS
-                        <a href="https://www.theassemblers.net" target="_blank">www.theassemblers.net</a>
-                    </div>
+                <hr style="border-top:solid 1px <?php echo $style->color_text ?>;"/>
+                Copyright © 2015 - <?php echo date('Y') ?> AsbWeb By Theassemblerthemes.
+
+                <div id="counter" style=" float: right; color: #009900;">
+                    จำนวนผู้เยี่ยมชม <span class="badge"><?php echo number_format($this->counter_model->counter()); ?></span> คน
                 </div>
-            </nav>
-            <!--
-            #####################
-            ## EndFooter 
-            #####################
-            -->
+
+            </div>
+        </nav>
+        <nav class="navbar navbar-inverse" role="navigation" id="footer-credit" style=" border: none;">
+            <div style="padding-top:20px;">
+                <div style="font-size:10px; color: #009900; text-align:center;">
+                    &copy; Create By The Assembler Themes | Kimniyom | Mini CMS
+                    <a href="https://www.theassemblers.net" target="_blank">www.theassemblers.net</a>
+                </div>
+            </div>
+        </nav>
+        <!--
+        #####################
+        ## EndFooter 
+        #####################
+        -->
 
         <a href="#" id="back-to-top" title="Back to top">&uarr; TOP</a>
         <!-- Script to Activate the Carousel -->
